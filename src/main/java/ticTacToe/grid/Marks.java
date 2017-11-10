@@ -2,11 +2,11 @@ package ticTacToe.grid;
 
 public enum Marks {
 
-NOUGHT("O"), CROSS("X");
+    NOUGHT("O"), CROSS("X");
 
-   Marks(String name) {
-       sign = name;
+    Marks(String name) {
+        sign = name;
    }
 
-   public String sign;
+    public String sign;
 }
