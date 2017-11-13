@@ -3,14 +3,24 @@ package ticTacToe.grid;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-
-public class GridState {
+public class Rows {
 
     private final ArrayList<String> gridCells;
 
-    public GridState(Grid grid) {
+    public Rows(Grid grid) {
         this.gridCells = grid.getCells();
+    }
+
+    public boolean isWinning(int gridSize) {
+        if (!winningRow(gridSize).isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String winningMark(int gridSize) {
+        return (String) winningRow(gridSize).get(0).get(0);
     }
 
     public List<ArrayList<String>> allRows(int gridSize) {
@@ -47,6 +57,16 @@ public class GridState {
        diagonalRows.add(firstDiagonalRow(gridSize));
        diagonalRows.add(secondDiagonalRow(gridSize));
        return diagonalRows;
+    }
+
+    private List<List> winningRow(int gridSize) {
+        List winningRow = new ArrayList<>();
+        for (List row : allRows(gridSize)) {
+            if ((row.stream().distinct().limit(2).count() <= 1) == true) {
+                winningRow.add(row);
+            }
+        }
+        return winningRow;
     }
 
     private void addEachRow(List<ArrayList<String>> rows, List allRows) {
