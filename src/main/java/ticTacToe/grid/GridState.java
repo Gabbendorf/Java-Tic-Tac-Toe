@@ -7,7 +7,7 @@ import static java.util.Arrays.asList;
 
 public class GridState {
 
-    private final String[] gridCells;
+    private final ArrayList<String> gridCells;
 
     public GridState(Grid grid) {
         this.gridCells = grid.getCells();
@@ -24,7 +24,7 @@ public class GridState {
     public List<ArrayList<String>> horizontalRows(int gridSize) {
         List<ArrayList<String>> horizontalRows = new ArrayList<>();
         for (int i = 0; i < gridSize; i++){
-            ArrayList<String> line = sliceArray(new ArrayList<>(asList(gridCells)), startingCellPosition(i, gridSize), finalCellPosition(i, gridSize));
+            ArrayList<String> line = sliceArray(gridCells, startingCellPosition(i, gridSize), finalCellPosition(i, gridSize));
             horizontalRows.add(line);
         }
         return horizontalRows;

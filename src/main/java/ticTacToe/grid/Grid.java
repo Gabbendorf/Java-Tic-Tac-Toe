@@ -1,29 +1,31 @@
 package ticTacToe.grid;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import static java.util.Arrays.asList;
 import static ticTacToe.grid.Marks.CROSS;
 import static ticTacToe.grid.Marks.NOUGHT;
 
 public class Grid {
 
-    private final String[] cells;
+    private final ArrayList<String> cells;
 
     public Grid(int gridSize) {
         this.cells = allCells(gridSize);
     }
 
-    public Grid(String[] cells) {
-        this.cells = cells.clone();
+    public Grid(ArrayList cells) {
+        this.cells = cells;
     }
 
     public void addMark(String mark, String cellNumber) {
-        cells[positionFor(cellNumber)] = mark;
+        cells.set(positionFor(cellNumber), mark);
     }
 
     public boolean isEmptyCell(String cellNumber) {
-        return cellDifferentFromMark(cells[positionFor(cellNumber)]);
+        return cellDifferentFromMark(cells.get(positionFor(cellNumber)));
     }
 
     public boolean allOccupiedCells() {
@@ -35,12 +37,12 @@ public class Grid {
         return true;
     }
 
-    public String[] getCells() {
+    public ArrayList<String> getCells() {
         return cells;
     }
 
-    private String[] allCells(int gridSize) {
-        return stringCellsNumbers(IntStream.range(1, cellsNumber(gridSize)).toArray());
+    private ArrayList<String> allCells(int gridSize) {
+        return new ArrayList<>(asList(stringCellsNumbers(IntStream.range(1, cellsNumber(gridSize)).toArray())));
     }
 
     private String[] stringCellsNumbers(int [] cells) {
