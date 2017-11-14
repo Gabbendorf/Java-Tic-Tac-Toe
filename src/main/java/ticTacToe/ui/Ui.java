@@ -76,7 +76,7 @@ public class Ui {
     }
 
     private boolean isInsideValidRange(String gridPosition, Grid grid) {
-        return Integer.parseInt(gridPosition) > 0 && Integer.parseInt(gridPosition) < grid.getCells().size();
+        return Integer.parseInt(gridPosition) > 0 && Integer.parseInt(gridPosition) <= grid.getCells().size();
     }
 
     private String notOccupiedPosition(Grid grid, String validPosition, String mark) {
