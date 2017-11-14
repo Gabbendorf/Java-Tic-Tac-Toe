@@ -40,7 +40,7 @@ public class Rows {
         return horizontalRows;
     }
 
-    public List<ArrayList<String>> verticalRows(int gridSize) {
+    private List<ArrayList<String>> verticalRows(int gridSize) {
         List<ArrayList<String>> verticalRows = new ArrayList<>();
         for (int cellPosition = 0; cellPosition < gridSize; cellPosition++) {
             ArrayList<String> row = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Rows {
         return verticalRows;
     }
 
-    public List<ArrayList<String>> diagonalRows(int gridSize) {
+    private List<ArrayList<String>> diagonalRows(int gridSize) {
        List<ArrayList<String>> diagonalRows = new ArrayList<>();
        diagonalRows.add(firstDiagonalRow(gridSize));
        diagonalRows.add(secondDiagonalRow(gridSize));

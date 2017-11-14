@@ -1,4 +1,4 @@
-package ticTacToe.grid;
+package ticTacToe.game;
 
 public enum Mark {
 

@@ -3,6 +3,7 @@ package ticTacToe.ui;
 import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.Rows;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,6 +35,15 @@ public class UiTest {
 
         assertTrue(output.toString().contains("Welcome to tic-tac-toe"));
         assertTrue(output.toString().contains("Are you ready to play??"));
+    }
+
+    @Test
+    public void printsGrid() {
+        Ui ui = newUiWith("input");
+
+        ui.printGrid(new Rows(new Grid(3)), 3);
+
+        assertTrue(output.toString().contains("| 1 | 2 | 3 | \n | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
     }
 
     @Test

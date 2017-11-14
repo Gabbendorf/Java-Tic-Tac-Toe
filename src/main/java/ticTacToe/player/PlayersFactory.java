@@ -2,7 +2,7 @@ package ticTacToe.player;
 
 import ticTacToe.ui.Ui;
 
-import static ticTacToe.grid.Mark.*;
+import static ticTacToe.game.Mark.*;
 
 public class PlayersFactory {
 

@@ -54,23 +54,23 @@ public class RowsTest {
         assertEquals(rows(firstRow, secondRow, thirdRow), rows.horizontalRows(3));
     }
 
-    @Test
+    /*@Test
     public void createsVerticalRows() {
         String[] firstRow = new String[]{"1", "4", "7"};
         String[] secondRow = new String[]{"2", "5", "8"};
         String[] thirdRow = new String[]{"3", "6", "9"};
 
         assertEquals(rows(firstRow, secondRow, thirdRow), rows.verticalRows(3));
-    }
+    }*/
 
-    @Test
+    /*@Test
     public void listOfDiagonalRows() {
         ArrayList<List> diagonalRows = new ArrayList<>();
         diagonalRows.add(asList(new String[]{"1", "5", "9"}));
         diagonalRows.add(asList(new String[]{"3", "5", "7"}));
 
         Assert.assertEquals(diagonalRows, rows.diagonalRows(3));
-    }
+    }*/
 
     @Test
     public void listOfAllRows() {

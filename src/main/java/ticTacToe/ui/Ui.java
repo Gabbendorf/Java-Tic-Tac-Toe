@@ -1,22 +1,26 @@
 package ticTacToe.ui;
 
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.GridPreparer;
+import ticTacToe.grid.Rows;
 
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-import static ticTacToe.grid.Mark.CROSS;
-import static ticTacToe.grid.Mark.NOUGHT;
+import static ticTacToe.game.Mark.CROSS;
+import static ticTacToe.game.Mark.NOUGHT;
 
 public class Ui {
 
+    private final GridPreparer gridPreparer;
     private PrintStream output;
     private Scanner input;
 
     public Ui(PrintStream output, InputStream input) {
         this.output = output;
         this.input = new Scanner(input);
+        this.gridPreparer = new GridPreparer();
     }
 
     public void welcomePlayer() {
@@ -24,6 +28,9 @@ public class Ui {
         output.println("Are you ready to play??");
     }
 
+    public void printGrid(Rows rows, int gridSize) {
+        output.println(gridPreparer.prepareGridForPrinting(rows, gridSize));
+    }
 
     public String askForMarkType() {
         output.println("First player: please choose a mark: X => Cross, O (letter) => Nought");

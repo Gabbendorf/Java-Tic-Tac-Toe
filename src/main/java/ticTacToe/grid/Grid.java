@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
-import static ticTacToe.grid.Mark.CROSS;
-import static ticTacToe.grid.Mark.NOUGHT;
+import static ticTacToe.game.Mark.CROSS;
+import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
