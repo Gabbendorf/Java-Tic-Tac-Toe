@@ -17,5 +17,10 @@ public class DoubleUi extends Ui {
     public String validPosition(Grid grid, String mark) {
         return "1";
     }
+
+    @Override
+    public String askForMarkType() {
+        return "X";
+    }
 }
 
