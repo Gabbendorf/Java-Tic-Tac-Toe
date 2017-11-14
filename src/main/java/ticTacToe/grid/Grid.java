@@ -11,9 +11,11 @@ import static ticTacToe.grid.Mark.NOUGHT;
 public class Grid {
 
     private final ArrayList<String> cells;
+    private int size;
 
-    public Grid(int gridSize) {
-        this.cells = allCells(gridSize);
+    public Grid(int size) {
+        this.size = size;
+        this.cells = allCells();
     }
 
     public Grid(ArrayList cells) {
@@ -41,16 +43,20 @@ public class Grid {
         return cells;
     }
 
-    private ArrayList<String> allCells(int gridSize) {
-        return new ArrayList<>(asList(stringCellsNumbers(IntStream.range(1, cellsNumber(gridSize)).toArray())));
+    public int getSize() {
+        return size;
+    }
+
+    private ArrayList<String> allCells() {
+        return new ArrayList<>(asList(stringCellsNumbers(IntStream.range(1, cellsNumber()).toArray())));
     }
 
     private String[] stringCellsNumbers(int [] cells) {
         return Arrays.toString(cells).split("[\\[\\]]")[1].split(", ");
     }
 
-    private int cellsNumber(int gridSize) {
-        return gridSize * gridSize + 1;
+    private int cellsNumber() {
+        return size * size + 1;
     }
 
     private int positionFor(String cellNumber) {
@@ -60,5 +66,4 @@ public class Grid {
     private boolean cellDifferentFromMark(String cell) {
         return !cell.equals(CROSS.mark) && !cell.equals(NOUGHT.mark);
     }
-
 }
