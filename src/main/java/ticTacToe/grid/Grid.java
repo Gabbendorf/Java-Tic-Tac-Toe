@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
-import static ticTacToe.grid.Marks.CROSS;
-import static ticTacToe.grid.Marks.NOUGHT;
+import static ticTacToe.grid.Mark.CROSS;
+import static ticTacToe.grid.Mark.NOUGHT;
 
 public class Grid {
 
@@ -58,7 +58,7 @@ public class Grid {
     }
 
     private boolean cellDifferentFromMark(String cell) {
-        return !cell.equals(CROSS.sign) && !cell.equals(NOUGHT.sign);
+        return !cell.equals(CROSS.mark) && !cell.equals(NOUGHT.mark);
     }
 
 }

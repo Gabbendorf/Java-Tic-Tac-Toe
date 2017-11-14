@@ -1,0 +1,149 @@
+package ticTacToe.ui;
+
+import org.junit.Before;
+import org.junit.Test;
+import ticTacToe.grid.Grid;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+public class UiTest {
+
+    private ByteArrayOutputStream output;
+    private Grid gridWithSize;
+    private Grid gridWithCells;
+
+    @Before
+    public void setUp() {
+        output = new ByteArrayOutputStream();
+        gridWithSize = new Grid(3);
+        gridWithCells = new Grid(new ArrayList<>(Arrays.asList("X", "2")));
+    }
+
+    @Test
+    public void saysHi() {
+        Ui ui = newUiWith("input");
+
+        ui.welcomePlayer();
+
+        assertTrue(output.toString().contains("Welcome to tic-tac-toe"));
+        assertTrue(output.toString().contains("Are you ready to play??"));
+    }
+
+    @Test
+    public void asksForMarkType() {
+        Ui ui = newUiWith("X");
+
+        String markType = ui.askForMarkType();
+
+        assertTrue(output.toString().contains("First player: please choose a mark: X => Cross, O (letter) => Nought"));
+        assertEquals("X", markType);
+    }
+
+    @Test
+    public void asksToRepeatMarkType() {
+        Ui ui = newUiWith("0\no");
+
+        String markType = ui.askForMarkType();
+
+        assertTrue(output.toString().contains("Invalid option: X => Cross or O (letter) => Nought"));
+        assertEquals("O", markType);
+    }
+
+    @Test
+    public void asksWhoStarts() {
+        Ui ui = newUiWith("x");
+
+        String startingMark = ui.askForStarter();
+
+        assertTrue(output.toString().contains("Who starts: X or O (letter)?"));
+        assertEquals("X", startingMark);
+    }
+
+    @Test
+    public void asksForCorrectStarter() {
+        Ui ui = newUiWith("me\nx");
+
+        String startingMark = ui.askForStarter();
+
+        assertTrue(output.toString().contains("Invalid option: X => Cross or O (letter) => Nought"));
+        assertEquals("X", startingMark);
+    }
+
+    @Test
+    public void asksForPositionForMove() {
+        Ui ui = newUiWith("input");
+
+        ui.promptForPosition("X");
+
+        assertTrue(output.toString().contains("Player X: please choose a valid position in the grid"));
+    }
+
+    @Test
+    public void returnsValidPosition() {
+        Ui ui = newUiWith("1");
+
+        String gridPosition = ui.validPosition(gridWithSize, "X");
+
+        assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void asksForNotOccupiedPosition() {
+        Ui ui = newUiWith("1\n2");
+
+        String gridPosition = ui.validPosition(gridWithCells, "X");
+
+        assertTrue(output.toString().contains("Position already occupied."));
+        assertEquals("2", gridPosition);
+    }
+
+    @Test
+    public void asksForValidPosition() {
+        Ui ui = newUiWith("10\n1");
+
+        String gridPosition = ui.validPosition(gridWithSize, "X");
+
+        assertTrue(output.toString().contains("Invalid position."));
+        assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void confirmsMove() {
+        Ui ui = newUiWith("input");
+
+        ui.confirmMove("X", "1");
+
+        assertTrue(output.toString().contains("Player X marked position 1."));
+    }
+
+    @Test
+    public void announcesWinner() {
+        Ui ui = newUiWith("input");
+
+        ui.declareWinner("X");
+
+        assertTrue(output.toString().contains("Player X won!"));
+    }
+
+    @Test
+    public void announcesDraw() {
+        Ui ui = newUiWith("input");
+
+        ui.declareDraw();
+
+        assertTrue(output.toString().contains("It's draw: nobody wins!"));
+    }
+
+    private Ui newUiWith(String inputString) {
+        ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
+
+        return new Ui(new PrintStream(output), input);
+    }
+}

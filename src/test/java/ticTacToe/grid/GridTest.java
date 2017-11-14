@@ -9,7 +9,7 @@ import java.util.Arrays;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static ticTacToe.grid.Marks.*;
+import static ticTacToe.grid.Mark.*;
 
 public class GridTest {
 
@@ -29,20 +29,20 @@ public class GridTest {
 
     @Test
     public void addsMarkNoughtToCell() {
-        grid.addMark(NOUGHT.sign, "1");
+        grid.addMark(NOUGHT.mark, "1");
 
         String addedMark = grid.getCells().get(0);
 
-        assertEquals(NOUGHT.sign, addedMark);
+        assertEquals(NOUGHT.mark, addedMark);
     }
 
     @Test
     public void addsMarkCrossToCell() {
-        grid.addMark(CROSS.sign, "1");
+        grid.addMark(CROSS.mark, "1");
 
         String addedMark = grid.getCells().get(0);
 
-        assertEquals(CROSS.sign, addedMark);
+        assertEquals(CROSS.mark, addedMark);
     }
 
     @Test
