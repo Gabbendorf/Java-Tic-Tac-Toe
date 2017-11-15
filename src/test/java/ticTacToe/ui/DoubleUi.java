@@ -1,6 +1,7 @@
 package ticTacToe.ui;
 
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.Rows;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,7 +15,7 @@ public class DoubleUi extends Ui {
     }
 
     @Override
-    public String validPosition(Grid grid, String mark) {
+    public String validPosition(Grid grid, String mark, Rows rows, int gridSize) {
         return "1";
     }
 

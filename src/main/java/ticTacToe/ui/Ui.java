@@ -44,13 +44,14 @@ public class Ui {
         return validMarkType(startingMark);
     }
 
-    public void promptForPosition(String mark) {
+    public void promptForPosition(String mark, Rows rows, int gridSize) {
+        printGrid(rows, gridSize);
         output.println(String.format("Player %s: please choose a valid position in the grid", mark));
     }
 
-    public String validPosition(Grid grid, String mark) {
-        String validPosition = validatePosition(grid, input.nextLine(), mark);
-        return notOccupiedPosition(grid, validPosition, mark);
+    public String validPosition(Grid grid, String mark, Rows rows, int gridSize) {
+        String validPosition = validatePosition(grid, input.nextLine(), mark, rows, gridSize);
+        return notOccupiedPosition(grid, validPosition, mark, rows, gridSize);
     }
 
     public void confirmMove(String mark, String gridPosition) {
@@ -73,10 +74,10 @@ public class Ui {
         return mark;
     }
 
-    private String validatePosition(Grid grid, String gridPosition, String mark) {
+    private String validatePosition(Grid grid, String gridPosition, String mark, Rows rows, int gridSize) {
         while (!isInsideValidRange(gridPosition, grid)) {
             output.println("Invalid position.");
-            promptForPosition(mark);
+            promptForPosition(mark, rows, gridSize);
             gridPosition = input.nextLine();
         }
         return gridPosition;
@@ -86,10 +87,10 @@ public class Ui {
         return Integer.parseInt(gridPosition) > 0 && Integer.parseInt(gridPosition) <= grid.getCells().size();
     }
 
-    private String notOccupiedPosition(Grid grid, String validPosition, String mark) {
+    private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rows rows, int gridSize) {
         while (!grid.isEmptyCell(validPosition)) {
             output.println("Position already occupied.");
-            promptForPosition(mark);
+            promptForPosition(mark, rows, gridSize);
             validPosition = input.nextLine();
         }
         return validPosition;

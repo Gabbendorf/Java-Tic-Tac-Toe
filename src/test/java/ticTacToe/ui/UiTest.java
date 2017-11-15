@@ -19,12 +19,14 @@ public class UiTest {
     private ByteArrayOutputStream output;
     private Grid gridWithSize;
     private Grid gridWithCells;
+    private Rows rows;
 
     @Before
     public void setUp() {
         output = new ByteArrayOutputStream();
         gridWithSize = new Grid(3);
         gridWithCells = new Grid(new ArrayList<>(Arrays.asList("X", "2")));
+        rows = new Rows(gridWithSize);
     }
 
     @Test
@@ -90,7 +92,7 @@ public class UiTest {
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
-        ui.promptForPosition("X");
+        ui.promptForPosition("X", rows, gridWithSize.getSize());
 
         assertTrue(output.toString().contains("Player X: please choose a valid position in the grid"));
     }
@@ -99,7 +101,7 @@ public class UiTest {
     public void returnsValidPosition() {
         Ui ui = newUiWith("1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X");
+        String gridPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
 
         assertEquals("1", gridPosition);
     }
@@ -108,7 +110,7 @@ public class UiTest {
     public void asksForNotOccupiedPosition() {
         Ui ui = newUiWith("1\n2");
 
-        String gridPosition = ui.validPosition(gridWithCells, "X");
+        String gridPosition = ui.validPosition(gridWithCells, "X", rows, gridWithSize.getSize());
 
         assertTrue(output.toString().contains("Position already occupied."));
         assertEquals("2", gridPosition);
@@ -118,7 +120,7 @@ public class UiTest {
     public void asksForValidPosition() {
         Ui ui = newUiWith("10\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X");
+        String gridPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
 
         assertTrue(output.toString().contains("Invalid position."));
         assertEquals("1", gridPosition);
