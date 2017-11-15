@@ -60,7 +60,7 @@ public class Rows {
     }
 
     private List<List> winningRow(int gridSize) {
-        List winningRow = new ArrayList<>();
+        List<List> winningRow = new ArrayList<>();
         for (List row : allRows(gridSize)) {
             if ((row.stream().distinct().limit(2).count() <= 1)) {
                 winningRow.add(row);
