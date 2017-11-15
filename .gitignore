@@ -3,3 +3,4 @@
 gradlew.bat
 out
 Java TicTacToe.iml
+*.iml
