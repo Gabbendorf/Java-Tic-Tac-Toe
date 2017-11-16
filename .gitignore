@@ -1,3 +1,7 @@
 .idea
 .gradle
 gradlew.bat
+out
+Java TicTacToe.iml
+*.iml
+*.class
