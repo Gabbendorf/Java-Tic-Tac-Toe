@@ -43,7 +43,7 @@ public class GameFlow {
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
-        printFinalResult(switchPlayerMark(currentMark));
+        reportFinalResult(switchPlayerMark(currentMark));
     }
 
     private boolean gameEnded() {
@@ -69,7 +69,7 @@ public class GameFlow {
         return players;
     }
 
-    private void printFinalResult(String currentMark) {
+    private void reportFinalResult(String currentMark) {
         if (rows.isWinning(gridSize)) {
             ui.declareWinner(currentMark, rows, gridSize);
         } else {
