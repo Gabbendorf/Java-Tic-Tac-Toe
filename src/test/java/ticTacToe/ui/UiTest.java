@@ -89,6 +89,15 @@ public class UiTest {
     }
 
     @Test
+    public void checksInputIsValidNumberAndInsideRange() {
+        Ui ui = newUiWith("h\n100\nh\n1");
+
+        String validPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
+
+        assertEquals("1", validPosition);
+    }
+
+    @Test
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
