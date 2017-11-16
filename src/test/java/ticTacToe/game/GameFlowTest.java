@@ -11,6 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GameFlowTest {
 
@@ -31,6 +33,7 @@ public class GameFlowTest {
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
+        assertFalse(rows.isWinning(grid.getSize()));
     }
 
     @Test
@@ -43,6 +46,7 @@ public class GameFlowTest {
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("Player X won!"));
+        assertEquals("X", rows.winningMark(grid.getSize()));
     }
 
     @Test
@@ -55,6 +59,7 @@ public class GameFlowTest {
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("Player O won!"));
+        assertEquals("O", rows.winningMark(grid.getSize()));
     }
 
     private Ui newUiWith(String inputString) {

@@ -17,6 +17,7 @@ public class GameFlow {
     private final Grid grid;
     private final Rows rows;
     private final PlayersFactory playersFactory;
+    private final int gridSize;
     private Player firstPlayer;
     private Player secondPlayer;
 
@@ -25,6 +26,7 @@ public class GameFlow {
         this.grid = grid;
         this.rows = rows;
         this.playersFactory = new PlayersFactory();
+        this.gridSize = grid.getSize();
         ui.welcomePlayer();
     }
 
@@ -36,18 +38,16 @@ public class GameFlow {
     }
 
     private void gameFlow(String currentMark) {
-        while (!grid.allOccupiedCells()) {
+        while (!gameEnded()) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rows);
             grid.addMark(currentMark, positionChosen);
-            if (rows.isWinning(grid.getSize())) {
-                ui.declareWinner(rows.winningMark(grid.getSize()));
-            } else {
-                currentMark = switchPlayerMark(currentMark);
-                gameFlow(currentMark);
-            }
-            break;
+            currentMark = switchPlayerMark(currentMark);
         }
-        ui.declareDraw();
+        printFinalResult(switchPlayerMark(currentMark));
+    }
+
+    private boolean gameEnded() {
+        return grid.allOccupiedCells() || rows.isWinning(gridSize);
     }
 
     private Player currentPlayer(String startingMark) {
@@ -67,6 +67,14 @@ public class GameFlow {
         players.put(firstPlayer.getMark(), firstPlayer);
         players.put(secondPlayer.getMark(), secondPlayer);
         return players;
+    }
+
+    private void printFinalResult(String currentMark) {
+        if (rows.isWinning(gridSize)) {
+            ui.declareWinner(currentMark, rows, gridSize);
+        } else {
+            ui.declareDraw(rows, gridSize);
+        }
     }
 
 }

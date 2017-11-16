@@ -58,11 +58,13 @@ public class Ui {
         output.println(String.format("Player %s marked position %s.", mark, gridPosition));
     }
 
-    public void declareWinner(String mark) {
+    public void declareWinner(String mark, Rows rows, int gridSize) {
+        printGrid(rows, gridSize);
         output.println(String.format("Player %s won!", mark));
     }
 
-    public void declareDraw() {
+    public void declareDraw(Rows rows, int gridSize) {
+        printGrid(rows, gridSize);
         output.println("It's draw: nobody wins!");
     }
 
