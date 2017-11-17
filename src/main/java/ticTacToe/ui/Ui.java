@@ -98,12 +98,12 @@ public class Ui {
     }
 
     private boolean isNotNumber(String usersInput) {
-        int position = -1;
         try {
-            position = Integer.parseInt(usersInput);
+            Integer.parseInt(usersInput);
+            return false;
         } catch (NumberFormatException e) {
+            return true;
         }
-        return position == -1;
     }
 
     private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rows rows, int gridSize) {
