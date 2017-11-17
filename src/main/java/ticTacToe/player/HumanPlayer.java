@@ -13,8 +13,8 @@ public class HumanPlayer implements Player {
     }
 
     public String makeMove(Ui ui, Grid grid, Rows rows) {
-        ui.promptForPosition(mark, rows, grid.getSize());
-        String positionChosen = ui.validPosition(grid, mark, rows, grid.getSize());
+        ui.promptForPosition(mark, rows);
+        String positionChosen = ui.validPosition(grid, mark, rows);
         ui.confirmMove(mark, positionChosen);
         return positionChosen;
     }

@@ -15,7 +15,7 @@ public class DoubleUi extends Ui {
     }
 
     @Override
-    public String validPosition(Grid grid, String mark, Rows rows, int gridSize) {
+    public String validPosition(Grid grid, String mark, Rows rows) {
         return "1";
     }
 

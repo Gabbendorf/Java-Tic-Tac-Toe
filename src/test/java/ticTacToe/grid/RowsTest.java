@@ -1,7 +1,6 @@
 package ticTacToe.grid;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -18,8 +17,8 @@ public class RowsTest {
     private static Grid grid;
     private static Rows rows;
 
-    @BeforeClass
-    public static void newGridState() {
+    @Before
+    public void newGridState() {
         grid = new Grid(3);
         rows = new Rows(grid);
     }
@@ -29,12 +28,12 @@ public class RowsTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
         Rows rows = new Rows(grid);
 
-        assertTrue(rows.isWinning(3));
+        assertTrue(rows.isWinning());
     }
 
     @Test
     public void returnsFalseForNotWinningRow() {
-        assertFalse(rows.isWinning(3));
+        assertFalse(rows.isWinning());
     }
 
     @Test
@@ -42,7 +41,7 @@ public class RowsTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
         Rows rows = new Rows(grid);
 
-        assertEquals("X", rows.winningMark(3));
+        assertEquals("X", rows.winningMark());
     }
 
     @Test
@@ -51,12 +50,7 @@ public class RowsTest {
         String[] secondRow = new String[]{"4", "5", "6"};
         String[] thirdRow = new String[]{"7", "8", "9"};
 
-        assertEquals(rows(firstRow, secondRow, thirdRow), rows.horizontalRows(3));
-    }
-
-    @Test
-    public void listOfAllRows() {
-        assertEquals(8, rows.allRows(3).size());
+        assertEquals(rows(firstRow, secondRow, thirdRow), rows.slicedRows());
     }
 
     private List<List> rows(String[] firstRow, String[] secondRow, String[] thirdRow) {

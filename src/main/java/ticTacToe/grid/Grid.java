@@ -10,7 +10,7 @@ import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
-    private final ArrayList<String> cells;
+    private ArrayList<String> cells;
     private int size;
 
     public Grid(int size) {
@@ -18,8 +18,9 @@ public class Grid {
         this.cells = allCells();
     }
 
-    public Grid(ArrayList cells) {
+    public Grid(ArrayList<String> cells) {
         this.cells = cells;
+        this.size = (int) Math.sqrt(cells.size());
     }
 
     public void addMark(String mark, String cellNumber) {
@@ -47,11 +48,15 @@ public class Grid {
         return size;
     }
 
+    public void setCellsToEmpty() {
+        cells = allCells();
+    }
+
     private ArrayList<String> allCells() {
         return new ArrayList<>(asList(stringCellsNumbers(IntStream.range(1, cellsNumber()).toArray())));
     }
 
-    private String[] stringCellsNumbers(int [] cells) {
+    private String[] stringCellsNumbers(int[] cells) {
         return Arrays.toString(cells).split("[\\[\\]]")[1].split(", ");
     }
 

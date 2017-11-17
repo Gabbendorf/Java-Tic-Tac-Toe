@@ -11,8 +11,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 public class GameFlowTest {
 
@@ -25,41 +23,46 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameThatIsDraw() {
-        Ui ui = newUiWith("x\no\n1\n2\n3\n4\n6\n5\n8\n9\n7");
-        Grid grid = new Grid(3);
-        Rows rows = new Rows(grid);
-        GameFlow gameFlow = new GameFlow(ui, grid, rows);
+        GameFlow gameFlow = newGameFlow("x\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
 
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
-        assertFalse(rows.isWinning(grid.getSize()));
     }
 
     @Test
     public void runsNewGameWherePlayerCrossWins() {
-        Ui ui = newUiWith("x\nx\n1\n2\n3\n4\n5\n6\n9");
-        Grid grid = new Grid(3);
-        Rows rows = new Rows(grid);
-        GameFlow gameFlow = new GameFlow(ui, grid, rows);
+        GameFlow gameFlow = newGameFlow("x\nx\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("Player X won!"));
-        assertEquals("X", rows.winningMark(grid.getSize()));
     }
 
     @Test
     public void runsNewGameWherePlayerNoughtWins() {
-        Ui ui = newUiWith("x\no\n1\n2\n3\n4\n5\n6\n9");
-        Grid grid = new Grid(3);
-        Rows rows = new Rows(grid);
-        GameFlow gameFlow = new GameFlow(ui, grid, rows);
+        GameFlow gameFlow = newGameFlow("x\no\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
         assertTrue(output.toString().contains("Player O won!"));
-        assertEquals("O", rows.winningMark(grid.getSize()));
+    }
+
+    @Test
+    public void runsSecondGame() {
+        GameFlow gameFlow = newGameFlow("x\nx\n1\n2\n5\n3\n9\ny\no\no\n1\n2\n5\n3\n9\nn");
+
+        gameFlow.runGame();
+
+        assertTrue(output.toString().contains("Player X won!"));
+        assertTrue(output.toString().contains("Player O won!"));
+    }
+
+    private GameFlow newGameFlow(String allInput) {
+        Ui ui = newUiWith(allInput);
+        Grid grid = new Grid(3);
+        Rows rows = new Rows(grid);
+        return new GameFlow(ui, grid, rows);
     }
 
     private Ui newUiWith(String inputString) {

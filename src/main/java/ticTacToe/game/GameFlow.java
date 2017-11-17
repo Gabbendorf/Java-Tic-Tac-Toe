@@ -14,10 +14,9 @@ import static ticTacToe.game.Mark.NOUGHT;
 public class GameFlow {
 
     private final Ui ui;
-    private final Grid grid;
+    private Grid grid;
     private final Rows rows;
     private final PlayersFactory playersFactory;
-    private final int gridSize;
     private Player firstPlayer;
     private Player secondPlayer;
 
@@ -26,15 +25,21 @@ public class GameFlow {
         this.grid = grid;
         this.rows = rows;
         this.playersFactory = new PlayersFactory();
-        this.gridSize = grid.getSize();
         ui.welcomePlayer();
     }
 
     public void runGame() {
+        String startingPlayerMark = setUpPlayers();
+        gameFlow(startingPlayerMark);
+        reportFinalResult(startingPlayerMark);
+        startNewGameOrQuit();
+    }
+
+    private String setUpPlayers() {
         firstPlayer = playersFactory.firstPlayer(ui);
         String currentMark = ui.askForStarter();
         secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
-        gameFlow(currentMark);
+        return currentMark;
     }
 
     private void gameFlow(String currentMark) {
@@ -43,11 +48,10 @@ public class GameFlow {
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
-        reportFinalResult(switchPlayerMark(currentMark));
     }
 
     private boolean gameEnded() {
-        return grid.allOccupiedCells() || rows.isWinning(gridSize);
+        return grid.allOccupiedCells() || rows.isWinning();
     }
 
     private Player currentPlayer(String startingMark) {
@@ -70,11 +74,20 @@ public class GameFlow {
     }
 
     private void reportFinalResult(String currentMark) {
-        if (rows.isWinning(gridSize)) {
-            ui.declareWinner(currentMark, rows, gridSize);
+        if (rows.isWinning()) {
+            ui.declareWinner(currentMark, rows);
         } else {
-            ui.declareDraw(rows, gridSize);
+            ui.declareDraw(rows);
         }
     }
 
+    private void startNewGameOrQuit() {
+        String answer = ui.askToPlayAgain();
+        if (answer.equals("y")) {
+            grid.setCellsToEmpty();
+            runGame();
+        } else {
+            ui.sayBye();
+        }
+    }
 }

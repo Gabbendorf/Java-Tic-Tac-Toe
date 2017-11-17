@@ -5,63 +5,30 @@ import java.util.List;
 
 public class Rows {
 
-    private final ArrayList<String> gridCells;
+    private final Grid grid;
+    private final int gridSize;
 
     public Rows(Grid grid) {
-        this.gridCells = grid.getCells();
+        this.grid = grid;
+        this.gridSize = grid.getSize();
     }
 
-    public boolean isWinning(int gridSize) {
-        if (!winningRow(gridSize).isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+    public boolean isWinning() {
+        return !winningRow().isEmpty();
     }
 
-    public String winningMark(int gridSize) {
-        return (String) winningRow(gridSize).get(0).get(0);
+    public String winningMark() {
+        return (String) winningRow().get(0).get(0);
     }
 
-    public List<ArrayList<String>> allRows(int gridSize) {
-       List<ArrayList<String>> allRows = new ArrayList<>();
-       addEachRow(horizontalRows(gridSize), allRows);
-       addEachRow(verticalRows(gridSize), allRows);
-       addEachRow(diagonalRows(gridSize), allRows);
-       return allRows;
+
+    public List<ArrayList<String>> slicedRows() {
+        return horizontalRows();
     }
 
-    public List<ArrayList<String>> horizontalRows(int gridSize) {
-        List<ArrayList<String>> horizontalRows = new ArrayList<>();
-        for (int i = 0; i < gridSize; i++){
-            ArrayList<String> line = sliceArray(gridCells, startingCellPosition(i, gridSize), finalCellPosition(i, gridSize));
-            horizontalRows.add(line);
-        }
-        return horizontalRows;
-    }
-
-    private List<ArrayList<String>> verticalRows(int gridSize) {
-        List<ArrayList<String>> verticalRows = new ArrayList<>();
-        for (int cellPosition = 0; cellPosition < gridSize; cellPosition++) {
-            ArrayList<String> row = new ArrayList<>();
-            for (int horizontalRowNumber = 0; horizontalRowNumber < gridSize; horizontalRowNumber++) {
-                row.add(slicedRows(gridSize).get(horizontalRowNumber).get(cellPosition));
-            }
-            verticalRows.add(row);
-        }
-        return verticalRows;
-    }
-
-    private List<ArrayList<String>> diagonalRows(int gridSize) {
-       List<ArrayList<String>> diagonalRows = new ArrayList<>();
-       diagonalRows.add(firstDiagonalRow(gridSize));
-       diagonalRows.add(secondDiagonalRow(gridSize));
-       return diagonalRows;
-    }
-
-    private List<List> winningRow(int gridSize) {
+    private List<List> winningRow() {
         List<List> winningRow = new ArrayList<>();
-        for (List row : allRows(gridSize)) {
+        for (List row : allRows()) {
             if ((row.stream().distinct().limit(2).count() <= 1)) {
                 winningRow.add(row);
             }
@@ -69,10 +36,25 @@ public class Rows {
         return winningRow;
     }
 
+    private List<ArrayList<String>> allRows() {
+       List<ArrayList<String>> allRows = new ArrayList<>();
+       addEachRow(horizontalRows(), allRows);
+       addEachRow(verticalRows(), allRows);
+       addEachRow(diagonalRows(), allRows);
+       return allRows;
+    }
+
     private void addEachRow(List<ArrayList<String>> rows, List allRows) {
-       for (List row : rows) {
-           allRows.add(row);
-       }
+        allRows.addAll(rows);
+    }
+
+    private List<ArrayList<String>> horizontalRows() {
+        List<ArrayList<String>> horizontalRows = new ArrayList<>();
+        for (int i = 0; i < gridSize; i++){
+            ArrayList<String> line = sliceArray(grid.getCells(), startingCellPosition(i), finalCellPosition(i));
+            horizontalRows.add(line);
+        }
+        return horizontalRows;
     }
 
     private ArrayList<String> sliceArray(ArrayList<String> cellsList, int startingPoint, int finalPoint) {
@@ -83,35 +65,50 @@ public class Rows {
         return row;
     }
 
-    private int startingCellPosition(int i, int gridSize) {
+    private int startingCellPosition(int i) {
         return i * gridSize;
     }
 
-    private int finalCellPosition(int i, int gridSize) {
+    private int finalCellPosition(int i) {
         return  (i + 1) * gridSize - 1;
     }
 
-    private ArrayList<String> firstDiagonalRow(int gridSize) {
+    private List<ArrayList<String>> verticalRows() {
+        List<ArrayList<String>> verticalRows = new ArrayList<>();
+        for (int cellPosition = 0; cellPosition < gridSize; cellPosition++) {
+            ArrayList<String> row = new ArrayList<>();
+            for (int horizontalRowNumber = 0; horizontalRowNumber < gridSize; horizontalRowNumber++) {
+                row.add(slicedRows().get(horizontalRowNumber).get(cellPosition));
+            }
+            verticalRows.add(row);
+        }
+        return verticalRows;
+    }
+
+    private List<ArrayList<String>> diagonalRows() {
+       List<ArrayList<String>> diagonalRows = new ArrayList<>();
+       diagonalRows.add(firstDiagonalRow());
+       diagonalRows.add(secondDiagonalRow());
+       return diagonalRows;
+    }
+
+    private ArrayList<String> firstDiagonalRow() {
         ArrayList<String> row = new ArrayList<>();
         int cellNumber = 0;
         for (int rowNumber = 0; rowNumber < gridSize; rowNumber++) {
-            row.add(slicedRows(gridSize).get(rowNumber).get(cellNumber));
+            row.add(slicedRows().get(rowNumber).get(cellNumber));
             cellNumber += 1;
         }
         return row;
     }
 
-    private ArrayList<String> secondDiagonalRow(int gridSize) {
+    private ArrayList<String> secondDiagonalRow() {
         ArrayList<String> row = new ArrayList<>();
         int cellNumber = gridSize - 1;
         for (int rowNumber = 0; rowNumber < gridSize; rowNumber++) {
-            row.add(slicedRows(gridSize).get(rowNumber).get(cellNumber));
+            row.add(slicedRows().get(rowNumber).get(cellNumber));
             cellNumber -= 1;
         }
         return row;
-    }
-
-    private List<ArrayList<String>> slicedRows(int gridSize) {
-        return horizontalRows(gridSize);
     }
 }
