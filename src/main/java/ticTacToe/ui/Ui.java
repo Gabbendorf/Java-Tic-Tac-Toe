@@ -50,8 +50,8 @@ public class Ui {
     }
 
     public String validPosition(Grid grid, String mark, Rows rows, int gridSize) {
-        String validPosition = validatePosition(grid, input.nextLine(), mark, rows, gridSize);
-        return notOccupiedPosition(grid, validPosition, mark, rows, gridSize);
+        String validatedPosition = validatePosition(grid, mark, rows, gridSize, validInput(grid, mark, rows, gridSize, input.nextLine()));
+        return notOccupiedPosition(grid, validatedPosition, mark, rows, gridSize);
     }
 
     public void confirmMove(String mark, String gridPosition) {
@@ -76,25 +76,46 @@ public class Ui {
         return mark;
     }
 
-    private String validatePosition(Grid grid, String gridPosition, String mark, Rows rows, int gridSize) {
-        while (!isInsideValidRange(gridPosition, grid)) {
+    private String validatePosition(Grid grid, String mark, Rows rows, int gridSize, String usersInput) {
+        while (!isInsideValidRange(usersInput, grid)) {
             output.println("Invalid position.");
-            promptForPosition(mark, rows, gridSize);
-            gridPosition = input.nextLine();
+            usersInput = promptForNewInput(grid, mark, rows, gridSize);
         }
-        return gridPosition;
+        return usersInput;
     }
 
     private boolean isInsideValidRange(String gridPosition, Grid grid) {
-        return Integer.parseInt(gridPosition) > 0 && Integer.parseInt(gridPosition) <= grid.getCells().size();
+        Integer positionNumber = Integer.parseInt(gridPosition);
+        return positionNumber > 0 && positionNumber <= grid.getCells().size();
+    }
+
+    private String validInput(Grid grid, String mark, Rows rows, int gridSize, String usersInput) {
+        while (isNotNumber(usersInput)) {
+            output.println("Invalid input: position must be a number.");
+            usersInput = promptForNewInput(grid, mark, rows, gridSize);
+        }
+        return usersInput;
+    }
+
+    private boolean isNotNumber(String usersInput) {
+        try {
+            Integer.parseInt(usersInput);
+            return false;
+        } catch (NumberFormatException e) {
+            return true;
+        }
     }
 
     private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rows rows, int gridSize) {
         while (!grid.isEmptyCell(validPosition)) {
             output.println("Position already occupied.");
-            promptForPosition(mark, rows, gridSize);
-            validPosition = input.nextLine();
+            validPosition = promptForNewInput(grid, mark, rows, gridSize);
         }
         return validPosition;
+    }
+
+    private String promptForNewInput(Grid grid, String mark, Rows rows, int gridSize) {
+        promptForPosition(mark, rows, gridSize);
+        return validPosition(grid, mark, rows, gridSize);
     }
 }
