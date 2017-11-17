@@ -139,7 +139,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner("X");
+        ui.declareWinner("X", rows, 3);
 
         assertTrue(output.toString().contains("Player X won!"));
     }
@@ -148,7 +148,7 @@ public class UiTest {
     public void announcesDraw() {
         Ui ui = newUiWith("input");
 
-        ui.declareDraw();
+        ui.declareDraw(rows, 3);
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
     }
