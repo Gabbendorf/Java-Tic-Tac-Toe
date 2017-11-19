@@ -1,4 +1,6 @@
 language: java
 java version:
   - "1.8.0_144"
+after_success:
+  - ./gradlew jacocoTestReport coveralls
 
