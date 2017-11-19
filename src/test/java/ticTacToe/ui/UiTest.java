@@ -89,15 +89,6 @@ public class UiTest {
     }
 
     @Test
-    public void checksInputIsValidNumberAndInsideRange() {
-        Ui ui = newUiWith("h\n100\nh\n1");
-
-        String validPosition = ui.validPosition(gridWithSize, "X", rules);
-
-        assertEquals("1", validPosition);
-    }
-
-    @Test
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
@@ -133,6 +124,25 @@ public class UiTest {
 
         assertTrue(output.toString().contains("Invalid position."));
         assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void asksForNumberAsInput() {
+        Ui ui = newUiWith("d\n1");
+
+        String gridPosition = ui.validPosition(gridWithSize, "X", rules);
+
+        assertTrue(output.toString().contains("Invalid input: position must be a number."));
+        assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void returnsValidInputAfterAllChecks() {
+        Ui ui = newUiWith("h\n100\nh\n1");
+
+        String validPosition = ui.validPosition(gridWithSize, "X", rules);
+
+        assertEquals("1", validPosition);
     }
 
     @Test
