@@ -1,7 +1,6 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Rows;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;
@@ -14,16 +13,16 @@ import static ticTacToe.game.Mark.NOUGHT;
 public class GameFlow {
 
     private final Ui ui;
+    private final Rules rules;
     private Grid grid;
-    private final Rows rows;
     private final PlayersFactory playersFactory;
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Rows rows) {
+    public GameFlow(Ui ui, Grid grid, Rules rules) {
         this.ui = ui;
         this.grid = grid;
-        this.rows = rows;
+        this.rules = rules;
         this.playersFactory = new PlayersFactory();
         ui.welcomePlayer();
     }
@@ -43,15 +42,15 @@ public class GameFlow {
     }
 
     private void gameFlow(String currentMark) {
-        while (!gameEnded()) {
-            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rows);
+        while (!isGameEnded()) {
+            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rules);
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
     }
 
-    private boolean gameEnded() {
-        return grid.allOccupiedCells() || rows.isWinning();
+    private boolean isGameEnded() {
+        return grid.allOccupiedCells() || rules.isWinning(grid);
     }
 
     private Player currentPlayer(String startingMark) {
@@ -74,10 +73,10 @@ public class GameFlow {
     }
 
     private void reportFinalResult(String currentMark) {
-        if (rows.isWinning()) {
-            ui.declareWinner(currentMark, rows);
+        if (rules.isWinning(grid)) {
+            ui.declareWinner(currentMark, rules, grid);
         } else {
-            ui.declareDraw(rows);
+            ui.declareDraw(rules, grid);
         }
     }
 

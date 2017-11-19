@@ -1,7 +1,7 @@
 package ticTacToe.player;
 
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Rows;
+import ticTacToe.game.Rules;
 import ticTacToe.ui.Ui;
 
 public class HumanPlayer implements Player {
@@ -12,9 +12,9 @@ public class HumanPlayer implements Player {
         this.mark = mark;
     }
 
-    public String makeMove(Ui ui, Grid grid, Rows rows) {
-        ui.promptForPosition(mark, rows);
-        String positionChosen = ui.validPosition(grid, mark, rows);
+    public String makeMove(Ui ui, Grid grid, Rules rules) {
+        ui.promptForPosition(mark, rules, grid);
+        String positionChosen = ui.validPosition(grid, mark, rules);
         ui.confirmMove(mark, positionChosen);
         return positionChosen;
     }

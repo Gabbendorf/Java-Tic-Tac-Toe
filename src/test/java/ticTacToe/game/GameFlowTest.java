@@ -3,7 +3,6 @@ package ticTacToe.game;
 import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Rows;
 import ticTacToe.ui.Ui;
 
 import java.io.ByteArrayInputStream;
@@ -17,7 +16,7 @@ public class GameFlowTest {
     private ByteArrayOutputStream output;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         output = new ByteArrayOutputStream();
     }
 
@@ -61,8 +60,8 @@ public class GameFlowTest {
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
         Grid grid = new Grid(3);
-        Rows rows = new Rows(grid);
-        return new GameFlow(ui, grid, rows);
+        Rules rules = new Rules();
+        return new GameFlow(ui, grid, rules);
     }
 
     private Ui newUiWith(String inputString) {

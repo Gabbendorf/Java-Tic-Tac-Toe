@@ -2,6 +2,7 @@ package ticTacToe.grid;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.Rules;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,36 +13,36 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class RowsTest {
+public class rulesTest {
 
     private static Grid grid;
-    private static Rows rows;
+    private static Rules rules;
 
     @Before
     public void newGridState() {
         grid = new Grid(3);
-        rows = new Rows(grid);
+        rules = new Rules();
     }
 
     @Test
     public void returnsTrueForWinningRow() {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
-        Rows rows = new Rows(grid);
+        Rules rules = new Rules();
 
-        assertTrue(rows.isWinning());
+        assertTrue(rules.isWinning(grid));
     }
 
     @Test
     public void returnsFalseForNotWinningRow() {
-        assertFalse(rows.isWinning());
+        assertFalse(rules.isWinning(grid));
     }
 
     @Test
     public void returnsWinningMark() {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
-        Rows rows = new Rows(grid);
+        Rules rules = new Rules();
 
-        assertEquals("X", rows.winningMark());
+        assertEquals("X", rules.winningMark(grid));
     }
 
     @Test
@@ -50,7 +51,7 @@ public class RowsTest {
         String[] secondRow = new String[]{"4", "5", "6"};
         String[] thirdRow = new String[]{"7", "8", "9"};
 
-        assertEquals(rows(firstRow, secondRow, thirdRow), rows.slicedRows());
+        assertEquals(rows(firstRow, secondRow, thirdRow), rules.slicedRows(grid));
     }
 
     private List<List> rows(String[] firstRow, String[] secondRow, String[] thirdRow) {

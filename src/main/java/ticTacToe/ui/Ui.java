@@ -2,7 +2,7 @@ package ticTacToe.ui;
 
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.GridPreparer;
-import ticTacToe.grid.Rows;
+import ticTacToe.game.Rules;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -28,8 +28,8 @@ public class Ui {
         output.println("Are you ready to play??");
     }
 
-    public void printGrid(Rows rows) {
-        output.println(gridPreparer.prepareGridForPrinting(rows));
+    public void printGrid(Rules rules, Grid grid) {
+        output.println(gridPreparer.prepareGridForPrinting(rules, grid));
     }
 
     public String askForMarkType() {
@@ -44,27 +44,27 @@ public class Ui {
         return validMarkType(startingMark);
     }
 
-    public void promptForPosition(String mark, Rows rows) {
-        printGrid(rows);
+    public void promptForPosition(String mark, Rules rules, Grid grid) {
+        printGrid(rules, grid);
         output.println(String.format("Player %s: please choose a valid position in the grid", mark));
     }
 
-    public String validPosition(Grid grid, String mark, Rows rows) {
-        String validatedPosition = validatePosition(grid, mark, rows, validInput(grid, mark, rows, input.nextLine()));
-        return notOccupiedPosition(grid, validatedPosition, mark, rows);
+    public String validPosition(Grid grid, String mark, Rules rules) {
+        String validatedPosition = validatePosition(grid, mark, rules, validInput(grid, mark, rules, input.nextLine()));
+        return notOccupiedPosition(grid, validatedPosition, mark, rules);
     }
 
     public void confirmMove(String mark, String gridPosition) {
         output.println(String.format("Player %s marked position %s.", mark, gridPosition));
     }
 
-    public void declareWinner(String mark, Rows rows) {
-        printGrid(rows);
+    public void declareWinner(String mark, Rules rules, Grid grid) {
+        printGrid(rules, grid);
         output.println(String.format("Player %s won!", mark));
     }
 
-    public void declareDraw(Rows rows) {
-        printGrid(rows);
+    public void declareDraw(Rules rules, Grid grid) {
+        printGrid(rules, grid);
         output.println("It's draw: nobody wins!");
     }
 
@@ -90,10 +90,10 @@ public class Ui {
         return mark;
     }
 
-    private String validatePosition(Grid grid, String mark, Rows rows, String usersInput) {
+    private String validatePosition(Grid grid, String mark, Rules rules, String usersInput) {
         while (!isInsideValidRange(usersInput, grid)) {
             output.println("Invalid position.");
-            usersInput = promptForNewInput(grid, mark, rows);
+            usersInput = promptForNewInput(grid, mark, rules);
         }
         return usersInput;
     }
@@ -103,10 +103,10 @@ public class Ui {
         return positionNumber > 0 && positionNumber <= grid.getCells().size();
     }
 
-    private String validInput(Grid grid, String mark, Rows rows, String usersInput) {
+    private String validInput(Grid grid, String mark, Rules rules, String usersInput) {
         while (isNotNumber(usersInput)) {
             output.println("Invalid input: position must be a number.");
-            usersInput = promptForNewInput(grid, mark, rows);
+            usersInput = promptForNewInput(grid, mark, rules);
         }
         return usersInput;
     }
@@ -120,16 +120,16 @@ public class Ui {
         }
     }
 
-    private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rows rows) {
+    private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rules rules) {
         while (!grid.isEmptyCell(validPosition)) {
             output.println("Position already occupied.");
-            validPosition = promptForNewInput(grid, mark, rows);
+            validPosition = promptForNewInput(grid, mark, rules);
         }
         return validPosition;
     }
 
-    private String promptForNewInput(Grid grid, String mark, Rows rows) {
-        promptForPosition(mark, rows);
-        return validPosition(grid, mark, rows);
+    private String promptForNewInput(Grid grid, String mark, Rules rules) {
+        promptForPosition(mark, rules, grid);
+        return validPosition(grid, mark, rules);
     }
 }
