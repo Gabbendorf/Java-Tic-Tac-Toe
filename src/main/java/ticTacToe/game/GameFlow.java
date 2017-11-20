@@ -7,7 +7,7 @@ import ticTacToe.ui.Ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ticTacToe.game.Mark.*;
+import static ticTacToe.game.Mark.switchPlayerMark;
 
 public class GameFlow {
 
