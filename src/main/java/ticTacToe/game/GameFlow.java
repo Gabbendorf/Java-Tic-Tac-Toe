@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static ticTacToe.game.Mark.*;
-import static ticTacToe.game.Mark.NOUGHT;
 
 public class GameFlow {
 
@@ -35,8 +34,9 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
+        String opponentOptionNumber = ui.chooseOpponent();
         firstPlayer = playersFactory.firstPlayer(ui);
-        secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
+        secondPlayer = playersFactory.secondPlayer(opponentOptionNumber, firstPlayer.getMark());
     }
 
     private void gameFlow() {
@@ -56,14 +56,6 @@ public class GameFlow {
         return players().get(startingMark);
     }
 
-    private String switchPlayerMark(String currentMark) {
-       if (currentMark.equals(CROSS.mark)) {
-           return NOUGHT.mark;
-       } else {
-           return CROSS.mark;
-       }
-    }
-
     private Map<String, Player> players() {
         Map<String, Player> players = new HashMap<>();
         players.put(firstPlayer.getMark(), firstPlayer);
@@ -74,9 +66,8 @@ public class GameFlow {
     private void reportFinalResult() {
         if (lines.isWinning(grid)) {
             ui.declareWinner(lines.winningMark(grid), lines, grid);
-        } else {
-            ui.declareDraw(lines, grid);
         }
+        ui.declareDraw(lines, grid);
     }
 
     private void startNewGameOrQuit() {
@@ -84,8 +75,7 @@ public class GameFlow {
         if (answer.equals("y")) {
             grid.setCellsToEmpty();
             runGame();
-        } else {
-            ui.sayBye();
         }
+        ui.sayBye();
     }
 }

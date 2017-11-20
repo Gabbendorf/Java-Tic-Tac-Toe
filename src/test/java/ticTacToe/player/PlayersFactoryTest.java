@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.ui.DoubleUi;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class PlayersFactoryTest {
@@ -25,9 +26,18 @@ public class PlayersFactoryTest {
     }
 
     @Test
-    public void createsPlayerWithOtherPossibleMark() {
-        Player secondPlayer = playersFactory.secondPlayer("X");
+    public void createsHumanPlayerWithOtherPossibleMark() {
+        Player secondPlayer = playersFactory.secondPlayer("1", "X");
 
+        assertTrue(secondPlayer instanceof HumanPlayer);
         assertEquals("O", secondPlayer.getMark());
+    }
+
+    @Test
+    public void createsSmartComputerWithOtherPossibleMark() {
+        Player secondPlayer = playersFactory.secondPlayer("2", "O");
+
+        assertTrue(secondPlayer instanceof SmartComputer);
+        assertEquals("X", secondPlayer.getMark());
     }
 }

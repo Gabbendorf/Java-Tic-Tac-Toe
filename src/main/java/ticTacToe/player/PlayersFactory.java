@@ -2,6 +2,9 @@ package ticTacToe.player;
 
 import ticTacToe.ui.Ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static ticTacToe.game.Mark.*;
 
 public class PlayersFactory {
@@ -10,11 +13,18 @@ public class PlayersFactory {
        return new HumanPlayer(ui.askForMarkType());
     }
 
-    public Player secondPlayer(String markChosen) {
-       if (markChosen.equals(CROSS.mark)) {
-           return new HumanPlayer(NOUGHT.mark);
-       } else {
-           return new HumanPlayer(CROSS.mark);
-       }
+    public Player secondPlayer(String opponentOptionNumber, String markChosen) {
+        if (markChosen.equals(CROSS.mark)) {
+            return opponentOptions(NOUGHT.mark).get(opponentOptionNumber);
+        } else {
+            return opponentOptions(CROSS.mark).get(opponentOptionNumber);
+        }
+    }
+
+    private Map<String, Player> opponentOptions(String mark) {
+        Map<String, Player> playersOptions = new HashMap<>();
+        playersOptions.put("1", new HumanPlayer(mark));
+        playersOptions.put("2", new SmartComputer(mark));
+        return playersOptions;
     }
 }

@@ -22,7 +22,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameThatIsDraw() {
-        GameFlow gameFlow = newGameFlow("x\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
+        GameFlow gameFlow = newGameFlow("1\nx\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
 
         gameFlow.runGame();
 
@@ -31,7 +31,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameWherePlayerCrossWins() {
-        GameFlow gameFlow = newGameFlow("x\nx\n1\n2\n3\n4\n5\n6\n9\nn");
+        GameFlow gameFlow = newGameFlow("1\nx\nx\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
@@ -40,7 +40,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameWherePlayerNoughtWins() {
-        GameFlow gameFlow = newGameFlow("x\no\n1\n2\n3\n4\n5\n6\n9\nn");
+        GameFlow gameFlow = newGameFlow("1\nx\no\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
@@ -49,7 +49,7 @@ public class GameFlowTest {
 
     @Test
     public void runsSecondGame() {
-        GameFlow gameFlow = newGameFlow("x\nx\n1\n2\n5\n3\n9\ny\no\no\n1\n2\n5\n3\n9\nn");
+        GameFlow gameFlow = newGameFlow("1\nx\nx\n1\n2\n5\n3\n9\ny\n1\no\no\n1\n2\n5\n3\n9\nn");
 
         gameFlow.runGame();
 
