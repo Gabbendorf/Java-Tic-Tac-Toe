@@ -71,8 +71,7 @@ public class GameFlow {
     }
 
     private void startNewGameOrQuit() {
-        String answer = ui.askToPlayAgain();
-        if (answer.equals("y")) {
+        if (ui.askToPlayAgain().equals("y")) {
             grid.setCellsToEmpty();
             runGame();
         }
