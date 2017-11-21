@@ -15,7 +15,6 @@ public class Rules {
         return (String) winningRow(grid).get(0).get(0);
     }
 
-
     public List<ArrayList<String>> slicedRows(Grid grid) {
         return horizontalRows(grid);
     }
