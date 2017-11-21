@@ -1,5 +1,6 @@
 package ticTacToe.player;
 
+import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class PlayersFactory {
     private Map<String, Player> opponentOptions(String mark) {
         Map<String, Player> playersOptions = new HashMap<>();
         playersOptions.put("1", new HumanPlayer(mark));
-        playersOptions.put("2", new SmartComputer(mark));
+        playersOptions.put("2", new SmartComputer(mark, new MoveGenerator()));
         return playersOptions;
     }
 }

@@ -1,10 +1,13 @@
 package ticTacToe.grid;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import ticTacToe.game.Lines;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -72,11 +75,90 @@ public class GridTest {
     }
 
     @Test
+    public void createsCopyOfGridWithNewCells() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "O", "4")));
+
+        Grid copyOfGrid = grid.copyOfGrid();
+
+        assertEquals(grid.getCells(), copyOfGrid.getCells());
+    }
+
+    @Test
+    public void copyOfGridCellsIsNotEqualToOriginalGridCellsAfterChanged() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "O", "4")));
+
+        Grid copyOfGrid = grid.copyOfGrid();
+        grid.addMark("X", "2");
+
+        assertFalse(grid.getCells().equals(copyOfGrid.getCells()));
+    }
+
+    @Test
+    public void returnsListOfEmptyPositions() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("1", "X", "3", "O", "X", "6")));
+
+        List<String> emptyPositions = grid.emptyPositions();
+
+        assertEquals(3, emptyPositions.size());
+    }
+
+    @Test
+    public void returnsListOfGridsWithNewMarkAddedToCells() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("1", "X", "3", "O", "X", "6")));
+
+        List<Grid> gridList = grid.makeCopiesOfGridWith("X");
+
+        assertEquals(3, gridList.size());
+        assertFalse(cells(gridList, 0).equals(cells(gridList, 1)));
+        assertFalse(cells(gridList, 1).equals(cells(gridList, 2)));
+        assertFalse(cells(gridList, 0).equals(cells(gridList, 2)));
+    }
+
+    @Test
+    public void returnsTrueIfNewGridWithAllEmptyCells() {
+        assertTrue(grid.isAllEmpty());
+    }
+
+    @Test
+    public void returnsFalseIfNotEmptyGrid() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "X", "O", "O", "X", "X", "X", "O")));
+
+        assertFalse(grid.isAllEmpty());
+    }
+
+    @Test
+    public void knowsGameIsEndedIfDraw() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "X", "O", "O", "X", "X", "X", "O")));
+        Lines lines = new Lines();
+
+        assertTrue(grid.isEndedGame(lines));
+    }
+
+    @Test
+    public void knowsGameIsEndedIfThereIsWinner() {
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "X", "X", "O", "O", "X", "X", "O", "O")));
+        Lines lines = new Lines();
+
+        assertTrue(grid.isEndedGame(lines));
+    }
+
+    @Test
+    public void knowsGameIsNotEnded() {
+        Lines lines = new Lines();
+
+        assertFalse(grid.isEndedGame(lines));
+    }
+
+    @Test
     public void setCellsToEmptyAgain() {
         grid.addMark("x", "1");
 
         grid.setCellsToEmpty();
 
         assertFalse(grid.getCells().contains("X"));
+    }
+
+    private List<String> cells(List<Grid> gridList, int gridNumber) {
+        return gridList.get(gridNumber).getCells();
     }
 }

@@ -41,15 +41,11 @@ public class GameFlow {
 
     private void gameFlow() {
         String currentMark = ui.askForStarter();
-        while (isOnGoingGame()) {
+        while (!grid.isEndedGame(lines)) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
-    }
-
-    private boolean isOnGoingGame() {
-        return !grid.allOccupiedCells() && !lines.isWinning(grid);
     }
 
     private Player currentPlayer(String startingMark) {
@@ -66,15 +62,17 @@ public class GameFlow {
     private void reportFinalResult() {
         if (lines.isWinning(grid)) {
             ui.declareWinner(lines.winningMark(grid), lines, grid);
+        } else {
+            ui.declareDraw(lines, grid);
         }
-        ui.declareDraw(lines, grid);
     }
 
     private void startNewGameOrQuit() {
         if (ui.askToPlayAgain().equals("y")) {
             grid.setCellsToEmpty();
             runGame();
+        } else {
+            ui.sayBye();
         }
-        ui.sayBye();
     }
 }
