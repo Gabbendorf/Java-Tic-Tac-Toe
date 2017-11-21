@@ -42,15 +42,15 @@ public class GameFlow {
     }
 
     private void gameFlow(String currentMark) {
-        while (!isGameEnded()) {
+        while (isOnGoingGame()) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rules);
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
     }
 
-    private boolean isGameEnded() {
-        return grid.allOccupiedCells() || rules.isWinning(grid);
+    private boolean isOnGoingGame() {
+        return !grid.allOccupiedCells() && !rules.isWinning(grid);
     }
 
     private Player currentPlayer(String startingMark) {

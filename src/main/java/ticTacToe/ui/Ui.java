@@ -91,16 +91,16 @@ public class Ui {
     }
 
     private String validatePosition(Grid grid, String mark, Rules rules, String usersInput) {
-        while (!isInsideValidRange(usersInput, grid)) {
+        while (isOutsideValidRange(usersInput, grid)) {
             output.println("Invalid position.");
             usersInput = promptForNewInput(grid, mark, rules);
         }
         return usersInput;
     }
 
-    private boolean isInsideValidRange(String gridPosition, Grid grid) {
+    private boolean isOutsideValidRange(String gridPosition, Grid grid) {
         Integer positionNumber = Integer.parseInt(gridPosition);
-        return positionNumber > 0 && positionNumber <= grid.getCells().size();
+        return positionNumber < 0 || positionNumber > grid.getCells().size();
     }
 
     private String validInput(Grid grid, String mark, Rules rules, String usersInput) {
