@@ -13,16 +13,16 @@ import static ticTacToe.game.Mark.NOUGHT;
 public class GameFlow {
 
     private final Ui ui;
-    private final Rules rules;
+    private final Lines lines;
     private Grid grid;
     private final PlayersFactory playersFactory;
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Rules rules) {
+    public GameFlow(Ui ui, Grid grid, Lines lines) {
         this.ui = ui;
         this.grid = grid;
-        this.rules = rules;
+        this.lines = lines;
         this.playersFactory = new PlayersFactory();
         ui.welcomePlayer();
     }
@@ -42,14 +42,14 @@ public class GameFlow {
     private void gameFlow() {
         String currentMark = ui.askForStarter();
         while (isOnGoingGame()) {
-            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rules);
+            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
     }
 
     private boolean isOnGoingGame() {
-        return !grid.allOccupiedCells() && !rules.isWinning(grid);
+        return !grid.allOccupiedCells() && !lines.isWinning(grid);
     }
 
     private Player currentPlayer(String startingMark) {
@@ -72,10 +72,10 @@ public class GameFlow {
     }
 
     private void reportFinalResult() {
-        if (rules.isWinning(grid)) {
-            ui.declareWinner(rules.winningMark(grid), rules, grid);
+        if (lines.isWinning(grid)) {
+            ui.declareWinner(lines.winningMark(grid), lines, grid);
         } else {
-            ui.declareDraw(rules, grid);
+            ui.declareDraw(lines, grid);
         }
     }
 

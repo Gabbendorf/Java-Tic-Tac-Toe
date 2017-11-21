@@ -60,8 +60,8 @@ public class GameFlowTest {
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
         Grid grid = new Grid(3);
-        Rules rules = new Rules();
-        return new GameFlow(ui, grid, rules);
+        Lines lines = new Lines();
+        return new GameFlow(ui, grid, lines);
     }
 
     private Ui newUiWith(String inputString) {
