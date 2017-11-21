@@ -3,7 +3,7 @@ package ticTacToe.ui;
 import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Rows;
+import ticTacToe.game.Lines;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -19,14 +19,14 @@ public class UiTest {
     private ByteArrayOutputStream output;
     private Grid gridWithSize;
     private Grid gridWithCells;
-    private Rows rows;
+    private Lines lines;
 
     @Before
     public void setUp() {
         output = new ByteArrayOutputStream();
         gridWithSize = new Grid(3);
         gridWithCells = new Grid(new ArrayList<>(Arrays.asList("X", "2")));
-        rows = new Rows(gridWithSize);
+        lines = new Lines();
     }
 
     @Test
@@ -43,7 +43,7 @@ public class UiTest {
     public void printsGrid() {
         Ui ui = newUiWith("input");
 
-        ui.printGrid(new Rows(new Grid(3)), 3);
+        ui.printGrid(new Lines(), new Grid(3));
 
         assertTrue(output.toString().contains("| 1 | 2 | 3 | \n | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
     }
@@ -89,19 +89,10 @@ public class UiTest {
     }
 
     @Test
-    public void checksInputIsValidNumberAndInsideRange() {
-        Ui ui = newUiWith("h\n100\nh\n1");
-
-        String validPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
-
-        assertEquals("1", validPosition);
-    }
-
-    @Test
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
-        ui.promptForPosition("X", rows, gridWithSize.getSize());
+        ui.promptForPosition("X", lines, gridWithSize);
 
         assertTrue(output.toString().contains("Player X: please choose a valid position in the grid"));
     }
@@ -110,7 +101,7 @@ public class UiTest {
     public void returnsValidPosition() {
         Ui ui = newUiWith("1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
+        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
 
         assertEquals("1", gridPosition);
     }
@@ -119,7 +110,7 @@ public class UiTest {
     public void asksForNotOccupiedPosition() {
         Ui ui = newUiWith("1\n2");
 
-        String gridPosition = ui.validPosition(gridWithCells, "X", rows, gridWithSize.getSize());
+        String gridPosition = ui.validPosition(gridWithCells, "X", lines);
 
         assertTrue(output.toString().contains("Position already occupied."));
         assertEquals("2", gridPosition);
@@ -129,10 +120,29 @@ public class UiTest {
     public void asksForValidPosition() {
         Ui ui = newUiWith("10\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X", rows, gridWithSize.getSize());
+        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
 
         assertTrue(output.toString().contains("Invalid position."));
         assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void asksForNumberAsInput() {
+        Ui ui = newUiWith("d\n1");
+
+        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
+
+        assertTrue(output.toString().contains("Invalid input: position must be a number."));
+        assertEquals("1", gridPosition);
+    }
+
+    @Test
+    public void returnsValidInputAfterAllChecks() {
+        Ui ui = newUiWith("h\n100\nh\n1");
+
+        String validPosition = ui.validPosition(gridWithSize, "X", lines);
+
+        assertEquals("1", validPosition);
     }
 
     @Test
@@ -148,7 +158,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner("X", rows, 3);
+        ui.declareWinner("X", lines, gridWithSize);
 
         assertTrue(output.toString().contains("Player X won!"));
     }
@@ -157,9 +167,29 @@ public class UiTest {
     public void announcesDraw() {
         Ui ui = newUiWith("input");
 
-        ui.declareDraw(rows, 3);
+        ui.declareDraw(lines, gridWithSize);
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
+    }
+
+    @Test
+    public void asksUserIfWantsToPlayAgain() {
+        Ui ui = newUiWith("yes\nY");
+
+        String newGameAnswer = ui.askToPlayAgain();
+
+        assertTrue(output.toString().contains("New game? y/n"));
+        assertTrue(output.toString().contains("Sorry, I didn't understand."));
+        assertEquals("y", newGameAnswer);
+    }
+
+    @Test
+    public void saysByeBeforeUserLeaves() {
+        Ui ui = newUiWith("input");
+
+        ui.sayBye();
+
+        assertTrue(output.toString().contains("See you soon!"));
     }
 
     private Ui newUiWith(String inputString) {

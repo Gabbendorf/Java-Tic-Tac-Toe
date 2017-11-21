@@ -70,4 +70,13 @@ public class GridTest {
 
         assertFalse(grid.allOccupiedCells());
     }
+
+    @Test
+    public void setCellsToEmptyAgain() {
+        grid.addMark("x", "1");
+
+        grid.setCellsToEmpty();
+
+        assertFalse(grid.getCells().contains("X"));
+    }
 }

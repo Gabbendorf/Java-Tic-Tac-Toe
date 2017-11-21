@@ -1,8 +1,8 @@
 package ticTacToe.grid;
 
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.Lines;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,50 +13,45 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class RowsTest {
+public class LinesTest {
 
     private static Grid grid;
-    private static Rows rows;
+    private static Lines lines;
 
-    @BeforeClass
-    public static void newGridState() {
+    @Before
+    public void newGridState() {
         grid = new Grid(3);
-        rows = new Rows(grid);
+        lines = new Lines();
     }
 
     @Test
     public void returnsTrueForWinningRow() {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
-        Rows rows = new Rows(grid);
+        Lines lines = new Lines();
 
-        assertTrue(rows.isWinning(3));
+        assertTrue(lines.isWinning(grid));
     }
 
     @Test
     public void returnsFalseForNotWinningRow() {
-        assertFalse(rows.isWinning(3));
+        assertFalse(lines.isWinning(grid));
     }
 
     @Test
     public void returnsWinningMark() {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
-        Rows rows = new Rows(grid);
+        Lines lines = new Lines();
 
-        assertEquals("X", rows.winningMark(3));
+        assertEquals("X", lines.winningMark(grid));
     }
 
     @Test
-    public void createsHorizontalRows() {
+    public void createsRows() {
         String[] firstRow = new String[]{"1","2","3"};
         String[] secondRow = new String[]{"4", "5", "6"};
         String[] thirdRow = new String[]{"7", "8", "9"};
 
-        assertEquals(rows(firstRow, secondRow, thirdRow), rows.horizontalRows(3));
-    }
-
-    @Test
-    public void listOfAllRows() {
-        assertEquals(8, rows.allRows(3).size());
+        assertEquals(rows(firstRow, secondRow, thirdRow), lines.getRows(grid));
     }
 
     private List<List> rows(String[] firstRow, String[] secondRow, String[] thirdRow) {

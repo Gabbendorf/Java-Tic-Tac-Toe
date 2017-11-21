@@ -1,7 +1,6 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Rows;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;
@@ -14,40 +13,43 @@ import static ticTacToe.game.Mark.NOUGHT;
 public class GameFlow {
 
     private final Ui ui;
-    private final Grid grid;
-    private final Rows rows;
+    private final Lines lines;
+    private Grid grid;
     private final PlayersFactory playersFactory;
-    private final int gridSize;
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Rows rows) {
+    public GameFlow(Ui ui, Grid grid, Lines lines) {
         this.ui = ui;
         this.grid = grid;
-        this.rows = rows;
+        this.lines = lines;
         this.playersFactory = new PlayersFactory();
-        this.gridSize = grid.getSize();
         ui.welcomePlayer();
     }
 
     public void runGame() {
-        firstPlayer = playersFactory.firstPlayer(ui);
-        String currentMark = ui.askForStarter();
-        secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
-        gameFlow(currentMark);
+        setUpPlayers();
+        gameFlow();
+        reportFinalResult();
+        startNewGameOrQuit();
     }
 
-    private void gameFlow(String currentMark) {
-        while (!gameEnded()) {
-            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rows);
+    private void setUpPlayers() {
+        firstPlayer = playersFactory.firstPlayer(ui);
+        secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
+    }
+
+    private void gameFlow() {
+        String currentMark = ui.askForStarter();
+        while (isOnGoingGame()) {
+            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
-        reportFinalResult(switchPlayerMark(currentMark));
     }
 
-    private boolean gameEnded() {
-        return grid.allOccupiedCells() || rows.isWinning(gridSize);
+    private boolean isOnGoingGame() {
+        return !grid.allOccupiedCells() && !lines.isWinning(grid);
     }
 
     private Player currentPlayer(String startingMark) {
@@ -69,12 +71,21 @@ public class GameFlow {
         return players;
     }
 
-    private void reportFinalResult(String currentMark) {
-        if (rows.isWinning(gridSize)) {
-            ui.declareWinner(currentMark, rows, gridSize);
+    private void reportFinalResult() {
+        if (lines.isWinning(grid)) {
+            ui.declareWinner(lines.winningMark(grid), lines, grid);
         } else {
-            ui.declareDraw(rows, gridSize);
+            ui.declareDraw(lines, grid);
         }
     }
 
+    private void startNewGameOrQuit() {
+        String answer = ui.askToPlayAgain();
+        if (answer.equals("y")) {
+            grid.setCellsToEmpty();
+            runGame();
+        } else {
+            ui.sayBye();
+        }
+    }
 }

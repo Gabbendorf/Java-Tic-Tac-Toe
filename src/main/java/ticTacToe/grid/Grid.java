@@ -2,6 +2,7 @@ package ticTacToe.grid;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
@@ -10,7 +11,7 @@ import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
-    private final ArrayList<String> cells;
+    private List<String> cells;
     private int size;
 
     public Grid(int size) {
@@ -18,8 +19,9 @@ public class Grid {
         this.cells = allCells();
     }
 
-    public Grid(ArrayList cells) {
+    public Grid(List<String> cells) {
         this.cells = cells;
+        this.size = (int) Math.sqrt(cells.size());
     }
 
     public void addMark(String mark, String cellNumber) {
@@ -39,7 +41,7 @@ public class Grid {
         return true;
     }
 
-    public ArrayList<String> getCells() {
+    public List<String> getCells() {
         return cells;
     }
 
@@ -47,11 +49,15 @@ public class Grid {
         return size;
     }
 
-    private ArrayList<String> allCells() {
+    public void setCellsToEmpty() {
+        cells = allCells();
+    }
+
+    private List<String> allCells() {
         return new ArrayList<>(asList(stringCellsNumbers(IntStream.range(1, cellsNumber()).toArray())));
     }
 
-    private String[] stringCellsNumbers(int [] cells) {
+    private String[] stringCellsNumbers(int[] cells) {
         return Arrays.toString(cells).split("[\\[\\]]")[1].split(", ");
     }
 

@@ -2,7 +2,7 @@ package ticTacToe.ui;
 
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.GridPreparer;
-import ticTacToe.grid.Rows;
+import ticTacToe.game.Lines;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -28,8 +28,8 @@ public class Ui {
         output.println("Are you ready to play??");
     }
 
-    public void printGrid(Rows rows, int gridSize) {
-        output.println(gridPreparer.prepareGridForPrinting(rows, gridSize));
+    public void printGrid(Lines lines, Grid grid) {
+        output.println(gridPreparer.prepareGridForPrinting(lines, grid));
     }
 
     public String askForMarkType() {
@@ -44,28 +44,42 @@ public class Ui {
         return validMarkType(startingMark);
     }
 
-    public void promptForPosition(String mark, Rows rows, int gridSize) {
-        printGrid(rows, gridSize);
+    public void promptForPosition(String mark, Lines lines, Grid grid) {
+        printGrid(lines, grid);
         output.println(String.format("Player %s: please choose a valid position in the grid", mark));
     }
 
-    public String validPosition(Grid grid, String mark, Rows rows, int gridSize) {
-        String validatedPosition = validatePosition(grid, mark, rows, gridSize, validInput(grid, mark, rows, gridSize, input.nextLine()));
-        return notOccupiedPosition(grid, validatedPosition, mark, rows, gridSize);
+    public String validPosition(Grid grid, String mark, Lines lines) {
+        String validatedPosition = validatePosition(grid, mark, lines, validInput(grid, mark, lines, input.nextLine()));
+        return notOccupiedPosition(grid, validatedPosition, mark, lines);
     }
 
     public void confirmMove(String mark, String gridPosition) {
         output.println(String.format("Player %s marked position %s.", mark, gridPosition));
     }
 
-    public void declareWinner(String mark, Rows rows, int gridSize) {
-        printGrid(rows, gridSize);
+    public void declareWinner(String mark, Lines lines, Grid grid) {
+        printGrid(lines, grid);
         output.println(String.format("Player %s won!", mark));
     }
 
-    public void declareDraw(Rows rows, int gridSize) {
-        printGrid(rows, gridSize);
+    public void declareDraw(Lines lines, Grid grid) {
+        printGrid(lines, grid);
         output.println("It's draw: nobody wins!");
+    }
+
+    public String askToPlayAgain() {
+        output.println("New game? y/n");
+        String answer = input.nextLine().toLowerCase();
+        if (!answer.equals("y") && !answer.equals("n")) {
+            output.println("Sorry, I didn't understand.");
+            answer = askToPlayAgain();
+        }
+        return answer;
+    }
+
+    public void sayBye() {
+        output.println("See you soon!");
     }
 
     private String validMarkType(String mark) {
@@ -76,23 +90,23 @@ public class Ui {
         return mark;
     }
 
-    private String validatePosition(Grid grid, String mark, Rows rows, int gridSize, String usersInput) {
-        while (!isInsideValidRange(usersInput, grid)) {
+    private String validatePosition(Grid grid, String mark, Lines lines, String usersInput) {
+        while (isOutsideValidRange(usersInput, grid)) {
             output.println("Invalid position.");
-            usersInput = promptForNewInput(grid, mark, rows, gridSize);
+            usersInput = promptForNewInput(grid, mark, lines);
         }
         return usersInput;
     }
 
-    private boolean isInsideValidRange(String gridPosition, Grid grid) {
+    private boolean isOutsideValidRange(String gridPosition, Grid grid) {
         Integer positionNumber = Integer.parseInt(gridPosition);
-        return positionNumber > 0 && positionNumber <= grid.getCells().size();
+        return positionNumber < 0 || positionNumber > grid.getCells().size();
     }
 
-    private String validInput(Grid grid, String mark, Rows rows, int gridSize, String usersInput) {
+    private String validInput(Grid grid, String mark, Lines lines, String usersInput) {
         while (isNotNumber(usersInput)) {
             output.println("Invalid input: position must be a number.");
-            usersInput = promptForNewInput(grid, mark, rows, gridSize);
+            usersInput = promptForNewInput(grid, mark, lines);
         }
         return usersInput;
     }
@@ -106,16 +120,16 @@ public class Ui {
         }
     }
 
-    private String notOccupiedPosition(Grid grid, String validPosition, String mark, Rows rows, int gridSize) {
+    private String notOccupiedPosition(Grid grid, String validPosition, String mark, Lines lines) {
         while (!grid.isEmptyCell(validPosition)) {
             output.println("Position already occupied.");
-            validPosition = promptForNewInput(grid, mark, rows, gridSize);
+            validPosition = promptForNewInput(grid, mark, lines);
         }
         return validPosition;
     }
 
-    private String promptForNewInput(Grid grid, String mark, Rows rows, int gridSize) {
-        promptForPosition(mark, rows, gridSize);
-        return validPosition(grid, mark, rows, gridSize);
+    private String promptForNewInput(Grid grid, String mark, Lines lines) {
+        promptForPosition(mark, lines, grid);
+        return validPosition(grid, mark, lines);
     }
 }
