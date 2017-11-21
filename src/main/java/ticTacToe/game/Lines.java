@@ -50,7 +50,7 @@ public class Lines {
         return rows;
     }
 
-    private ArrayList<String> sliceArray(ArrayList<String> cellsList, int startingPoint, int finalPoint) {
+    private ArrayList<String> sliceArray(List<String> cellsList, int startingPoint, int finalPoint) {
         ArrayList<String> row = new ArrayList<>();
         for (int i = startingPoint; i <= finalPoint; i++) {
             row.add(cellsList.get(i));
