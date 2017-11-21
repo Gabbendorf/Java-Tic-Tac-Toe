@@ -28,20 +28,19 @@ public class GameFlow {
     }
 
     public void runGame() {
-        String startingPlayerMark = setUpPlayers();
-        gameFlow(startingPlayerMark);
-        reportFinalResult(startingPlayerMark);
+        setUpPlayers();
+        gameFlow();
+        reportFinalResult();
         startNewGameOrQuit();
     }
 
-    private String setUpPlayers() {
+    private void setUpPlayers() {
         firstPlayer = playersFactory.firstPlayer(ui);
-        String currentMark = ui.askForStarter();
         secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
-        return currentMark;
     }
 
-    private void gameFlow(String currentMark) {
+    private void gameFlow() {
+        String currentMark = ui.askForStarter();
         while (isOnGoingGame()) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, rules);
             grid.addMark(currentMark, positionChosen);
@@ -72,9 +71,9 @@ public class GameFlow {
         return players;
     }
 
-    private void reportFinalResult(String currentMark) {
+    private void reportFinalResult() {
         if (rules.isWinning(grid)) {
-            ui.declareWinner(currentMark, rules, grid);
+            ui.declareWinner(rules.winningMark(grid), rules, grid);
         } else {
             ui.declareDraw(rules, grid);
         }
