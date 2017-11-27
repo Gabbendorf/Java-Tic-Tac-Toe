@@ -24,7 +24,8 @@ public class Ui {
     }
 
     public void welcomePlayer() {
-        output.println("Welcome to tic-tac-toe");
+        clearScreen();
+        output.println("Welcome to TIC TAC TOE!");
         output.println("Are you ready to play??");
     }
 
@@ -33,42 +34,49 @@ public class Ui {
     }
 
     public String chooseOpponent() {
+        output.println("\n");
         output.println("Choose opponent type:");
-        output.println("1- human player");
-        output.println("2- smart computer.");
+        opponentOptions();
         return validOptionNumber(input.nextLine());
     }
 
     public String askForMarkType() {
+        clearScreen();
         output.println("First player: please choose a mark: X => Cross, O (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public String askForStarter() {
+        clearScreen();
         output.println("Who starts: X or O (letter)?");
-        return validMarkType(input.nextLine().toUpperCase());
+        String markType = validMarkType(input.nextLine().toUpperCase());
+        clearScreen();
+        return markType;
     }
 
-    public void promptForPosition(String mark, Lines lines, Grid grid) {
-        printGrid(lines, grid);
+    public void promptForPosition(String mark) {
         output.println(String.format("Player %s: please choose a valid position in the grid", mark));
     }
 
     public String validPosition(Grid grid, String mark, Lines lines) {
+        printGrid(lines, grid);
         String validatedPosition = validatePosition(grid, mark, lines, validInput(grid, mark, lines, input.nextLine()));
         return notOccupiedPosition(grid, validatedPosition, mark, lines);
     }
 
     public void confirmMove(String mark, String gridPosition) {
+        clearScreen();
         output.println(String.format("Player %s marked position %s.", mark, gridPosition));
     }
 
     public void declareWinner(String mark, Lines lines, Grid grid) {
+        clearScreen();
         printGrid(lines, grid);
         output.println(String.format("Player %s won!", mark));
     }
 
     public void declareDraw(Lines lines, Grid grid) {
+        clearScreen();
         printGrid(lines, grid);
         output.println("It's draw: nobody wins!");
     }
@@ -82,10 +90,17 @@ public class Ui {
         output.println("See you soon!");
     }
 
+    private void opponentOptions() {
+        output.println("1- human player");
+        output.println("2- smart computer.");
+    }
+
     private String validOptionNumber(String opponentOptionNumber) {
         if (isInvalidOptionNumber(opponentOptionNumber)) {
+            clearScreen();
             output.println("Please choose a valid option.");
-            opponentOptionNumber = chooseOpponent();
+            opponentOptions();
+            opponentOptionNumber = input.nextLine();
         }
         return opponentOptionNumber;
     }
@@ -96,6 +111,7 @@ public class Ui {
 
     private String validMarkType(String mark) {
         while (isInvalidMark(mark)) {
+            clearScreen();
             output.println("Invalid option: X => Cross or O (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
@@ -108,19 +124,22 @@ public class Ui {
 
     private String validatePosition(Grid grid, String mark, Lines lines, String usersInput) {
         while (isOutsideValidRange(usersInput, grid)) {
+            clearScreen();
             output.println("Invalid position.");
             usersInput = promptForNewInput(grid, mark, lines);
+            printGrid(lines, grid);
         }
         return usersInput;
     }
 
     private boolean isOutsideValidRange(String gridPosition, Grid grid) {
         Integer positionNumber = Integer.parseInt(gridPosition);
-        return positionNumber < 0 || positionNumber > grid.getCells().size();
+        return positionNumber <= 0 || positionNumber > grid.getCells().size();
     }
 
     private String validInput(Grid grid, String mark, Lines lines, String usersInput) {
         while (isNotNumber(usersInput)) {
+            clearScreen();
             output.println("Invalid input: position must be a number.");
             usersInput = promptForNewInput(grid, mark, lines);
         }
@@ -138,19 +157,22 @@ public class Ui {
 
     private String notOccupiedPosition(Grid grid, String validPosition, String mark, Lines lines) {
         while (!grid.isEmptyCell(validPosition)) {
+            clearScreen();
             output.println("Position already occupied.");
             validPosition = promptForNewInput(grid, mark, lines);
+            printGrid(lines, grid);
         }
         return validPosition;
     }
 
     private String promptForNewInput(Grid grid, String mark, Lines lines) {
-        promptForPosition(mark, lines, grid);
+        promptForPosition(mark);
         return validPosition(grid, mark, lines);
     }
 
     private String validAnswer(String answer) {
         if (isInvalidAnswer(answer)) {
+            clearScreen();
             output.println("Sorry, I didn't understand.");
             answer = askToPlayAgain();
         }
@@ -159,5 +181,10 @@ public class Ui {
 
     private boolean isInvalidAnswer (String answer) {
         return !answer.equals("y") && !answer.equals("n");
+    }
+
+    private void clearScreen() {
+        output.println("\033[H\033[2J");
+        output.flush();
     }
 }

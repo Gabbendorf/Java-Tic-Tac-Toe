@@ -35,7 +35,7 @@ public class UiTest {
 
         ui.welcomePlayer();
 
-        assertTrue(output.toString().contains("Welcome to tic-tac-toe"));
+        assertTrue(output.toString().contains("Welcome to TIC TAC TOE!"));
         assertTrue(output.toString().contains("Are you ready to play??"));
     }
 
@@ -114,7 +114,7 @@ public class UiTest {
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
-        ui.promptForPosition("X", lines, gridWithSize);
+        ui.promptForPosition("X");
 
         assertTrue(output.toString().contains("Player X: please choose a valid position in the grid"));
     }
