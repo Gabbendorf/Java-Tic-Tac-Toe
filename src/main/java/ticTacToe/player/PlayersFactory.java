@@ -1,6 +1,5 @@
 package ticTacToe.player;
 
-import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
 
 import java.util.HashMap;

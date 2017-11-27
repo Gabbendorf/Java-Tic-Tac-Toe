@@ -2,28 +2,25 @@ package ticTacToe.player;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.grid.Grid;
-import ticTacToe.ui.DoubleUi;
+import ticTacToe.ui.UiDouble;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class PlayersFactoryTest {
 
-    private DoubleUi doubleUi;
+    private UiDouble uiDouble;
     private PlayersFactory playersFactory;
-    private Grid grid;
 
     @Before
     public void classesInstantiations() {
-        doubleUi = new DoubleUi(null, null);
-        grid = new Grid(3);
+        uiDouble = new UiDouble(null, null);
         playersFactory = new PlayersFactory();
     }
 
     @Test
     public void createsPlayerWithChosenMark() {
-        Player firstPlayer = playersFactory.firstPlayer(doubleUi);
+        Player firstPlayer = playersFactory.firstPlayer(uiDouble);
 
         assertEquals("X", firstPlayer.getMark());
     }
