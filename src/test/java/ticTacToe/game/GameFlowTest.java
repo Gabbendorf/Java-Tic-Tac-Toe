@@ -4,12 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
+import ticTacToe.ui.UiDouble;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 public class GameFlowTest {
 
@@ -57,6 +59,19 @@ public class GameFlowTest {
         assertTrue(output.toString().contains("Player O won!"));
     }
 
+    @Test
+    public void runsGameAgainstSmartComputer() {
+        UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        Grid grid = new Grid(3);
+        Lines lines = new Lines();
+        GameFlow gameFlow = new GameFlow(ui, grid, lines);
+
+        gameFlow.runGame();
+
+        String computerMark = "O";
+        assertTrue(humanIsNotWinner(grid, lines, computerMark));
+    }
+
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
         Grid grid = new Grid(3);
@@ -68,5 +83,11 @@ public class GameFlowTest {
         ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
 
         return new Ui(new PrintStream(output), input);
+    }
+
+    private boolean humanIsNotWinner(Grid grid, Lines lines, String mark) {
+        boolean isDraw = !lines.isWinning(grid);
+        boolean computerWon = lines.winningMark(grid).equals(mark);
+        return isDraw || computerWon;
     }
 }

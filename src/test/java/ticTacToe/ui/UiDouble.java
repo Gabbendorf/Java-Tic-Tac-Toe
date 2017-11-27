@@ -7,16 +7,19 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.List;
+import java.util.Random;
 
 public class UiDouble extends Ui {
 
     public UiDouble(PrintStream output, InputStream input) {
-        super(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        super(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("2\nx\nx\nn".getBytes()));
     }
 
     @Override
     public String validPosition(Grid grid, String mark, Lines lines) {
-        return "1";
+        List<String> emptyPositions = grid.emptyPositions();
+        return emptyPositions.get(new Random().nextInt(emptyPositions.size()));
     }
 
     @Override
