@@ -4,6 +4,7 @@ plugins {
 }
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -21,3 +22,11 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'ticTacToe.GameRunner'
+    }
+}
+
+mainClassName = 'GameRunner'
