@@ -78,7 +78,7 @@ public class Grid {
         return emptyPositions().size() == cells.size();
     }
 
-    public boolean isEndedGame(Lines lines) {
+    public boolean isFinishedGame(Lines lines) {
         return allOccupiedCells() || lines.isWinning(this);
     }
 

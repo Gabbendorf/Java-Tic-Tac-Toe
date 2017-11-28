@@ -61,7 +61,7 @@ public class SmartComputer implements Player {
     }
 
     private int scoreFor(Grid gridCopy, Lines lines, String mark) {
-        if (gridCopy.isEndedGame(lines)) {
+        if (gridCopy.isFinishedGame(lines)) {
             ScoreForFinalGrid(gridCopy, lines);
         } else {
             String currentMark = switchPlayerMark(mark);

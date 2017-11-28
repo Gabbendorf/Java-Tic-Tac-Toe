@@ -130,7 +130,7 @@ public class GridTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "X", "O", "O", "X", "X", "X", "O")));
         Lines lines = new Lines();
 
-        assertTrue(grid.isEndedGame(lines));
+        assertTrue(grid.isFinishedGame(lines));
     }
 
     @Test
@@ -138,14 +138,14 @@ public class GridTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "X", "X", "O", "O", "X", "X", "O", "O")));
         Lines lines = new Lines();
 
-        assertTrue(grid.isEndedGame(lines));
+        assertTrue(grid.isFinishedGame(lines));
     }
 
     @Test
     public void knowsGameIsNotEnded() {
         Lines lines = new Lines();
 
-        assertFalse(grid.isEndedGame(lines));
+        assertFalse(grid.isFinishedGame(lines));
     }
 
     @Test

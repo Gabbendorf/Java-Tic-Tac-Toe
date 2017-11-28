@@ -41,7 +41,7 @@ public class GameFlow {
 
     private void gameFlow() {
         String currentMark = ui.askForStarter();
-        while (!grid.isEndedGame(lines)) {
+        while (!grid.isFinishedGame(lines)) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);
@@ -69,11 +69,15 @@ public class GameFlow {
     }
 
     private void startNewGameOrQuit() {
-        if (ui.askToPlayAgain().equals("y")) {
+        if (playAgain(ui.askToPlayAgain())) {
             grid.setCellsToEmpty();
             runGame();
         } else {
             ui.sayBye();
         }
+    }
+
+    private boolean playAgain(String userInput) {
+        return userInput.equals("y");
     }
 }
