@@ -11,7 +11,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class SmartComputerTest {
@@ -34,7 +36,7 @@ public class SmartComputerTest {
     }
 
     @Test
-    public void returnsBestMoveIfNotStarter() {
+    public void returnsBestMoveThatLeadsToWin() {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("1", "X", "O", "X", "O", "X", "X", "O", "9")));
         Lines lines = new Lines();
@@ -42,6 +44,39 @@ public class SmartComputerTest {
         String moveToWin = "1";
 
         assertEquals(moveToWin, computer.makeMove(ui, grid, lines));
+    }
+
+    @Test
+    public void returnsMoveThatPreventsOpponentFromWinning() {
+        Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "X", "4", "O", "6", "7", "8", "9")));
+        Lines lines = new Lines();
+
+        String moveToBlockOpponent = "8";
+
+        assertEquals(moveToBlockOpponent, computer.makeMove(ui, grid, lines));
+    }
+
+    @Test
+    public void createsForkForMultipleWinningMoves() {
+        Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "3", "4", "5", "6", "7", "8", "9")));
+        Lines lines = new Lines();
+
+        String moveToCreateWinningFork = "7";
+
+        assertEquals(moveToCreateWinningFork, computer.makeMove(ui, grid, lines));
+    }
+
+    @Test
+    public void blocksWinningForkForOpponent() {
+        Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        Grid grid = new Grid(new ArrayList<>(Arrays.asList("O", "X", "3", "4", "X", "6", "7", "8", "O")));
+        Lines lines = new Lines();
+
+        List<String> movesToBlockWinningFork = new ArrayList<>(Arrays.asList("4", "7", "8"));
+
+        assertTrue(movesToBlockWinningFork.contains(computer.makeMove(ui, grid, lines)));
     }
 
     @Test
