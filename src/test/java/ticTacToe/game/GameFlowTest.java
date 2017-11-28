@@ -86,8 +86,19 @@ public class GameFlowTest {
     }
 
     private boolean humanIsNotWinner(Grid grid, Lines lines, String mark) {
-        boolean isDraw = !lines.isWinning(grid);
-        boolean computerWon = lines.winningMark(grid).equals(mark);
-        return isDraw || computerWon;
+        boolean isDraw = grid.allOccupiedCells();
+        return isDraw || isComputerWinner(lines, grid, mark);
+    }
+
+    private boolean isComputerWinner(Lines lines, Grid grid, String computerMark) {
+        boolean verdict = false;
+        if (lines.isWinning(grid)) {
+            if (lines.winningMark(grid).equals(computerMark)) {
+                verdict = true;
+            } else {
+                verdict = false;
+            }
+        }
+        return verdict;
     }
 }
