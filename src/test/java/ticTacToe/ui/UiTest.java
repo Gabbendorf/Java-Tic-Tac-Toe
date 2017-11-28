@@ -2,6 +2,7 @@ package ticTacToe.ui;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.game.Lines;
 
@@ -54,8 +55,8 @@ public class UiTest {
     public void printsGridWithColouredMarks() {
         Ui ui = newUiWith("input");
         Grid grid = new Grid(3);
-        grid.addMark("O", "2");
-        grid.addMark("X", "1");
+        grid.addMark(NOUGHT, "2");
+        grid.addMark(CROSS, "1");
 
         ui.printGrid(new Lines(), grid);
 
@@ -89,47 +90,47 @@ public class UiTest {
     public void asksForMarkType() {
         Ui ui = newUiWith("X");
 
-        String markType = ui.askForMarkType();
+        Mark markType = ui.askForMarkType();
 
         assertTrue(output.toString().contains("First player: please choose a mark: " + BLUE_X.sign + " => Cross, " + RED_O.sign + " (letter) => Nought"));
-        assertEquals("X", markType);
+        assertEquals(CROSS, markType);
     }
 
     @Test
     public void asksToRepeatMarkType() {
         Ui ui = newUiWith("0\no");
 
-        String markType = ui.askForMarkType();
+        Mark markType = ui.askForMarkType();
 
         assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
-        assertEquals("O", markType);
+        assertEquals(NOUGHT, markType);
     }
 
     @Test
     public void asksWhoStarts() {
         Ui ui = newUiWith("x");
 
-        String startingMark = ui.askForStarter();
+        Mark startingMark = ui.askForStarter();
 
         assertTrue(output.toString().contains("Who starts: " + BLUE_X.sign + " or " + RED_O.sign + " (letter)?"));
-        assertEquals("X", startingMark);
+        assertEquals(CROSS, startingMark);
     }
 
     @Test
     public void asksForCorrectStarter() {
         Ui ui = newUiWith("me\nx");
 
-        String startingMark = ui.askForStarter();
+        Mark startingMark = ui.askForStarter();
 
         assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
-        assertEquals("X", startingMark);
+        assertEquals(CROSS, startingMark);
     }
 
     @Test
     public void asksForPositionForMove() {
         Ui ui = newUiWith("input");
 
-        ui.promptForPosition("X");
+        ui.promptForPosition(CROSS);
 
         assertTrue(output.toString().contains("Player X: please choose a valid position in the grid"));
     }
@@ -138,7 +139,7 @@ public class UiTest {
     public void returnsValidPosition() {
         Ui ui = newUiWith("1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
 
         assertEquals("1", gridPosition);
     }
@@ -147,7 +148,7 @@ public class UiTest {
     public void asksForNotOccupiedPosition() {
         Ui ui = newUiWith("1\n2");
 
-        String gridPosition = ui.validPosition(gridWithCells, "X", lines);
+        String gridPosition = ui.validPosition(gridWithCells, CROSS , lines);
 
         assertTrue(output.toString().contains("Position already occupied."));
         assertEquals("2", gridPosition);
@@ -157,7 +158,7 @@ public class UiTest {
     public void asksForValidPosition() {
         Ui ui = newUiWith("10\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
 
         assertTrue(output.toString().contains("Invalid position."));
         assertEquals("1", gridPosition);
@@ -167,7 +168,7 @@ public class UiTest {
     public void asksForNumberAsInput() {
         Ui ui = newUiWith("d\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, "X", lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
 
         assertTrue(output.toString().contains("Invalid input: position must be a number."));
         assertEquals("1", gridPosition);
@@ -177,7 +178,7 @@ public class UiTest {
     public void returnsValidInputAfterAllChecks() {
         Ui ui = newUiWith("h\n100\nh\n1");
 
-        String validPosition = ui.validPosition(gridWithSize, "X", lines);
+        String validPosition = ui.validPosition(gridWithSize, CROSS, lines);
 
         assertEquals("1", validPosition);
     }
@@ -186,7 +187,7 @@ public class UiTest {
     public void confirmsMove() {
         Ui ui = newUiWith("input");
 
-        ui.confirmMove("X", "1");
+        ui.confirmMove(CROSS, "1");
 
         assertTrue(output.toString().contains("Player X marked position 1."));
     }
@@ -195,7 +196,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner("X", lines, gridWithSize);
+        ui.declareWinner(CROSS.sign, lines, gridWithSize);
 
         assertTrue(output.toString().contains("Player X won!"));
     }

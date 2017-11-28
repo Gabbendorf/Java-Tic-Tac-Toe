@@ -1,6 +1,7 @@
 package ticTacToe.grid;
 
 import ticTacToe.game.Lines;
+import ticTacToe.game.Mark;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -24,8 +25,8 @@ public class Grid {
         this.size = (int) Math.sqrt(cells.size());
     }
 
-    public void addMark(String mark, String cellNumber) {
-        cells.set(positionFor(cellNumber), mark);
+    public void addMark(Mark mark, String cellNumber) {
+        cells.set(positionFor(cellNumber), mark.sign);
     }
 
     public boolean isEmptyCell(String cellNumber) {
@@ -64,7 +65,7 @@ public class Grid {
         return emptyPositions;
     }
 
-    public List<Grid> makeCopiesOfGridWith(String mark) {
+    public List<Grid> makeCopiesOfGridWith(Mark mark) {
         List<Grid> gridCopies = new ArrayList<>();
         for (String cell : emptyPositions()) {
             Grid gridCopy = copyOfGrid();

@@ -31,7 +31,7 @@ public class GridTest {
 
     @Test
     public void addsMarkNoughtToCell() {
-        grid.addMark(NOUGHT.sign, "1");
+        grid.addMark(NOUGHT, "1");
 
         String addedMark = grid.getCells().get(0);
 
@@ -40,7 +40,7 @@ public class GridTest {
 
     @Test
     public void addsMarkCrossToCell() {
-        grid.addMark(CROSS.sign, "1");
+        grid.addMark(CROSS, "1");
 
         String addedMark = grid.getCells().get(0);
 
@@ -87,7 +87,7 @@ public class GridTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "O", "4")));
 
         Grid copyOfGrid = grid.copyOfGrid();
-        grid.addMark("X", "2");
+        grid.addMark(CROSS, "2");
 
         assertFalse(grid.getCells().equals(copyOfGrid.getCells()));
     }
@@ -105,7 +105,7 @@ public class GridTest {
     public void returnsListOfGridsWithNewMarkAddedToCells() {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("1", "X", "3", "O", "X", "6")));
 
-        List<Grid> gridList = grid.makeCopiesOfGridWith("X");
+        List<Grid> gridList = grid.makeCopiesOfGridWith(CROSS);
 
         assertEquals(3, gridList.size());
         assertFalse(cells(gridList, 0).equals(cells(gridList, 1)));
@@ -150,7 +150,7 @@ public class GridTest {
 
     @Test
     public void setCellsToEmptyAgain() {
-        grid.addMark("x", "1");
+        grid.addMark(CROSS, "1");
 
         grid.setCellsToEmpty();
 

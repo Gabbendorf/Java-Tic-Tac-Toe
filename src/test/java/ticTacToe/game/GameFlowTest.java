@@ -23,7 +23,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameThatIsDraw() {
-        GameFlow gameFlow = newGameFlow("1\nx\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
+        GameFlow gameFlow = newGameFlow("1\nX\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
 
         gameFlow.runGame();
 

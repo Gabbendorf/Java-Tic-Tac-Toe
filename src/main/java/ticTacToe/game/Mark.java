@@ -1,5 +1,8 @@
 package ticTacToe.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum Mark {
 
     NOUGHT("O"),
@@ -13,10 +16,25 @@ public enum Mark {
 
     public String sign;
 
-    public static String switchPlayerMark(String currentMark) {
-        if (currentMark.equals(CROSS.sign)) {
-            return NOUGHT.sign;
+    public static boolean isValidMark(String markChosen) {
+        List<String> validMarks = new ArrayList<>();
+        validMarks.add(NOUGHT.sign);
+        validMarks.add(CROSS.sign);
+        return validMarks.contains(markChosen);
+    }
+
+    public static Mark createMark(String markChosen) {
+        if (markChosen.equals(NOUGHT.sign)) {
+            return NOUGHT;
+        } else {
+            return CROSS;
         }
-        return CROSS.sign;
+    }
+
+    public static Mark switchPlayerMark(Mark currentMark) {
+        if (currentMark == CROSS) {
+            return NOUGHT;
+        }
+        return CROSS;
     }
 }
