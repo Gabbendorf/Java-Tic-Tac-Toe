@@ -26,7 +26,6 @@ public class SmartComputer implements Player {
         } else {
             move.append(bestMovePosition(grid, lines));
         }
-        ui.confirmMove(mark, move.toString());
         return move.toString();
     }
 

@@ -44,6 +44,7 @@ public class GameFlow {
         while (!grid.isEndedGame(lines)) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
+            ui.confirmMove(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
     }

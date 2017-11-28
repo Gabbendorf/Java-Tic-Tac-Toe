@@ -14,9 +14,7 @@ public class HumanPlayer implements Player {
 
     public String makeMove(Ui ui, Grid grid, Lines lines) {
         ui.promptForPosition(mark, lines, grid);
-        String positionChosen = ui.validPosition(grid, mark, lines);
-        ui.confirmMove(mark, positionChosen);
-        return positionChosen;
+        return ui.validPosition(grid, mark, lines);
     }
 
     public String getMark() {
