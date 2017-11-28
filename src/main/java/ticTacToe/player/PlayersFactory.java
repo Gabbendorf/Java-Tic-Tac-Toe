@@ -14,10 +14,10 @@ public class PlayersFactory {
     }
 
     public Player secondPlayer(String opponentOptionNumber, String firstPlayerMark) {
-        if (firstPlayerMark.equals(CROSS.mark)) {
-            return opponentOptions(NOUGHT.mark).get(opponentOptionNumber);
+        if (firstPlayerMark.equals(CROSS.sign)) {
+            return opponentOptions(NOUGHT.sign).get(opponentOptionNumber);
         }
-        return opponentOptions(CROSS.mark).get(opponentOptionNumber);
+        return opponentOptions(CROSS.sign).get(opponentOptionNumber);
     }
 
     private Map<String, Player> opponentOptions(String mark) {

@@ -103,6 +103,6 @@ public class Grid {
     }
 
     private boolean cellDifferentFromMark(String cell) {
-        return !cell.equals(CROSS.mark) && !cell.equals(NOUGHT.mark);
+        return !cell.equals(CROSS.sign) && !cell.equals(NOUGHT.sign);
     }
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static ticTacToe.game.Mark.*;
 
 public class UiTest {
 
@@ -43,9 +44,23 @@ public class UiTest {
     public void printsGrid() {
         Ui ui = newUiWith("input");
 
-        ui.printGrid(new Lines(), new Grid(3));
+        Grid grid = new Grid(3);
+        ui.printGrid(new Lines(), grid);
 
         assertTrue(output.toString().contains("| 1 | 2 | 3 | \n | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
+    }
+
+    @Test
+    public void printsGridWithColouredMarks() {
+        Ui ui = newUiWith("input");
+        Grid grid = new Grid(3);
+        grid.addMark("O", "2");
+        grid.addMark("X", "1");
+
+        ui.printGrid(new Lines(), grid);
+
+        assertTrue(output.toString().contains("| " + BLUE_X.sign + " | " + RED_O.sign + " | 3 | \n" +
+                " | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
     }
 
     @Test
@@ -76,7 +91,7 @@ public class UiTest {
 
         String markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: X => Cross, O (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + BLUE_X.sign + " => Cross, " + RED_O.sign + " (letter) => Nought"));
         assertEquals("X", markType);
     }
 
@@ -86,7 +101,7 @@ public class UiTest {
 
         String markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: X => Cross or O (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
         assertEquals("O", markType);
     }
 
@@ -96,7 +111,7 @@ public class UiTest {
 
         String startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: X or O (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + BLUE_X.sign + " or " + RED_O.sign + " (letter)?"));
         assertEquals("X", startingMark);
     }
 
@@ -106,7 +121,7 @@ public class UiTest {
 
         String startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: X => Cross or O (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
         assertEquals("X", startingMark);
     }
 

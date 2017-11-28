@@ -31,20 +31,20 @@ public class GridTest {
 
     @Test
     public void addsMarkNoughtToCell() {
-        grid.addMark(NOUGHT.mark, "1");
+        grid.addMark(NOUGHT.sign, "1");
 
         String addedMark = grid.getCells().get(0);
 
-        assertEquals(NOUGHT.mark, addedMark);
+        assertEquals(NOUGHT.sign, addedMark);
     }
 
     @Test
     public void addsMarkCrossToCell() {
-        grid.addMark(CROSS.mark, "1");
+        grid.addMark(CROSS.sign, "1");
 
         String addedMark = grid.getCells().get(0);
 
-        assertEquals(CROSS.mark, addedMark);
+        assertEquals(CROSS.sign, addedMark);
     }
 
     @Test

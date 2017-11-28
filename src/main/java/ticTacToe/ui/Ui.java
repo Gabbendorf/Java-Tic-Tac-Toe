@@ -6,10 +6,11 @@ import ticTacToe.game.Lines;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-import static ticTacToe.game.Mark.CROSS;
-import static ticTacToe.game.Mark.NOUGHT;
+import static ticTacToe.game.Mark.*;
 
 public class Ui {
 
@@ -30,7 +31,8 @@ public class Ui {
     }
 
     public void printGrid(Lines lines, Grid grid) {
-        output.println(gridPreparer.prepareGridForPrinting(lines, grid));
+        List<ArrayList<String>> rowsWithColours = gridPreparer.rowsWithColours(lines.getRows(grid));
+        output.println(gridPreparer.prepareGridForPrinting(rowsWithColours));
     }
 
     public String chooseOpponent() {
@@ -42,13 +44,13 @@ public class Ui {
 
     public String askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: X => Cross, O (letter) => Nought");
+        output.println("First player: please choose a mark: " + BLUE_X.sign + " => Cross, " + RED_O.sign + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public String askForStarter() {
         clearScreen();
-        output.println("Who starts: X or O (letter)?");
+        output.println("Who starts: " + BLUE_X.sign + " or " + RED_O.sign + " (letter)?");
         String markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -112,7 +114,7 @@ public class Ui {
     private String validMarkType(String mark) {
         while (isInvalidMark(mark)) {
             clearScreen();
-            output.println("Invalid option: X => Cross or O (letter) => Nought");
+            output.println("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return mark;
