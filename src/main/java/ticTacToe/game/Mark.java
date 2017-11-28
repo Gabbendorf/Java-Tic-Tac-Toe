@@ -6,15 +6,13 @@ import java.util.List;
 public enum Mark {
 
     NOUGHT("O"),
-    CROSS("X"),
-    RED_O("\u001B[31mO\u001b[0m"),
-    BLUE_X("\u001b[34mX\u001b[0m");
+    CROSS("X");
 
     Mark(String mark) {
         sign = mark;
    }
 
-    public String sign;
+    public final String sign;
 
     public static boolean isValidMark(String markChosen) {
         List<String> validMarks = new ArrayList<>();

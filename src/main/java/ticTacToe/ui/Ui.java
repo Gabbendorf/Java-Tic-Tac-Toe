@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static ticTacToe.game.Mark.*;
-
 public class Ui {
 
     private final GridPreparer gridPreparer;
@@ -45,13 +43,13 @@ public class Ui {
 
     public Mark askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: " + BLUE_X.sign + " => Cross, " + RED_O.sign + " (letter) => Nought");
+        output.println("First player: please choose a mark: " + GridPreparer.blue_X + " => Cross, " + GridPreparer.red_O + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public Mark askForStarter() {
         clearScreen();
-        output.println("Who starts: " + BLUE_X.sign + " or " + RED_O.sign + " (letter)?");
+        output.println("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?");
         Mark markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -115,7 +113,7 @@ public class Ui {
     private Mark validMarkType(String mark) {
         while (!Mark.isValidMark(mark)) {
             clearScreen();
-            output.println("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought");
+            output.println("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return Mark.createMark(mark);

@@ -16,7 +16,7 @@ public class MarkTest {
     }
 
     @Test
-    public void returnsTrueForValidMarkForNough() {
+    public void returnsTrueForValidMarkForNought() {
         assertTrue(Mark.isValidMark("O"));
     }
 

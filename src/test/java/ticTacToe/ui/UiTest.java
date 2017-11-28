@@ -5,6 +5,7 @@ import org.junit.Test;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.game.Lines;
+import ticTacToe.grid.GridPreparer;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -48,8 +49,13 @@ public class UiTest {
         Grid grid = new Grid(3);
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n | 1 | 2 | 3 | \n | --------- | \n | 4 | 5 | 6 | \n" +
-                " | --------- | \n | 7 | 8 | 9 | \n | --------- |"));
+        assertTrue(output.toString().contains("| --------- | \n " +
+                                              "| 1 | 2 | 3 | \n " +
+                                              "| --------- | \n " +
+                                              "| 4 | 5 | 6 | \n " +
+                                              "| --------- | \n " +
+                                              "| 7 | 8 | 9 | \n " +
+                                              "| --------- |"));
     }
 
     @Test
@@ -61,8 +67,13 @@ public class UiTest {
 
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n | " + BLUE_X.sign + " | " + RED_O.sign + " | 3 | \n" +
-                " | --------- | \n | 4 | 5 | 6 | \n | --------- | \n | 7 | 8 | 9 | \n | --------- |"));
+        assertTrue(output.toString().contains("| --------- | \n | " +
+                                              GridPreparer.blue_X + " | " + GridPreparer.red_O + " | 3 | \n" +
+                                             " | --------- | \n " +
+                                              "| 4 | 5 | 6 | \n " +
+                                              "| --------- | \n " +
+                                              "| 7 | 8 | 9 | \n " +
+                                              "| --------- |"));
     }
 
     @Test
@@ -93,7 +104,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: " + BLUE_X.sign + " => Cross, " + RED_O.sign + " (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + GridPreparer.blue_X +
+                                              " => Cross, " + GridPreparer.red_O + " (letter) => Nought"));
         assertEquals(CROSS, markType);
     }
 
@@ -103,7 +115,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or "
+                                              + GridPreparer.red_O + " (letter) => Nought"));
         assertEquals(NOUGHT, markType);
     }
 
@@ -113,7 +126,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: " + BLUE_X.sign + " or " + RED_O.sign + " (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -123,7 +136,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: " + BLUE_X.sign + " => Cross or " + RED_O.sign + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought"));
         assertEquals(CROSS, startingMark);
     }
 

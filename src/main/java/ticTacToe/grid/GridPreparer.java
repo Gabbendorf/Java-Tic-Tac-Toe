@@ -9,7 +9,8 @@ public class GridPreparer {
 
     private static final String NEW_LINE = "\n";
     private static final String LINE = "---------";
-
+    public static final String red_O =("\u001B[31mO\u001b[0m");
+    public static final String blue_X = ("\u001b[34mX\u001b[0m");
 
     public String prepareGridForPrinting(List<ArrayList<String>> rows) {
         List<String> printableList = new ArrayList<>();
@@ -38,9 +39,9 @@ public class GridPreparer {
     private String addColorTo(String cell) {
         String colouredMark;
         if (cell.equals(CROSS.sign)) {
-            colouredMark = BLUE_X.sign;
+            colouredMark = blue_X;
         } else if (cell.equals(NOUGHT.sign)){
-            colouredMark = RED_O.sign;
+            colouredMark = red_O;
         } else {
             colouredMark = cell;
         }
