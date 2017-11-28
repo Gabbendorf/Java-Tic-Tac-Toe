@@ -48,7 +48,8 @@ public class UiTest {
         Grid grid = new Grid(3);
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| 1 | 2 | 3 | \n | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
+        assertTrue(output.toString().contains("| --------- | \n | 1 | 2 | 3 | \n | --------- | \n | 4 | 5 | 6 | \n" +
+                " | --------- | \n | 7 | 8 | 9 | \n | --------- |"));
     }
 
     @Test
@@ -60,8 +61,8 @@ public class UiTest {
 
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| " + BLUE_X.sign + " | " + RED_O.sign + " | 3 | \n" +
-                " | _________ | \n | 4 | 5 | 6 | \n | _________ | \n | 7 | 8 | 9 | \n | _________ |"));
+        assertTrue(output.toString().contains("| --------- | \n | " + BLUE_X.sign + " | " + RED_O.sign + " | 3 | \n" +
+                " | --------- | \n | 4 | 5 | 6 | \n | --------- | \n | 7 | 8 | 9 | \n | --------- |"));
     }
 
     @Test

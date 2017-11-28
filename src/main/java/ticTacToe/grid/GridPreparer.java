@@ -8,11 +8,13 @@ import static ticTacToe.game.Mark.*;
 public class GridPreparer {
 
     private static final String NEW_LINE = "\n";
-    private static final String LINE = "_________";
+    private static final String LINE = "---------";
 
 
     public String prepareGridForPrinting(List<ArrayList<String>> rows) {
         List<String> printableList = new ArrayList<>();
+        printableList.add(NEW_LINE);
+        printableList.add(LINE);
         printableList.add(NEW_LINE);
         for (List<String> row : rows) {
             printableList.addAll(row);
