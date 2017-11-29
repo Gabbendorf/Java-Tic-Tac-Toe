@@ -30,12 +30,12 @@ public class Grid {
     }
 
     public boolean isEmptyCell(String cellNumber) {
-        return cellDifferentFromMark(cells.get(positionFor(cellNumber)));
+        return !Mark.isValidMark(cells.get(positionFor(cellNumber)));
     }
 
     public boolean allOccupiedCells() {
         for (String cell: cells) {
-            if (cellDifferentFromMark(cell)) {
+            if (!Mark.isValidMark(cell)) {
                 return false;
             }
         }
@@ -58,7 +58,7 @@ public class Grid {
     public List<String> emptyPositions() {
         List<String> emptyPositions = new ArrayList<>();
         for (String position : cells) {
-            if (cellDifferentFromMark(position)) {
+            if (!Mark.isValidMark(position)) {
                emptyPositions.add(position);
             }
         }
@@ -101,9 +101,5 @@ public class Grid {
 
     private int positionFor(String cellNumber) {
         return Integer.parseInt(cellNumber) - 1;
-    }
-
-    private boolean cellDifferentFromMark(String cell) {
-        return !cell.equals(CROSS.sign) && !cell.equals(NOUGHT.sign);
     }
 }
