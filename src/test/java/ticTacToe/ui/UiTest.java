@@ -49,6 +49,28 @@ public class UiTest {
     }
 
     @Test
+    public void asksForOpponentTypeNumber() {
+        Ui ui = newUiWith("1");
+
+        String opponentOptionNumber = ui.chooseOpponent();
+
+        assertTrue(output.toString().contains("Choose opponent type:"));
+        assertTrue(output.toString().contains("1- human player"));
+        assertTrue(output.toString().contains("2- smart computer."));
+        assertEquals("1", opponentOptionNumber);
+    }
+
+    @Test
+    public void asksForValidOpponentTypeNumber() {
+        Ui ui = newUiWith("3\nd\n1");
+
+        String validOpponentNumber = ui.chooseOpponent();
+
+        assertTrue(output.toString().contains("Please choose a valid option."));
+        assertEquals("1", validOpponentNumber);
+    }
+
+    @Test
     public void asksForMarkType() {
         Ui ui = newUiWith("X");
 

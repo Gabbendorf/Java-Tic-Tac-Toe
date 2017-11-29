@@ -9,4 +9,11 @@ public enum Mark {
    }
 
     public String mark;
+
+    public static String switchPlayerMark(String currentMark) {
+        if (currentMark.equals(CROSS.mark)) {
+            return NOUGHT.mark;
+        }
+        return CROSS.mark;
+    }
 }

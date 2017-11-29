@@ -1,8 +1,8 @@
 package ticTacToe.grid;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import ticTacToe.game.Lines;
+
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
@@ -47,6 +47,39 @@ public class Grid {
 
     public int getSize() {
         return size;
+    }
+
+    public Grid copyOfGrid() {
+        List<String> newCells = new ArrayList<>(cells);
+        return new Grid(newCells);
+    }
+
+    public List<String> emptyPositions() {
+        List<String> emptyPositions = new ArrayList<>();
+        for (String position : cells) {
+            if (cellDifferentFromMark(position)) {
+               emptyPositions.add(position);
+            }
+        }
+        return emptyPositions;
+    }
+
+    public List<Grid> makeCopiesOfGridWith(String mark) {
+        List<Grid> gridCopies = new ArrayList<>();
+        for (String cell : emptyPositions()) {
+            Grid gridCopy = copyOfGrid();
+            gridCopy.addMark(mark, cell);
+            gridCopies.add(gridCopy);
+        }
+        return gridCopies;
+    }
+
+    public boolean isAllEmpty() {
+        return emptyPositions().size() == cells.size();
+    }
+
+    public boolean isFinishedGame(Lines lines) {
+        return allOccupiedCells() || lines.isWinning(this);
     }
 
     public void setCellsToEmpty() {

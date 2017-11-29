@@ -7,8 +7,7 @@ import ticTacToe.ui.Ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ticTacToe.game.Mark.*;
-import static ticTacToe.game.Mark.NOUGHT;
+import static ticTacToe.game.Mark.switchPlayerMark;
 
 public class GameFlow {
 
@@ -35,33 +34,23 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
+        String opponentOptionNumber = ui.chooseOpponent();
         firstPlayer = playersFactory.firstPlayer(ui);
-        secondPlayer = playersFactory.secondPlayer(firstPlayer.getMark());
+        secondPlayer = playersFactory.secondPlayer(opponentOptionNumber, firstPlayer.getMark());
     }
 
     private void gameFlow() {
         String currentMark = ui.askForStarter();
-        while (isOnGoingGame()) {
+        while (!grid.isFinishedGame(lines)) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
+            ui.confirmMove(currentMark, positionChosen);
             currentMark = switchPlayerMark(currentMark);
         }
     }
 
-    private boolean isOnGoingGame() {
-        return !grid.allOccupiedCells() && !lines.isWinning(grid);
-    }
-
     private Player currentPlayer(String startingMark) {
         return players().get(startingMark);
-    }
-
-    private String switchPlayerMark(String currentMark) {
-       if (currentMark.equals(CROSS.mark)) {
-           return NOUGHT.mark;
-       } else {
-           return CROSS.mark;
-       }
     }
 
     private Map<String, Player> players() {
@@ -80,12 +69,15 @@ public class GameFlow {
     }
 
     private void startNewGameOrQuit() {
-        String answer = ui.askToPlayAgain();
-        if (answer.equals("y")) {
+        if (playAgain(ui.askToPlayAgain())) {
             grid.setCellsToEmpty();
             runGame();
         } else {
             ui.sayBye();
         }
+    }
+
+    private boolean playAgain(String userInput) {
+        return userInput.equals("y");
     }
 }

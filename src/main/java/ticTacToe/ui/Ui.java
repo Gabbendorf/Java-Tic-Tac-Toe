@@ -32,16 +32,21 @@ public class Ui {
         output.println(gridPreparer.prepareGridForPrinting(lines, grid));
     }
 
+    public String chooseOpponent() {
+        output.println("Choose opponent type:");
+        output.println("1- human player");
+        output.println("2- smart computer.");
+        return validOptionNumber(input.nextLine());
+    }
+
     public String askForMarkType() {
         output.println("First player: please choose a mark: X => Cross, O (letter) => Nought");
-        String mark = input.nextLine().toUpperCase();
-        return validMarkType(mark);
+        return validMarkType(input.nextLine().toUpperCase());
     }
 
     public String askForStarter() {
         output.println("Who starts: X or O (letter)?");
-        String startingMark = input.nextLine().toUpperCase();
-        return validMarkType(startingMark);
+        return validMarkType(input.nextLine().toUpperCase());
     }
 
     public void promptForPosition(String mark, Lines lines, Grid grid) {
@@ -70,24 +75,35 @@ public class Ui {
 
     public String askToPlayAgain() {
         output.println("New game? y/n");
-        String answer = input.nextLine().toLowerCase();
-        if (!answer.equals("y") && !answer.equals("n")) {
-            output.println("Sorry, I didn't understand.");
-            answer = askToPlayAgain();
-        }
-        return answer;
+        return validAnswer(input.nextLine().toLowerCase());
     }
 
     public void sayBye() {
         output.println("See you soon!");
     }
 
+    private String validOptionNumber(String opponentOptionNumber) {
+        if (isInvalidOptionNumber(opponentOptionNumber)) {
+            output.println("Please choose a valid option.");
+            opponentOptionNumber = chooseOpponent();
+        }
+        return opponentOptionNumber;
+    }
+
+    private boolean isInvalidOptionNumber(String opponentOptionNumber) {
+        return !opponentOptionNumber.equals("1") && !opponentOptionNumber.equals("2");
+    }
+
     private String validMarkType(String mark) {
-        while (!CROSS.mark.equals(mark) && !NOUGHT.mark.equals(mark)) {
+        while (isInvalidMark(mark)) {
             output.println("Invalid option: X => Cross or O (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return mark;
+    }
+
+    private boolean isInvalidMark(String mark) {
+        return !CROSS.mark.equals(mark) && !NOUGHT.mark.equals(mark);
     }
 
     private String validatePosition(Grid grid, String mark, Lines lines, String usersInput) {
@@ -131,5 +147,17 @@ public class Ui {
     private String promptForNewInput(Grid grid, String mark, Lines lines) {
         promptForPosition(mark, lines, grid);
         return validPosition(grid, mark, lines);
+    }
+
+    private String validAnswer(String answer) {
+        if (isInvalidAnswer(answer)) {
+            output.println("Sorry, I didn't understand.");
+            answer = askToPlayAgain();
+        }
+        return answer;
+    }
+
+    private boolean isInvalidAnswer (String answer) {
+        return !answer.equals("y") && !answer.equals("n");
     }
 }
