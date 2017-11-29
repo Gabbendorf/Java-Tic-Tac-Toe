@@ -12,12 +12,7 @@ public enum Mark {
     public final String sign;
 
     public static boolean isValidMark(String markChosen) {
-        for (Mark mark : Mark.values()) {
-            if (mark.sign.equals(markChosen)) {
-                return true;
-            }
-        }
-        return false;
+        return markChosen.equals(NOUGHT.sign) || markChosen.equals(CROSS.sign);
     }
 
     public static Mark createMark(String markChosen) {
