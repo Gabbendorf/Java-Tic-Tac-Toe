@@ -70,10 +70,10 @@ public class Ui {
         output.println(String.format("Player %s marked position %s.", mark.sign, gridPosition));
     }
 
-    public void declareWinner(String  mark, Lines lines, Grid grid) {
+    public void declareWinner(Mark mark, Lines lines, Grid grid) {
         clearScreen();
         printGrid(lines, grid);
-        output.println(String.format("Player %s won!", mark));
+        output.println(String.format("Player %s won!", mark.sign));
     }
 
     public void declareDraw(Lines lines, Grid grid) {

@@ -74,7 +74,7 @@ public class SmartComputer implements Player {
 
     private void ScoreForFinalGrid(Grid gridCopy, Lines lines) {
         if (lines.isWinning(gridCopy)) {
-            if (lines.winningMark(gridCopy).equals(mark.sign)) {
+            if (lines.winningMark(gridCopy).equals(mark)) {
                 score = 1;
             } else {
                 score = -1;

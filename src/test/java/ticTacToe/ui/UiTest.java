@@ -210,7 +210,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner(CROSS.sign, lines, gridWithSize);
+        ui.declareWinner(CROSS, lines, gridWithSize);
 
         assertTrue(output.toString().contains("Player X won!"));
     }

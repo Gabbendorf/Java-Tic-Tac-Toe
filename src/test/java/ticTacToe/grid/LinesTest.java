@@ -12,6 +12,7 @@ import static java.util.Arrays.asList;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static ticTacToe.game.Mark.CROSS;
 
 public class LinesTest {
 
@@ -42,7 +43,7 @@ public class LinesTest {
         Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "2", "3", "4", "X", "6", "7", "8", "X")));
         Lines lines = new Lines();
 
-        assertEquals("X", lines.winningMark(grid));
+        assertEquals(CROSS, lines.winningMark(grid));
     }
 
     @Test

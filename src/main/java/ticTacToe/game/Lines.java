@@ -11,8 +11,8 @@ public class Lines {
         return !winningLine(grid).isEmpty();
     }
 
-    public String winningMark(Grid grid) {
-        return (String) winningLine(grid).get(0).get(0);
+    public Mark winningMark(Grid grid) {
+        return Mark.createMark((String) winningLine(grid).get(0).get(0));
     }
 
     public List<ArrayList<String>> getRows(Grid grid) {

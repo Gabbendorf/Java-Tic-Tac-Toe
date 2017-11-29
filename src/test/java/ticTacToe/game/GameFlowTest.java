@@ -11,6 +11,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static junit.framework.TestCase.assertTrue;
+import static ticTacToe.game.Mark.NOUGHT;
 
 public class GameFlowTest {
 
@@ -67,7 +68,7 @@ public class GameFlowTest {
 
         gameFlow.runGame();
 
-        String computerMark = "O";
+        Mark computerMark = NOUGHT;
         assertTrue(humanIsNotWinner(grid, lines, computerMark));
     }
 
@@ -84,12 +85,12 @@ public class GameFlowTest {
         return new Ui(new PrintStream(output), input);
     }
 
-    private boolean humanIsNotWinner(Grid grid, Lines lines, String mark) {
+    private boolean humanIsNotWinner(Grid grid, Lines lines, Mark mark) {
         boolean isDraw = grid.allOccupiedCells();
         return isDraw || isComputerWinner(lines, grid, mark);
     }
 
-    private boolean isComputerWinner(Lines lines, Grid grid, String computerMark) {
+    private boolean isComputerWinner(Lines lines, Grid grid, Mark computerMark) {
         boolean verdict = false;
         if (lines.isWinning(grid)) {
             if (lines.winningMark(grid).equals(computerMark)) {
