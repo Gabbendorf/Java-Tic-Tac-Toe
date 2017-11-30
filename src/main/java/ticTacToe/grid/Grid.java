@@ -72,6 +72,10 @@ public class Grid {
         return gridCopies;
     }
 
+    public  boolean isInsideCellsRange(String positionChosen) {
+        return positionFor(positionChosen) >= 0 && positionFor(positionChosen) < cells.size();
+    }
+
     public boolean isAllEmpty() {
         return emptyPositions().size() == cells.size();
     }

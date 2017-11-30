@@ -97,7 +97,7 @@ public class Ui {
     }
 
     private String validGameOption(String userInput) {
-        while (invalidOption(userInput)) {
+        while (isInvalidGameOption(userInput)) {
             clearScreen();
             output.println("Wrong option, please choose a valid game option:");
             gameTypeOptions();
@@ -106,7 +106,7 @@ public class Ui {
         return userInput;
     }
 
-    private boolean invalidOption(String userInput) {
+    private boolean isInvalidGameOption(String userInput) {
         return !userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3");
     }
 
@@ -120,7 +120,7 @@ public class Ui {
     }
 
     private String validatePosition(Grid grid, Mark mark, Lines lines, String usersInput) {
-        while (isOutsideValidRange(usersInput, grid)) {
+        while (!grid.isInsideCellsRange(usersInput)) {
             clearScreen();
             output.println("Invalid position.");
             printGrid(lines, grid);
@@ -128,11 +128,6 @@ public class Ui {
             printGrid(lines, grid);
         }
         return usersInput;
-    }
-
-    private boolean isOutsideValidRange(String gridPosition, Grid grid) {
-        Integer positionNumber = Integer.parseInt(gridPosition);
-        return positionNumber <= 0 || positionNumber > grid.getCells().size();
     }
 
     private String validInput(Grid grid, Mark mark, Lines lines, String usersInput) {

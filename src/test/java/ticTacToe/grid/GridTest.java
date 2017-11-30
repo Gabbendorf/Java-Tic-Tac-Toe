@@ -112,6 +112,16 @@ public class GridTest {
     }
 
     @Test
+    public void returnsTrueForCellNumberInsideValidRange() {
+        assertTrue(grid.isInsideCellsRange("9"));
+    }
+
+    @Test
+    public void returnsFalseForCellNumberOutsideValidRange() {
+        assertFalse(grid.isInsideCellsRange("0"));
+    }
+
+    @Test
     public void returnsTrueIfNewGridWithAllEmptyCells() {
         assertTrue(grid.isAllEmpty());
     }
