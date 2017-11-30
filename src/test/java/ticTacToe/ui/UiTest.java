@@ -80,7 +80,7 @@ public class UiTest {
     public void asksForGameTypeOption() {
         Ui ui = newUiWith("1");
 
-        String gameTypeOption = ui.chooseGameType();
+        String gameTypeOption = ui.chooseGameOption();
 
         assertTrue(output.toString().contains("Choose game option:"));
         assertTrue(output.toString().contains("1- Human Player vs Human Player"));
@@ -93,7 +93,7 @@ public class UiTest {
     public void asksForCorrectInputForGameType() {
         Ui ui = newUiWith("n\n5\n3");
 
-        String validGameTypeOption = ui.chooseGameType();
+        String validGameTypeOption = ui.chooseGameOption();
 
         assertTrue(output.toString().contains("Wrong option, please choose a valid game option:"));
         assertEquals("3", validGameTypeOption);
@@ -211,7 +211,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner(CROSS, lines, gridWithSize);
+        ui.declareWinner(CROSS);
 
         assertTrue(output.toString().contains("Player X won!"));
     }
@@ -220,7 +220,7 @@ public class UiTest {
     public void announcesDraw() {
         Ui ui = newUiWith("input");
 
-        ui.declareDraw(lines, gridWithSize);
+        ui.declareDraw();
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
     }

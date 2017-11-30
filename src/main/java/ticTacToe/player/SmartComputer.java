@@ -25,6 +25,7 @@ public class SmartComputer implements Player {
         } else {
             move.append(bestMovePosition(grid, lines));
         }
+        slowDown();
         return move.toString();
     }
 
@@ -87,6 +88,14 @@ public class SmartComputer implements Player {
             score = Collections.max(gridsWithScores.keySet());
         } else {
             score = Collections.min(gridsWithScores.keySet());
+        }
+    }
+
+    private void slowDown() {
+        try {
+            Thread.sleep(1200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

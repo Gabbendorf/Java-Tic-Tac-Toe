@@ -34,7 +34,7 @@ public class Ui {
         output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
     }
 
-    public String chooseGameType() {
+    public String chooseGameOption() {
         output.println("\n");
         output.println("Choose game option:");
         gameTypeOptions();
@@ -69,15 +69,13 @@ public class Ui {
         output.println(String.format("Player %s marked position %s.", mark.sign, gridPosition));
     }
 
-    public void declareWinner(Mark mark, Lines lines, Grid grid) {
+    public void declareWinner(Mark mark) {
         clearScreen();
-        printGrid(lines, grid);
         output.println(String.format("Player %s won!", mark.sign));
     }
 
-    public void declareDraw(Lines lines, Grid grid) {
+    public void declareDraw() {
         clearScreen();
-        printGrid(lines, grid);
         output.println("It's draw: nobody wins!");
     }
 
@@ -124,7 +122,7 @@ public class Ui {
             clearScreen();
             output.println("Invalid position.");
             printGrid(lines, grid);
-            usersInput = promptForNewInput(grid, mark, lines);
+            usersInput = validPosition(grid, mark, lines);
             printGrid(lines, grid);
         }
         return usersInput;
@@ -135,7 +133,7 @@ public class Ui {
             clearScreen();
             output.println("Invalid input: position must be a number.");
             printGrid(lines, grid);
-            usersInput = promptForNewInput(grid, mark, lines);
+            usersInput = validPosition(grid, mark, lines);
         }
         return usersInput;
     }
@@ -154,15 +152,10 @@ public class Ui {
             clearScreen();
             output.println("Position already occupied.");
             printGrid(lines, grid);
-            validPosition = promptForNewInput(grid, mark, lines);
+            validPosition = validPosition(grid, mark, lines);
             printGrid(lines, grid);
         }
         return validPosition;
-    }
-
-    private String promptForNewInput(Grid grid, Mark mark, Lines lines) {
-        promptForPosition(mark);
-        return validPosition(grid, mark, lines);
     }
 
     private String validAnswer(String answer) {

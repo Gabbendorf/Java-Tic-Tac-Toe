@@ -33,7 +33,7 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
-        String gameTypeOption = ui.chooseGameType();
+        String gameTypeOption = ui.chooseGameOption();
         firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
         secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
     }
@@ -62,10 +62,11 @@ public class GameFlow {
 
     private void reportFinalResult() {
         if (lines.isWinning(grid)) {
-            ui.declareWinner(lines.winningMark(grid), lines, grid);
+            ui.declareWinner(lines.winningMark(grid));
         } else {
-            ui.declareDraw(lines, grid);
+            ui.declareDraw();
         }
+        ui.printGrid(lines, grid);
     }
 
     private void startNewGameOrQuit() {
