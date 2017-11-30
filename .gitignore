@@ -5,3 +5,4 @@ out
 Java TicTacToe.iml
 *.iml
 *.class
+build

@@ -7,8 +7,6 @@ import ticTacToe.ui.Ui;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ticTacToe.game.Mark.switchPlayerMark;
-
 public class GameFlow {
 
     private final Ui ui;
@@ -40,21 +38,21 @@ public class GameFlow {
     }
 
     private void gameFlow() {
-        String currentMark = ui.askForStarter();
+        Mark currentMark = ui.askForStarter();
         while (!grid.isFinishedGame(lines)) {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);
-            currentMark = switchPlayerMark(currentMark);
+            currentMark = currentMark.doSwitch();
         }
     }
 
-    private Player currentPlayer(String startingMark) {
+    private Player currentPlayer(Mark startingMark) {
         return players().get(startingMark);
     }
 
-    private Map<String, Player> players() {
-        Map<String, Player> players = new HashMap<>();
+    private Map<Mark, Player> players() {
+        Map<Mark, Player> players = new HashMap<>();
         players.put(firstPlayer.getMark(), firstPlayer);
         players.put(secondPlayer.getMark(), secondPlayer);
         return players;

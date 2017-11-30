@@ -1,20 +1,19 @@
 package ticTacToe.player;
 
 import ticTacToe.game.Lines;
+import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
 
 import java.util.*;
 
-import static ticTacToe.game.Mark.switchPlayerMark;
-
 public class SmartComputer implements Player {
 
-    private final String mark;
+    private final Mark mark;
     private final MoveGenerator firstMove;
     private int score;
 
-    public SmartComputer(String mark, MoveGenerator firstMove) {
+    public SmartComputer(Mark mark, MoveGenerator firstMove) {
         this.mark = mark;
         this.firstMove = firstMove;
     }
@@ -29,7 +28,7 @@ public class SmartComputer implements Player {
         return move.toString();
     }
 
-    public String getMark() {
+    public Mark getMark() {
         return mark;
     }
 
@@ -51,7 +50,7 @@ public class SmartComputer implements Player {
         return possibleMovesInGridCopies.get(maxScore);
     }
 
-    private Map<Integer, Grid> gridCopiesWithScores(Grid grid, Lines lines, String mark) {
+    private Map<Integer, Grid> gridCopiesWithScores(Grid grid, Lines lines, Mark mark) {
         List<Grid> gridCopies = grid.makeCopiesOfGridWith(mark);
         Map<Integer, Grid> gridsWithScores = new HashMap<>();
         for (Grid newGridCopy : gridCopies) {
@@ -60,13 +59,13 @@ public class SmartComputer implements Player {
         return gridsWithScores;
     }
 
-    private int scoreFor(Grid gridCopy, Lines lines, String mark) {
+    private int scoreFor(Grid gridCopy, Lines lines, Mark mark) {
         if (gridCopy.isFinishedGame(lines)) {
             ScoreForFinalGrid(gridCopy, lines);
         } else {
-            String currentMark = switchPlayerMark(mark);
+            Mark currentMark = mark.doSwitch();
             Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
-            applyMiniMax(gridsWithScores, currentMark);
+            applyMiniMax(gridsWithScores, currentMark.sign);
         }
         return score;
     }
@@ -84,7 +83,7 @@ public class SmartComputer implements Player {
     }
 
     private void applyMiniMax(Map<Integer, Grid> gridsWithScores, String currentMark) {
-        if (currentMark.equals(mark)) {
+        if (currentMark.equals(mark.sign)) {
             score = Collections.max(gridsWithScores.keySet());
         } else {
             score = Collections.min(gridsWithScores.keySet());

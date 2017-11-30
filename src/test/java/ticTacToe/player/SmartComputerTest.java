@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static ticTacToe.game.Mark.CROSS;
 
 public class SmartComputerTest {
 
@@ -22,7 +23,7 @@ public class SmartComputerTest {
 
     @BeforeClass
     public static void newComputer() {
-        computer = new SmartComputer("X", new MoveGenerator());
+        computer = new SmartComputer(CROSS, new MoveGenerator());
     }
 
     @Test
@@ -30,7 +31,7 @@ public class SmartComputerTest {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(3);
         Lines lines = new Lines();
-        SmartComputer computer = new SmartComputer("X", new MoveGeneratorDouble());
+        SmartComputer computer = new SmartComputer(CROSS, new MoveGeneratorDouble());
 
         assertEquals("5", computer.makeMove(ui, grid, lines));
     }
@@ -81,7 +82,7 @@ public class SmartComputerTest {
 
     @Test
     public void returnsItsMark() {
-        assertEquals("X", computer.getMark());
+        assertEquals(CROSS, computer.getMark());
     }
 }
 

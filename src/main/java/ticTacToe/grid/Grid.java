@@ -1,13 +1,12 @@
 package ticTacToe.grid;
 
 import ticTacToe.game.Lines;
+import ticTacToe.game.Mark;
 
 import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
-import static ticTacToe.game.Mark.CROSS;
-import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
@@ -24,17 +23,17 @@ public class Grid {
         this.size = (int) Math.sqrt(cells.size());
     }
 
-    public void addMark(String mark, String cellNumber) {
-        cells.set(positionFor(cellNumber), mark);
+    public void addMark(Mark mark, String cellNumber) {
+        cells.set(positionFor(cellNumber), mark.sign);
     }
 
     public boolean isEmptyCell(String cellNumber) {
-        return cellDifferentFromMark(cells.get(positionFor(cellNumber)));
+        return !Mark.isValid(cells.get(positionFor(cellNumber)));
     }
 
     public boolean allOccupiedCells() {
         for (String cell: cells) {
-            if (cellDifferentFromMark(cell)) {
+            if (!Mark.isValid(cell)) {
                 return false;
             }
         }
@@ -57,14 +56,14 @@ public class Grid {
     public List<String> emptyPositions() {
         List<String> emptyPositions = new ArrayList<>();
         for (String position : cells) {
-            if (cellDifferentFromMark(position)) {
+            if (!Mark.isValid(position)) {
                emptyPositions.add(position);
             }
         }
         return emptyPositions;
     }
 
-    public List<Grid> makeCopiesOfGridWith(String mark) {
+    public List<Grid> makeCopiesOfGridWith(Mark mark) {
         List<Grid> gridCopies = new ArrayList<>();
         for (String cell : emptyPositions()) {
             Grid gridCopy = copyOfGrid();
@@ -100,9 +99,5 @@ public class Grid {
 
     private int positionFor(String cellNumber) {
         return Integer.parseInt(cellNumber) - 1;
-    }
-
-    private boolean cellDifferentFromMark(String cell) {
-        return !cell.equals(CROSS.mark) && !cell.equals(NOUGHT.mark);
     }
 }

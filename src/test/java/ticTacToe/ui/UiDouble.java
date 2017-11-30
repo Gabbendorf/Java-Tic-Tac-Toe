@@ -1,5 +1,6 @@
 package ticTacToe.ui;
 
+import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.game.Lines;
 
@@ -10,6 +11,8 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Random;
 
+import static ticTacToe.game.Mark.CROSS;
+
 public class UiDouble extends Ui {
 
     public UiDouble(PrintStream output, InputStream input) {
@@ -17,14 +20,14 @@ public class UiDouble extends Ui {
     }
 
     @Override
-    public String validPosition(Grid grid, String mark, Lines lines) {
+    public String validPosition(Grid grid, Mark mark, Lines lines) {
         List<String> emptyPositions = grid.emptyPositions();
         return emptyPositions.get(new Random().nextInt(emptyPositions.size()));
     }
 
     @Override
-    public String askForMarkType() {
-        return "X";
+    public Mark askForMarkType() {
+        return CROSS;
     }
 }
 
