@@ -33,14 +33,15 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
-        String opponentOptionNumber = ui.chooseOpponent();
-        firstPlayer = playersFactory.firstPlayer(ui);
-        secondPlayer = playersFactory.secondPlayer(opponentOptionNumber, firstPlayer.getMark());
+        String gameTypeOption = ui.chooseGameType();
+        firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
+        secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
     }
 
     private void gameFlow() {
         Mark currentMark = ui.askForStarter();
         while (!grid.isFinishedGame(lines)) {
+            ui.printGrid(lines, grid);
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);

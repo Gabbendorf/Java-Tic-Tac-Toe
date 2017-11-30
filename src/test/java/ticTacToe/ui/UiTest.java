@@ -77,25 +77,26 @@ public class UiTest {
     }
 
     @Test
-    public void asksForOpponentTypeNumber() {
+    public void asksForGameTypeOption() {
         Ui ui = newUiWith("1");
 
-        String opponentOptionNumber = ui.chooseOpponent();
+        String gameTypeOption = ui.chooseGameType();
 
-        assertTrue(output.toString().contains("Choose opponent type:"));
-        assertTrue(output.toString().contains("1- human player"));
-        assertTrue(output.toString().contains("2- smart computer."));
-        assertEquals("1", opponentOptionNumber);
+        assertTrue(output.toString().contains("Choose game option:"));
+        assertTrue(output.toString().contains("1- Human Player vs Human Player"));
+        assertTrue(output.toString().contains("2- Human Player vs Smart Computer"));
+        assertTrue(output.toString().contains("3- Computer vs Computer"));
+        assertEquals("1", gameTypeOption);
     }
 
     @Test
-    public void asksForValidOpponentTypeNumber() {
-        Ui ui = newUiWith("3\nd\n1");
+    public void asksForCorrectInputForGameType() {
+        Ui ui = newUiWith("n\n5\n3");
 
-        String validOpponentNumber = ui.chooseOpponent();
+        String validGameTypeOption = ui.chooseGameType();
 
-        assertTrue(output.toString().contains("Please choose a valid opponent:"));
-        assertEquals("1", validOpponentNumber);
+        assertTrue(output.toString().contains("Wrong option, please choose a valid game option:"));
+        assertEquals("3", validGameTypeOption);
     }
 
     @Test

@@ -61,7 +61,7 @@ public class GameFlowTest {
     }
 
     @Test
-    public void runsGameAgainstSmartComputer() {
+    public void runsGameHumanPlayerAgainstSmartComputer() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(3);
         Lines lines = new Lines();
@@ -71,6 +71,18 @@ public class GameFlowTest {
 
         Mark computerMark = NOUGHT;
         assertTrue(humanIsNotWinner(grid, lines, computerMark));
+    }
+
+    @Test
+    public void runsGameComputerAgainstComputer() {
+        Ui ui = new Ui (new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("3\nx\nn".getBytes()));
+        Grid grid = new Grid(3);
+        Lines lines = new Lines();
+        GameFlow gameFlow = new GameFlow(ui, grid, lines);
+
+        gameFlow.runGame();
+
+        assertTrue(grid.isFinishedGame(lines));
     }
 
     private GameFlow newGameFlow(String allInput) {

@@ -1,5 +1,9 @@
 package ticTacToe.game;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+
 public enum Mark {
 
     NOUGHT("O"),
@@ -21,6 +25,11 @@ public enum Mark {
         } else {
             return CROSS;
         }
+    }
+
+    public static Mark random() {
+        List<Mark> marks = Arrays.asList(Mark.values());
+        return marks.get(new Random().nextInt(marks.size()));
     }
 
     public Mark doSwitch() {

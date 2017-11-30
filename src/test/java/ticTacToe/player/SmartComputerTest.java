@@ -1,5 +1,6 @@
 package ticTacToe.player;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import ticTacToe.grid.Lines;
@@ -14,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static ticTacToe.game.Mark.CROSS;
 
 public class SmartComputerTest {
@@ -77,7 +77,7 @@ public class SmartComputerTest {
 
         List<String> movesToBlockWinningFork = new ArrayList<>(Arrays.asList("4", "7", "8"));
 
-        assertTrue(movesToBlockWinningFork.contains(computer.makeMove(ui, grid, lines)));
+        Assert.assertTrue(movesToBlockWinningFork.contains(computer.makeMove(ui, grid, lines)));
     }
 
     @Test
