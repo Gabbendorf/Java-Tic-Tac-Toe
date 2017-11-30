@@ -99,7 +99,7 @@ public class Ui {
     private String validOptionNumber(String opponentOptionNumber) {
         while (isInvalidOptionNumber(opponentOptionNumber)) {
             clearScreen();
-            output.println("Please choose a valid option.");
+            output.println("Please choose a valid opponent:");
             opponentOptions();
             opponentOptionNumber = input.nextLine();
         }
@@ -111,12 +111,12 @@ public class Ui {
     }
 
     private Mark validMarkType(String mark) {
-        while (!Mark.isValidMark(mark)) {
+        while (!Mark.isValid(mark)) {
             clearScreen();
             output.println("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
-        return Mark.createMark(mark);
+        return Mark.create(mark);
     }
 
     private String validatePosition(Grid grid, Mark mark, Lines lines, String usersInput) {

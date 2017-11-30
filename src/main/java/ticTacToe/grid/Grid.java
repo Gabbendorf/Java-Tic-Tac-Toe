@@ -28,12 +28,12 @@ public class Grid {
     }
 
     public boolean isEmptyCell(String cellNumber) {
-        return !Mark.isValidMark(cells.get(positionFor(cellNumber)));
+        return !Mark.isValid(cells.get(positionFor(cellNumber)));
     }
 
     public boolean allOccupiedCells() {
         for (String cell: cells) {
-            if (!Mark.isValidMark(cell)) {
+            if (!Mark.isValid(cell)) {
                 return false;
             }
         }
@@ -56,7 +56,7 @@ public class Grid {
     public List<String> emptyPositions() {
         List<String> emptyPositions = new ArrayList<>();
         for (String position : cells) {
-            if (!Mark.isValidMark(position)) {
+            if (!Mark.isValid(position)) {
                emptyPositions.add(position);
             }
         }

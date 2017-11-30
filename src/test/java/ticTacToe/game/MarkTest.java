@@ -2,9 +2,9 @@ package ticTacToe.game;
 
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static ticTacToe.game.Mark.CROSS;
 import static ticTacToe.game.Mark.NOUGHT;
 
@@ -12,26 +12,26 @@ public class MarkTest {
 
     @Test
     public void returnsTrueForValidMarkForCross() {
-        assertTrue(Mark.isValidMark("X"));
+        assertTrue(Mark.isValid("X"));
     }
 
     @Test
     public void returnsTrueForValidMarkForNought() {
-        assertTrue(Mark.isValidMark("O"));
+        assertTrue(Mark.isValid("O"));
     }
 
     @Test
     public void returnsFalseForInvalidMark() {
-        assertFalse(Mark.isValidMark("F"));
+        assertFalse(Mark.isValid("F"));
     }
 
     @Test
     public void convertsStringForCrossIntoConstant() {
-        assertEquals(CROSS, Mark.createMark("X"));
+        assertEquals(CROSS, Mark.create("X"));
     }
 
     @Test
     public void convertsStringForNoughtIntoConstant() {
-        assertEquals(NOUGHT, Mark.createMark("O"));
+        assertEquals(NOUGHT, Mark.create("O"));
     }
 }

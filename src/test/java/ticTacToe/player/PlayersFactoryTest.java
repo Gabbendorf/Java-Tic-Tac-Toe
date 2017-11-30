@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.ui.UiDouble;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static ticTacToe.game.Mark.CROSS;
 import static ticTacToe.game.Mark.NOUGHT;
 

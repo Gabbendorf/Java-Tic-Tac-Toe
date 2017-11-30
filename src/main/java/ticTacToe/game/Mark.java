@@ -11,11 +11,11 @@ public enum Mark {
 
     public final String sign;
 
-    public static boolean isValidMark(String markChosen) {
+    public static boolean isValid(String markChosen) {
         return markChosen.equals(NOUGHT.sign) || markChosen.equals(CROSS.sign);
     }
 
-    public static Mark createMark(String markChosen) {
+    public static Mark create(String markChosen) {
         if (markChosen.equals(NOUGHT.sign)) {
             return NOUGHT;
         } else {
@@ -23,10 +23,11 @@ public enum Mark {
         }
     }
 
-    public static Mark switchPlayerMark(Mark currentMark) {
-        if (currentMark == CROSS) {
+    public Mark doSwitch() {
+        if (this == CROSS) {
             return NOUGHT;
+        } else {
+            return CROSS;
         }
-        return CROSS;
     }
 }

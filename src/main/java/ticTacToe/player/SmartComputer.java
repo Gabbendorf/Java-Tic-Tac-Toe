@@ -7,8 +7,6 @@ import ticTacToe.ui.Ui;
 
 import java.util.*;
 
-import static ticTacToe.game.Mark.switchPlayerMark;
-
 public class SmartComputer implements Player {
 
     private final Mark mark;
@@ -65,7 +63,7 @@ public class SmartComputer implements Player {
         if (gridCopy.isFinishedGame(lines)) {
             ScoreForFinalGrid(gridCopy, lines);
         } else {
-            Mark currentMark = switchPlayerMark(mark);
+            Mark currentMark = mark.doSwitch();
             Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
             applyMiniMax(gridsWithScores, currentMark.sign);
         }

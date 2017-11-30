@@ -13,8 +13,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static ticTacToe.game.Mark.*;
 
 public class UiTest {
@@ -94,7 +94,7 @@ public class UiTest {
 
         String validOpponentNumber = ui.chooseOpponent();
 
-        assertTrue(output.toString().contains("Please choose a valid option."));
+        assertTrue(output.toString().contains("Please choose a valid opponent:"));
         assertEquals("1", validOpponentNumber);
     }
 

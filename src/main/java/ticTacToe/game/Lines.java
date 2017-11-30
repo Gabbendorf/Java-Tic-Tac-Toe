@@ -12,7 +12,7 @@ public class Lines {
     }
 
     public Mark winningMark(Grid grid) {
-        return Mark.createMark((String) winningLine(grid).get(0).get(0));
+        return Mark.create((String) winningLine(grid).get(0).get(0));
     }
 
     public List<ArrayList<String>> getRows(Grid grid) {
