@@ -5,7 +5,7 @@ import org.junit.Test;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
-import ticTacToe.grid.GridPreparer;
+import ticTacToe.grid.GridFormatter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -68,7 +68,7 @@ public class UiTest {
         ui.printGrid(new Lines(), grid);
 
         assertTrue(output.toString().contains("| --------- | \n | " +
-                                              GridPreparer.blue_X + " | " + GridPreparer.red_O + " | 3 | \n" +
+                                              GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
                                              " | --------- | \n " +
                                               "| 4 | 5 | 6 | \n " +
                                               "| --------- | \n " +
@@ -104,8 +104,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: " + GridPreparer.blue_X +
-                                              " => Cross, " + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.blue_X +
+                                              " => Cross, " + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(CROSS, markType);
     }
 
@@ -115,8 +115,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or "
-                                              + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or "
+                                              + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(NOUGHT, markType);
     }
 
@@ -126,7 +126,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -136,7 +136,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(CROSS, startingMark);
     }
 

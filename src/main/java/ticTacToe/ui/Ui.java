@@ -2,7 +2,7 @@ package ticTacToe.ui;
 
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.GridPreparer;
+import ticTacToe.grid.GridFormatter;
 import ticTacToe.grid.Lines;
 
 import java.io.InputStream;
@@ -13,14 +13,14 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private final GridPreparer gridPreparer;
+    private final GridFormatter gridFormatter;
     private PrintStream output;
     private Scanner input;
 
     public Ui(PrintStream output, InputStream input) {
         this.output = output;
         this.input = new Scanner(input);
-        this.gridPreparer = new GridPreparer();
+        this.gridFormatter = new GridFormatter();
     }
 
     public void welcomePlayer() {
@@ -30,8 +30,8 @@ public class Ui {
     }
 
     public void printGrid(Lines lines, Grid grid) {
-        List<ArrayList<String>> rowsWithColours = gridPreparer.rowsWithColours(lines.getRows(grid));
-        output.println(gridPreparer.prepareGridForPrinting(rowsWithColours));
+        List<ArrayList<String>> rowsWithColours = gridFormatter.rowsWithColours(lines.getRows(grid));
+        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
     }
 
     public String chooseOpponent() {
@@ -43,13 +43,13 @@ public class Ui {
 
     public Mark askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: " + GridPreparer.blue_X + " => Cross, " + GridPreparer.red_O + " (letter) => Nought");
+        output.println("First player: please choose a mark: " + GridFormatter.blue_X + " => Cross, " + GridFormatter.red_O + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public Mark askForStarter() {
         clearScreen();
-        output.println("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?");
+        output.println("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?");
         Mark markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -113,7 +113,7 @@ public class Ui {
     private Mark validMarkType(String mark) {
         while (!Mark.isValid(mark)) {
             clearScreen();
-            output.println("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought");
+            output.println("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return Mark.create(mark);
