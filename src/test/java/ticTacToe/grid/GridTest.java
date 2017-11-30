@@ -2,7 +2,6 @@ package ticTacToe.grid;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.game.Lines;
 
 import java.util.Arrays;
 import java.util.List;

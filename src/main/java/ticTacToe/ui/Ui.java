@@ -3,7 +3,7 @@ package ticTacToe.ui;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.GridPreparer;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 
 import java.io.InputStream;
 import java.io.PrintStream;

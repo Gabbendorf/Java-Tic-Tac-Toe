@@ -2,7 +2,7 @@ package ticTacToe.player;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
 

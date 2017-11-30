@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 import ticTacToe.grid.GridPreparer;
 
 import java.io.ByteArrayInputStream;

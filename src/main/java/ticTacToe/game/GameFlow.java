@@ -1,6 +1,7 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.Lines;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;

@@ -1,6 +1,5 @@
 package ticTacToe.grid;
 
-import ticTacToe.game.Lines;
 import ticTacToe.game.Mark;
 
 import java.util.*;

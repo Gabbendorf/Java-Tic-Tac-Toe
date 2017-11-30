@@ -2,7 +2,7 @@ package ticTacToe;
 
 import ticTacToe.game.GameFlow;
 import ticTacToe.grid.Grid;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 import ticTacToe.ui.Ui;
 
 public class GameRunner {
