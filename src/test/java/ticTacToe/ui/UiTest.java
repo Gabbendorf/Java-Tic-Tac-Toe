@@ -2,6 +2,7 @@ package ticTacToe.ui;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.GameOption;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
@@ -15,6 +16,8 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ticTacToe.game.GameOption.COMPUTER_VS_COMPUTER;
+import static ticTacToe.game.GameOption.HUMAN_VS_HUMAN;
 import static ticTacToe.game.Mark.*;
 
 public class UiTest {
@@ -80,23 +83,23 @@ public class UiTest {
     public void asksForGameTypeOption() {
         Ui ui = newUiWith("1");
 
-        String gameTypeOption = ui.chooseGameOption();
+        GameOption gameOptionChosen = ui.chooseGameOption();
 
-        assertTrue(output.toString().contains("Choose game option:"));
+        assertTrue(output.toString().contains("Choose a game option:"));
         assertTrue(output.toString().contains("1- Human Player vs Human Player"));
         assertTrue(output.toString().contains("2- Human Player vs Smart Computer"));
         assertTrue(output.toString().contains("3- Computer vs Computer"));
-        assertEquals("1", gameTypeOption);
+        assertEquals(HUMAN_VS_HUMAN, gameOptionChosen);
     }
 
     @Test
-    public void asksForCorrectInputForGameType() {
+    public void asksForCorrectInputForGameTypeOption() {
         Ui ui = newUiWith("n\n5\n3");
 
-        String validGameTypeOption = ui.chooseGameOption();
+        GameOption validGameOption = ui.chooseGameOption();
 
-        assertTrue(output.toString().contains("Wrong option, please choose a valid game option:"));
-        assertEquals("3", validGameTypeOption);
+        assertTrue(output.toString().contains("Invalid input."));
+        assertEquals(COMPUTER_VS_COMPUTER, validGameOption);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package ticTacToe.ui;
 
+import ticTacToe.game.GameOption;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.GridFormatter;
@@ -27,6 +28,7 @@ public class Ui {
         clearScreen();
         output.println("Welcome to TIC TAC TOE!");
         output.println("Are you ready to play??");
+        output.println("\n");
     }
 
     public void printGrid(Lines lines, Grid grid) {
@@ -34,11 +36,10 @@ public class Ui {
         output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
     }
 
-    public String chooseGameOption() {
-        output.println("\n");
-        output.println("Choose game option:");
+    public GameOption chooseGameOption() {
+        output.println("Choose a game option:");
         gameTypeOptions();
-        return validGameOption(input.nextLine());
+        return validGameOption(validatedInput());
     }
 
     public Mark askForMarkType() {
@@ -94,18 +95,25 @@ public class Ui {
         output.println("3- Computer vs Computer");
     }
 
-    private String validGameOption(String userInput) {
-        while (isInvalidGameOption(userInput)) {
+    private int validatedInput() {
+        String userInput = input.nextLine();
+        while (isNotNumber(userInput)) {
             clearScreen();
-            output.println("Wrong option, please choose a valid game option:");
+            output.println("Invalid input.");
             gameTypeOptions();
             userInput = input.nextLine();
         }
-        return userInput;
+        return Integer.parseInt(userInput);
     }
 
-    private boolean isInvalidGameOption(String userInput) {
-        return !userInput.equals("1") && !userInput.equals("2") && !userInput.equals("3");
+    private GameOption validGameOption(int validInput) {
+        while (!GameOption.isValid(validInput)) {
+            clearScreen();
+            output.println("Wrong option, please choose a valid game option:");
+            gameTypeOptions();
+            validInput = validatedInput();
+        }
+        return GameOption.create(validInput);
     }
 
     private Mark validMarkType(String mark) {

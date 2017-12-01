@@ -33,7 +33,7 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
-        String gameTypeOption = ui.chooseGameOption();
+        GameOption gameTypeOption = ui.chooseGameOption();
         firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
         secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
     }

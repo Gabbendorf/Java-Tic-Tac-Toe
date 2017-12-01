@@ -2,6 +2,7 @@ package ticTacToe.player;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.GameOption;
 import ticTacToe.ui.Ui;
 import ticTacToe.ui.UiDouble;
 
@@ -11,6 +12,9 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ticTacToe.game.GameOption.COMPUTER_VS_COMPUTER;
+import static ticTacToe.game.GameOption.HUMAN_VS_COMPUTER;
+import static ticTacToe.game.GameOption.HUMAN_VS_HUMAN;
 import static ticTacToe.game.Mark.CROSS;
 import static ticTacToe.game.Mark.NOUGHT;
 
@@ -29,7 +33,7 @@ public class PlayersFactoryTest {
 
     @Test
     public void createsHumanAsFirstPlayerWithChosenMarkForGameType1() {
-        Player firstPlayer = playersFactory.firstPlayer(uiDouble, "1");
+        Player firstPlayer = playersFactory.firstPlayer(uiDouble, HUMAN_VS_HUMAN);
 
         assertTrue(firstPlayer instanceof HumanPlayer);
         assertEquals(CROSS, firstPlayer.getMark());
@@ -37,7 +41,7 @@ public class PlayersFactoryTest {
 
     @Test
     public void createsHumanPlayerAsFirstPlayerForGameType2() {
-        Player firstPlayer = playersFactory.firstPlayer(uiDouble, "2");
+        Player firstPlayer = playersFactory.firstPlayer(uiDouble, HUMAN_VS_COMPUTER);
 
         assertTrue(firstPlayer instanceof HumanPlayer);
         assertEquals(CROSS, firstPlayer.getMark());
@@ -45,14 +49,14 @@ public class PlayersFactoryTest {
 
     @Test
     public void createsComputerAsFirstPlayerForGameType3() {
-        Player firstPlayer = playersFactory.firstPlayer(ui, "3");
+        Player firstPlayer = playersFactory.firstPlayer(ui, COMPUTER_VS_COMPUTER);
 
         assertTrue(firstPlayer instanceof SmartComputer);
     }
 
     @Test
     public void createsHumanPlayerAsSecondPlayerWithOtherPossibleMarkForGameType1() {
-        Player secondPlayer = playersFactory.secondPlayer("1", CROSS);
+        Player secondPlayer = playersFactory.secondPlayer(HUMAN_VS_HUMAN, CROSS);
 
         assertTrue(secondPlayer instanceof HumanPlayer);
         assertEquals(NOUGHT, secondPlayer.getMark());
@@ -60,7 +64,7 @@ public class PlayersFactoryTest {
 
     @Test
     public void createsSmartComputerAsSecondPlayerWithOtherPossibleMarkForGameType2() {
-        Player secondPlayer = playersFactory.secondPlayer("2", NOUGHT);
+        Player secondPlayer = playersFactory.secondPlayer(HUMAN_VS_COMPUTER, NOUGHT);
 
         assertTrue(secondPlayer instanceof SmartComputer);
         assertEquals(CROSS, secondPlayer.getMark());
@@ -68,7 +72,7 @@ public class PlayersFactoryTest {
 
     @Test
     public void createsSmartComputerAsSecondPlayerWithOtherPossibleMarkForGameType3() {
-        Player secondPlayer = playersFactory.secondPlayer("3", CROSS);
+        Player secondPlayer = playersFactory.secondPlayer(COMPUTER_VS_COMPUTER, CROSS);
 
         assertTrue(secondPlayer instanceof SmartComputer);
         assertEquals(NOUGHT, secondPlayer.getMark());
