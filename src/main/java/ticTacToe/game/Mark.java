@@ -32,7 +32,7 @@ public enum Mark {
         return marks.get(new Random().nextInt(marks.size()));
     }
 
-    public Mark doSwitch() {
+    public Mark swap() {
         if (this == CROSS) {
             return NOUGHT;
         } else {

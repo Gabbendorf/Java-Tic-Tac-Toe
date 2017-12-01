@@ -18,10 +18,10 @@ public class PlayersFactoryDouble extends PlayersFactory {
 
     public Player secondPlayer(GameOption gameOptionChosen, Mark firstPlayerMark) {
         if (gameOptionChosen == HUMAN_VS_HUMAN) {
-            return new HumanPlayer(firstPlayerMark.doSwitch());
+            return new HumanPlayer(firstPlayerMark.swap());
         } else if (gameOptionChosen == COMPUTER_VS_COMPUTER) {
-            return new SmartComputer(firstPlayerMark.doSwitch(), new MoveGenerator(),0);
+            return new SmartComputer(firstPlayerMark.swap(), new MoveGenerator(),0);
         }
-        return new SmartComputer(firstPlayerMark.doSwitch(), new MoveGenerator(), 0);
+        return new SmartComputer(firstPlayerMark.swap(), new MoveGenerator(), 0);
     }
 }

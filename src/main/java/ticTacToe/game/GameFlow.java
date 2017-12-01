@@ -45,7 +45,7 @@ public class GameFlow {
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);
-            currentMark = currentMark.doSwitch();
+            currentMark = currentMark.swap();
         }
     }
 

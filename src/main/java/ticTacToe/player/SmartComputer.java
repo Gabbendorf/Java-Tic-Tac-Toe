@@ -68,7 +68,7 @@ public class SmartComputer implements Player {
         if (gridCopy.isFinishedGame(lines)) {
             ScoreForFinalGrid(gridCopy, lines);
         } else {
-            Mark currentMark = mark.doSwitch();
+            Mark currentMark = mark.swap();
             Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
             applyMiniMax(gridsWithScores, currentMark.sign);
         }
