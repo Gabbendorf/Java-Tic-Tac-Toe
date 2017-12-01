@@ -46,6 +46,27 @@ public class UiTest {
     }
 
     @Test
+    public void asksToChooseGridSizeAndReturnsIt() {
+        Ui ui = newUiWith("3");
+
+        int gridSizeChosen = ui.chooseGridSize();
+
+        assertEquals(3, gridSizeChosen);
+        assertTrue(output.toString().contains("Choose a size for the grid [3 or 4]:"));
+    }
+
+
+    @Test
+    public void asksForValidGridSize() {
+        Ui ui = newUiWith("5\nn\n7\n3");
+
+        int gridSizeChosen = ui.chooseGridSize();
+
+        assertEquals(3, gridSizeChosen);
+        assertTrue(output.toString().contains("Invalid grid size [3 or 4]:"));
+    }
+
+    @Test
     public void printsGrid() {
         Ui ui = newUiWith("input");
 

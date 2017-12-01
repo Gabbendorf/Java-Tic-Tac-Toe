@@ -35,8 +35,6 @@ public class SmartComputer implements Player {
         return mark;
     }
 
-
-
     private String bestMovePosition(Grid grid, Lines lines) {
         Grid bestGrid = gridCopyWithBestMove(grid, lines);
         List<String> freePositions = grid.emptyPositions();
@@ -70,7 +68,7 @@ public class SmartComputer implements Player {
         } else {
             Mark currentMark = mark.swap();
             Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
-            applyMiniMax(gridsWithScores, currentMark.sign);
+            applyMiniMax(gridsWithScores, currentMark);
         }
         return score;
     }
@@ -87,8 +85,8 @@ public class SmartComputer implements Player {
         }
     }
 
-    private void applyMiniMax(Map<Integer, Grid> gridsWithScores, String currentMark) {
-        if (currentMark.equals(mark.sign)) {
+    private void applyMiniMax(Map<Integer, Grid> gridsWithScores, Mark currentMark) {
+        if (currentMark == mark) {
             score = Collections.max(gridsWithScores.keySet());
         } else {
             score = Collections.min(gridsWithScores.keySet());

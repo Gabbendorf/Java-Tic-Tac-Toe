@@ -1,6 +1,7 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.GridFactory;
 import ticTacToe.grid.Lines;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
@@ -17,12 +18,12 @@ public class GameFlow {
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Lines lines, PlayersFactory playersFactory) {
+    public GameFlow(Ui ui, Lines lines, PlayersFactory playersFactory) {
         this.ui = ui;
-        this.grid = grid;
+        ui.welcomePlayer();
+        this.grid = createNewGrid();
         this.lines = lines;
         this.playersFactory = playersFactory;
-        ui.welcomePlayer();
     }
 
     public void runGame() {
@@ -71,7 +72,7 @@ public class GameFlow {
 
     private void startNewGameOrQuit() {
         if (playAgain(ui.askToPlayAgain())) {
-            grid.setCellsToEmpty();
+            grid = createNewGrid();
             runGame();
         } else {
             ui.sayBye();
@@ -80,5 +81,9 @@ public class GameFlow {
 
     private boolean playAgain(String userInput) {
         return userInput.equals("y");
+    }
+
+    private Grid createNewGrid() {
+        return new GridFactory().createGrid(ui.chooseGridSize());
     }
 }

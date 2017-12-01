@@ -12,7 +12,7 @@ public class GridFormatter {
     public static final String red_O =("\u001B[31mO\u001b[0m");
     public static final String blue_X = ("\u001b[34mX\u001b[0m");
 
-    public String prepareGridForPrinting(List<ArrayList<String>> rows) {
+    public String prepareGridForPrinting(List<ArrayList<String>> rows, int gridSize) {
         List<String> printableList = new ArrayList<>();
         printableList.add(NEW_LINE);
         printableList.add(LINE);

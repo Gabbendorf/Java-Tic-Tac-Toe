@@ -31,12 +31,24 @@ public class Ui {
         output.println("\n");
     }
 
+    public int chooseGridSize() {
+        output.println("Choose a size for the grid [3 or 4]:");
+        String userInput = input.nextLine();
+        while (isInvalidGridSize(userInput)) {
+            clearScreen();
+            output.println("Invalid grid size [3 or 4]:");
+            userInput = input.nextLine();
+        }
+        return Integer.parseInt(userInput);
+    }
+
     public void printGrid(Lines lines, Grid grid) {
         List<ArrayList<String>> rowsWithColours = gridFormatter.rowsWithColours(lines.getRows(grid));
-        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
+        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours, grid.getSize()));
     }
 
     public GameOption chooseGameOption() {
+        clearScreen();
         output.println("Choose a game option:");
         gameTypeOptions();
         return validGameOption(validatedInput());
@@ -87,6 +99,10 @@ public class Ui {
 
     public void sayBye() {
         output.println("See you soon!");
+    }
+
+    private boolean isInvalidGridSize(String userInput) {
+        return !userInput.equals("3") && !userInput.equals("4");
     }
 
     private void gameTypeOptions() {

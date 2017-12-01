@@ -2,7 +2,6 @@ package ticTacToe.game;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.player.PlayersFactoryDouble;
@@ -13,8 +12,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static ticTacToe.game.Mark.NOUGHT;
+import static ticTacToe.game.Mark.CROSS;
 
 public class GameFlowTest {
 
@@ -27,7 +27,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameThatIsDraw() {
-        GameFlow gameFlow = newGameFlow("1\nX\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
+        GameFlow gameFlow = newGameFlow("3\n1\nX\no\n1\n2\n3\n4\n6\n5\n8\n9\n7\nn");
 
         gameFlow.runGame();
 
@@ -36,7 +36,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameWherePlayerCrossWins() {
-        GameFlow gameFlow = newGameFlow("1\nx\nx\n1\n2\n3\n4\n5\n6\n9\nn");
+        GameFlow gameFlow = newGameFlow("3\n1\nx\nx\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
@@ -45,7 +45,7 @@ public class GameFlowTest {
 
     @Test
     public void runsNewGameWherePlayerNoughtWins() {
-        GameFlow gameFlow = newGameFlow("1\nx\no\n1\n2\n3\n4\n5\n6\n9\nn");
+        GameFlow gameFlow = newGameFlow("3\n1\nx\no\n1\n2\n3\n4\n5\n6\n9\nn");
 
         gameFlow.runGame();
 
@@ -54,7 +54,7 @@ public class GameFlowTest {
 
     @Test
     public void runsSecondGame() {
-        GameFlow gameFlow = newGameFlow("1\nx\nx\n1\n2\n5\n3\n9\ny\n1\no\no\n1\n2\n5\n3\n9\nn");
+        GameFlow gameFlow = newGameFlow("3\n1\nx\nx\n1\n2\n5\n3\n9\ny\n3\n1\no\no\n1\n2\n5\n3\n9\nn");
 
         gameFlow.runGame();
 
@@ -65,58 +65,39 @@ public class GameFlowTest {
     @Test
     public void runsGameHumanPlayerAgainstSmartComputer() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Grid grid = new Grid(3);
         Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
-        GameFlow gameFlow = new GameFlow(ui, grid, lines, playersFactory);
+        GameFlow gameFlow = new GameFlow(ui, lines, playersFactory);
 
         gameFlow.runGame();
 
-        Mark computerMark = NOUGHT;
-        assertTrue(humanIsNotWinner(grid, lines, computerMark));
+        String humanPlayerMark = CROSS.sign;
+        String message = String.format("Player %s won!", humanPlayerMark);
+        assertFalse(output.toString().contains(message));
     }
 
     @Test
-    public void runsGameComputerAgainstComputer() {
-        Ui ui = new Ui (new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("3\nx\nn".getBytes()));
-        Grid grid = new Grid(3);
+    public void runsGameComputerAgainstComputerOn3x3Grid() {
+        Ui ui = new Ui (new PrintStream(output), new ByteArrayInputStream("3\n3\nx\nn".getBytes()));
         Lines lines = new Lines();
         PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
-        GameFlow gameFlow = new GameFlow(ui, grid, lines, playersFactoryDouble);
+        GameFlow gameFlow = new GameFlow(ui, lines, playersFactoryDouble);
 
         gameFlow.runGame();
 
-        assertTrue(grid.isFinishedGame(lines));
+        assertTrue(output.toString().contains("It's draw: nobody wins!"));
     }
 
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
-        Grid grid = new Grid(3);
         Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
-        return new GameFlow(ui, grid, lines, playersFactory);
+        return new GameFlow(ui, lines, playersFactory);
     }
 
     private Ui newUiWith(String inputString) {
         ByteArrayInputStream input = new ByteArrayInputStream(inputString.getBytes());
 
         return new Ui(new PrintStream(output), input);
-    }
-
-    private boolean humanIsNotWinner(Grid grid, Lines lines, Mark mark) {
-        boolean isDraw = grid.allOccupiedCells();
-        return isDraw || isComputerWinner(lines, grid, mark);
-    }
-
-    private boolean isComputerWinner(Lines lines, Grid grid, Mark computerMark) {
-        boolean verdict = false;
-        if (lines.isWinning(grid)) {
-            if (lines.winningMark(grid).equals(computerMark)) {
-                verdict = true;
-            } else {
-                verdict = false;
-            }
-        }
-        return verdict;
     }
 }

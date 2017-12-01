@@ -156,15 +156,6 @@ public class GridTest {
         assertFalse(grid.isFinishedGame(lines));
     }
 
-    @Test
-    public void setCellsToEmptyAgain() {
-        grid.addMark(CROSS, "1");
-
-        grid.setCellsToEmpty();
-
-        assertFalse(grid.getCells().contains("X"));
-    }
-
     private List<String> cells(List<Grid> gridList, int gridNumber) {
         return gridList.get(gridNumber).getCells();
     }

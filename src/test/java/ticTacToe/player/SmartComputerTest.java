@@ -39,7 +39,7 @@ public class SmartComputerTest {
     @Test
     public void returnsBestMoveThatLeadsToWin() {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Grid grid = new Grid(new ArrayList<>(Arrays.asList("1", "X", "O", "X", "O", "X", "X", "O", "9")));
+        Grid grid = new Grid(Arrays.asList("1", "X", "O", "X", "O", "X", "X", "O", "9"));
         Lines lines = new Lines();
 
         String moveToWin = "1";
@@ -50,7 +50,7 @@ public class SmartComputerTest {
     @Test
     public void returnsMoveThatPreventsOpponentFromWinning() {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "X", "4", "O", "6", "7", "8", "9")));
+        Grid grid = new Grid(Arrays.asList("X", "O", "X", "4", "O", "6", "7", "8", "9"));
         Lines lines = new Lines();
 
         String moveToBlockOpponent = "8";
@@ -61,7 +61,7 @@ public class SmartComputerTest {
     @Test
     public void createsForkForMultipleWinningMoves() {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Grid grid = new Grid(new ArrayList<>(Arrays.asList("X", "O", "3", "4", "5", "6", "7", "8", "9")));
+        Grid grid = new Grid(Arrays.asList("X", "O", "3", "4", "5", "6", "7", "8", "9"));
         Lines lines = new Lines();
 
         String moveToCreateWinningFork = "7";
@@ -72,7 +72,7 @@ public class SmartComputerTest {
     @Test
     public void blocksWinningForkForOpponent() {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Grid grid = new Grid(new ArrayList<>(Arrays.asList("O", "X", "3", "4", "X", "6", "7", "8", "O")));
+        Grid grid = new Grid(Arrays.asList("O", "X", "3", "4", "X", "6", "7", "8", "O"));
         Lines lines = new Lines();
 
         List<String> movesToBlockWinningFork = new ArrayList<>(Arrays.asList("4", "7", "8"));
