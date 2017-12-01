@@ -13,8 +13,9 @@ public enum GameOption {
     }
 
     public static boolean isValid(int gameOptionNumber) {
-        return gameOptionNumber == HUMAN_VS_HUMAN.optionNumber || gameOptionNumber == HUMAN_VS_COMPUTER.optionNumber
-                || gameOptionNumber == COMPUTER_VS_COMPUTER.optionNumber;
+        return gameOptionNumber == HUMAN_VS_HUMAN.optionNumber ||
+                gameOptionNumber == HUMAN_VS_COMPUTER.optionNumber ||
+                gameOptionNumber == COMPUTER_VS_COMPUTER.optionNumber;
     }
 
     public static GameOption create(int gameTypeOptionNumber) {

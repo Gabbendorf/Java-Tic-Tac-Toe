@@ -23,7 +23,7 @@ public class SmartComputerTest {
 
     @BeforeClass
     public static void newComputer() {
-        computer = new SmartComputer(CROSS, new MoveGenerator());
+        computer = new SmartComputer(CROSS, new MoveGenerator(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SmartComputerTest {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(3);
         Lines lines = new Lines();
-        SmartComputer computer = new SmartComputer(CROSS, new MoveGeneratorDouble());
+        SmartComputer computer = new SmartComputer(CROSS, new MoveGeneratorDouble(), 0);
 
         assertEquals("5", computer.makeMove(ui, grid, lines));
     }

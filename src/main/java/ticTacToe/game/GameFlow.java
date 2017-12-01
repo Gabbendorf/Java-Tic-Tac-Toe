@@ -17,11 +17,11 @@ public class GameFlow {
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Lines lines) {
+    public GameFlow(Ui ui, Grid grid, Lines lines, PlayersFactory playersFactory) {
         this.ui = ui;
         this.grid = grid;
         this.lines = lines;
-        this.playersFactory = new PlayersFactory();
+        this.playersFactory = playersFactory;
         ui.welcomePlayer();
     }
 

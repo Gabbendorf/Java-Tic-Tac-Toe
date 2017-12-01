@@ -11,11 +11,13 @@ public class SmartComputer implements Player {
 
     private final Mark mark;
     private final MoveGenerator firstMove;
+    private final int speedInMills;
     private int score;
 
-    public SmartComputer(Mark mark, MoveGenerator firstMove) {
+    public SmartComputer(Mark mark, MoveGenerator firstMove, int speedInMillis) {
         this.mark = mark;
         this.firstMove = firstMove;
+        this.speedInMills = speedInMillis;
     }
 
     public String makeMove(Ui ui, Grid grid, Lines lines) {
@@ -32,6 +34,8 @@ public class SmartComputer implements Player {
     public Mark getMark() {
         return mark;
     }
+
+
 
     private String bestMovePosition(Grid grid, Lines lines) {
         Grid bestGrid = gridCopyWithBestMove(grid, lines);
@@ -93,7 +97,7 @@ public class SmartComputer implements Player {
 
     private void slowDown() {
         try {
-            Thread.sleep(1200);
+            Thread.sleep(speedInMills);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
