@@ -10,87 +10,21 @@ import java.util.*;
 public class SmartComputer implements Player {
 
     private final Mark mark;
-    private final MoveGenerator firstMove;
     private final int speedInMills;
-    private int score;
+    private Grid bestGrid;
 
-    public SmartComputer(Mark mark, MoveGenerator firstMove, int speedInMillis) {
+    public SmartComputer(Mark mark, int speedInMillis) {
         this.mark = mark;
-        this.firstMove = firstMove;
         this.speedInMills = speedInMillis;
     }
 
     public String makeMove(Ui ui, Grid grid, Lines lines) {
-        StringBuilder move = new StringBuilder();
-        if (grid.isAllEmpty()) {
-            move.append(firstMove.getRandomMove(grid));
-        } else {
-            move.append(bestMovePosition(grid, lines));
-        }
         slowDown();
-        return move.toString();
+        return bestMoveFor(grid, lines);
     }
 
     public Mark getMark() {
         return mark;
-    }
-
-    private String bestMovePosition(Grid grid, Lines lines) {
-        Grid bestGrid = gridCopyWithBestMove(grid, lines);
-        List<String> freePositions = grid.emptyPositions();
-        StringBuilder movePosition = new StringBuilder();
-        for (String cell : freePositions) {
-           if (!bestGrid.isEmptyCell(cell)) {
-               movePosition.append(cell);
-           }
-        }
-        return movePosition.toString();
-    }
-
-    private Grid gridCopyWithBestMove(Grid grid, Lines lines) {
-        Map<Integer, Grid> possibleMovesInGridCopies = gridCopiesWithScores(grid, lines, mark);
-        int maxScore = Collections.max(possibleMovesInGridCopies.keySet());
-        return possibleMovesInGridCopies.get(maxScore);
-    }
-
-    private Map<Integer, Grid> gridCopiesWithScores(Grid grid, Lines lines, Mark mark) {
-        List<Grid> gridCopies = grid.makeCopiesOfGridWith(mark);
-        Map<Integer, Grid> gridsWithScores = new HashMap<>();
-        for (Grid newGridCopy : gridCopies) {
-            gridsWithScores.put(scoreFor(newGridCopy, lines, mark), newGridCopy);
-        }
-        return gridsWithScores;
-    }
-
-    private int scoreFor(Grid gridCopy, Lines lines, Mark mark) {
-        if (gridCopy.isFinishedGame(lines)) {
-            ScoreForFinalGrid(gridCopy, lines);
-        } else {
-            Mark currentMark = mark.swap();
-            Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
-            applyMiniMax(gridsWithScores, currentMark);
-        }
-        return score;
-    }
-
-    private void ScoreForFinalGrid(Grid gridCopy, Lines lines) {
-        if (lines.isWinning(gridCopy)) {
-            if (lines.winningMark(gridCopy).equals(mark)) {
-                score = 1;
-            } else {
-                score = -1;
-            }
-        } else {
-            score = 0;
-        }
-    }
-
-    private void applyMiniMax(Map<Integer, Grid> gridsWithScores, Mark currentMark) {
-        if (currentMark == mark) {
-            score = Collections.max(gridsWithScores.keySet());
-        } else {
-            score = Collections.min(gridsWithScores.keySet());
-        }
     }
 
     private void slowDown() {
@@ -99,5 +33,76 @@ public class SmartComputer implements Player {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private String bestMoveFor(Grid grid, Lines lines) {
+        calculateMinimax(grid, 8, -1, 1, mark, lines);
+        StringBuilder movePosition = new StringBuilder();
+        for (String cell : grid.emptyPositions()) {
+            if (!bestGrid.isEmptyCell(cell)) {
+                movePosition.append(cell);
+            }
+        }
+        return movePosition.toString();
+    }
+
+    private int calculateMinimax(Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
+        if (grid.isFinishedGame(lines) || depthLevel == 0) {
+            return scoreForFinalGrid(grid, lines);
+        } else {
+            List<Grid> gridsWithMoves = grid.makeCopiesOfGridWith(mark);
+            Collections.shuffle(gridsWithMoves);
+            if (mark == this.mark) {
+                return maximisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark, lines);
+            } else {
+                return minimisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark, lines);
+            }
+        }
+    }
+
+    private int scoreForFinalGrid(Grid gridCopy, Lines lines) {
+        int score;
+        if (lines.isWinning(gridCopy)) {
+            if (lines.winningMark(gridCopy) == mark) {
+                score = 1;
+            } else {
+                score = -1;
+            }
+        } else {
+            score = 0;
+        }
+        return score;
+    }
+
+    private int maximisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
+        Grid gridSelected = grid;
+        for (Grid gridWithMove : gridsWithMoves) {
+            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap(), lines);
+            if (score > alpha) {
+                alpha = score;
+                gridSelected = gridWithMove;
+            }
+            if (alpha >= beta) {
+                break;
+            }
+        }
+        bestGrid = gridSelected;
+        return alpha;
+    }
+
+    private int minimisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
+        Grid gridSelected = grid;
+        for (Grid gridWithMove : gridsWithMoves) {
+            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap(), lines);
+            if (score < beta) {
+                beta = score;
+                gridSelected = gridWithMove;
+            }
+            if (alpha >= beta) {
+                break;
+            }
+        }
+        bestGrid = gridSelected;
+        return beta;
     }
 }

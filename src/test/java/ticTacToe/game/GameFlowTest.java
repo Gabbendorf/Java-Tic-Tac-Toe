@@ -63,7 +63,21 @@ public class GameFlowTest {
     }
 
     @Test
-    public void runsGameHumanPlayerAgainstSmartComputer() {
+    public void runsGameHumanPlayerAgainstSmartComputerOn3x3Grid() {
+        UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
+        Lines lines = new Lines();
+        PlayersFactory playersFactory = new PlayersFactory();
+        GameFlow gameFlow = new GameFlow(ui, lines, playersFactory);
+
+        gameFlow.runGame();
+
+        String humanPlayerMark = CROSS.sign;
+        String message = String.format("Player %s won!", humanPlayerMark);
+        assertFalse(output.toString().contains(message));
+    }
+
+    @Test
+    public void runsGameHumanPlayerAgainstSmartComputerOn4x4Grid() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
@@ -79,6 +93,18 @@ public class GameFlowTest {
     @Test
     public void runsGameComputerAgainstComputerOn3x3Grid() {
         Ui ui = new Ui (new PrintStream(output), new ByteArrayInputStream("3\n3\nx\nn".getBytes()));
+        Lines lines = new Lines();
+        PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
+        GameFlow gameFlow = new GameFlow(ui, lines, playersFactoryDouble);
+
+        gameFlow.runGame();
+
+        assertTrue(output.toString().contains("It's draw: nobody wins!"));
+    }
+
+    @Test
+    public void runsGameComputerAgainstComputerOn4x4Grid() {
+        Ui ui = new Ui (new PrintStream(output), new ByteArrayInputStream("4\n3\nx\nn".getBytes()));
         Lines lines = new Lines();
         PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
         GameFlow gameFlow = new GameFlow(ui, lines, playersFactoryDouble);
