@@ -67,23 +67,60 @@ public class UiTest {
     }
 
     @Test
-    public void printsGrid() {
+    public void printsGrid3x3() {
         Ui ui = newUiWith("input");
-
         Grid grid = new Grid(3);
+
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n " +
-                                              "| 1 | 2 | 3 | \n " +
-                                              "| --------- | \n " +
-                                              "| 4 | 5 | 6 | \n " +
-                                              "| --------- | \n " +
-                                              "| 7 | 8 | 9 | \n " +
+        assertTrue(output.toString().contains("| --------- | \n" +
+                                              "| 1 | 2 | 3 | \n" +
+                                              "| --------- | \n" +
+                                              "| 4 | 5 | 6 | \n" +
+                                              "| --------- | \n" +
+                                              "| 7 | 8 | 9 | \n" +
                                               "| --------- |"));
     }
 
     @Test
-    public void printsGridWithColouredMarks() {
+    public void printsGrid4x4() {
+        Ui ui = newUiWith("input");
+        Grid grid = new Grid(4);
+
+        ui.printGrid(new Lines(), grid);
+
+        assertTrue(output.toString().contains("| ------------- | \n" +
+                                              "| 1 | 2 | 3 | 4 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 5 | 6 | 7 | 8 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 9 | 10| 11| 12| \n" +
+                                              "| ------------- | \n" +
+                                              "| 13| 14| 15| 16| \n" +
+                                              "| ------------- |"));
+    }
+    @Test
+    public void prints4x4GridWithColouredMarks() {
+        Ui ui = newUiWith("input");
+        Grid grid = new Grid(4);
+        grid.addMark(NOUGHT, "2");
+        grid.addMark(CROSS, "15");
+
+        ui.printGrid(new Lines(), grid);
+
+        assertTrue(output.toString().contains("| ------------- | \n" +
+                                              "| 1 | " + GridFormatter.red_O + " | 3 | 4 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 5 | 6 | 7 | 8 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 9 | 10| 11| 12| \n" +
+                                              "| ------------- | \n" +
+                                              "| 13| 14| " + GridFormatter.blue_X + " | 16| \n" +
+                                              "| ------------- |"));
+    }
+
+    @Test
+    public void prints3x3GridWithColouredMarks() {
         Ui ui = newUiWith("input");
         Grid grid = new Grid(3);
         grid.addMark(NOUGHT, "2");
@@ -91,12 +128,12 @@ public class UiTest {
 
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n | " +
-                                              GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
-                                             " | --------- | \n " +
-                                              "| 4 | 5 | 6 | \n " +
-                                              "| --------- | \n " +
-                                              "| 7 | 8 | 9 | \n " +
+        assertTrue(output.toString().contains("| --------- | \n" +
+                                              "| " + GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
+                                              "| --------- | \n" +
+                                              "| 4 | 5 | 6 | \n" +
+                                              "| --------- | \n" +
+                                              "| 7 | 8 | 9 | \n" +
                                               "| --------- |"));
     }
 
