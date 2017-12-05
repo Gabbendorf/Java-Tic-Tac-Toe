@@ -2,7 +2,6 @@ package ticTacToe.grid;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.game.Lines;
 
 import java.util.Arrays;
 import java.util.List;
@@ -110,6 +109,16 @@ public class GridTest {
         assertFalse(cells(gridList, 0).equals(cells(gridList, 1)));
         assertFalse(cells(gridList, 1).equals(cells(gridList, 2)));
         assertFalse(cells(gridList, 0).equals(cells(gridList, 2)));
+    }
+
+    @Test
+    public void returnsTrueForCellNumberInsideValidRange() {
+        assertTrue(grid.isInsideCellsRange("9"));
+    }
+
+    @Test
+    public void returnsFalseForCellNumberOutsideValidRange() {
+        assertFalse(grid.isInsideCellsRange("0"));
     }
 
     @Test

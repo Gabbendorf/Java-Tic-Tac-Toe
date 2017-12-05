@@ -1,6 +1,5 @@
 package ticTacToe.grid;
 
-import ticTacToe.game.Lines;
 import ticTacToe.game.Mark;
 
 import java.util.*;
@@ -71,6 +70,10 @@ public class Grid {
             gridCopies.add(gridCopy);
         }
         return gridCopies;
+    }
+
+    public  boolean isInsideCellsRange(String positionChosen) {
+        return positionFor(positionChosen) >= 0 && positionFor(positionChosen) < cells.size();
     }
 
     public boolean isAllEmpty() {

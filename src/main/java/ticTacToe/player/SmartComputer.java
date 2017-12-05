@@ -1,6 +1,6 @@
 package ticTacToe.player;
 
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
@@ -11,11 +11,13 @@ public class SmartComputer implements Player {
 
     private final Mark mark;
     private final MoveGenerator firstMove;
+    private final int speedInMills;
     private int score;
 
-    public SmartComputer(Mark mark, MoveGenerator firstMove) {
+    public SmartComputer(Mark mark, MoveGenerator firstMove, int speedInMillis) {
         this.mark = mark;
         this.firstMove = firstMove;
+        this.speedInMills = speedInMillis;
     }
 
     public String makeMove(Ui ui, Grid grid, Lines lines) {
@@ -25,12 +27,15 @@ public class SmartComputer implements Player {
         } else {
             move.append(bestMovePosition(grid, lines));
         }
+        slowDown();
         return move.toString();
     }
 
     public Mark getMark() {
         return mark;
     }
+
+
 
     private String bestMovePosition(Grid grid, Lines lines) {
         Grid bestGrid = gridCopyWithBestMove(grid, lines);
@@ -63,7 +68,7 @@ public class SmartComputer implements Player {
         if (gridCopy.isFinishedGame(lines)) {
             ScoreForFinalGrid(gridCopy, lines);
         } else {
-            Mark currentMark = mark.doSwitch();
+            Mark currentMark = mark.swap();
             Map<Integer, Grid> gridsWithScores = gridCopiesWithScores(gridCopy, lines, currentMark);
             applyMiniMax(gridsWithScores, currentMark.sign);
         }
@@ -87,6 +92,14 @@ public class SmartComputer implements Player {
             score = Collections.max(gridsWithScores.keySet());
         } else {
             score = Collections.min(gridsWithScores.keySet());
+        }
+    }
+
+    private void slowDown() {
+        try {
+            Thread.sleep(speedInMills);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

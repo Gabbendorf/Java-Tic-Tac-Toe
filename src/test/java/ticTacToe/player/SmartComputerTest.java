@@ -1,8 +1,9 @@
 package ticTacToe.player;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.Lines;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
 
@@ -14,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static ticTacToe.game.Mark.CROSS;
 
 public class SmartComputerTest {
@@ -23,7 +23,7 @@ public class SmartComputerTest {
 
     @BeforeClass
     public static void newComputer() {
-        computer = new SmartComputer(CROSS, new MoveGenerator());
+        computer = new SmartComputer(CROSS, new MoveGenerator(), 0);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class SmartComputerTest {
         Ui ui = new Ui(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(3);
         Lines lines = new Lines();
-        SmartComputer computer = new SmartComputer(CROSS, new MoveGeneratorDouble());
+        SmartComputer computer = new SmartComputer(CROSS, new MoveGeneratorDouble(), 0);
 
         assertEquals("5", computer.makeMove(ui, grid, lines));
     }
@@ -77,7 +77,7 @@ public class SmartComputerTest {
 
         List<String> movesToBlockWinningFork = new ArrayList<>(Arrays.asList("4", "7", "8"));
 
-        assertTrue(movesToBlockWinningFork.contains(computer.makeMove(ui, grid, lines)));
+        Assert.assertTrue(movesToBlockWinningFork.contains(computer.makeMove(ui, grid, lines)));
     }
 
     @Test

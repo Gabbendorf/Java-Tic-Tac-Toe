@@ -34,4 +34,5 @@ public class MarkTest {
     public void convertsStringForNoughtIntoConstant() {
         assertEquals(NOUGHT, Mark.create("O"));
     }
+
 }

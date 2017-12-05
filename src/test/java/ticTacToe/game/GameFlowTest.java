@@ -3,6 +3,9 @@ package ticTacToe.game;
 import org.junit.Before;
 import org.junit.Test;
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.Lines;
+import ticTacToe.player.PlayersFactory;
+import ticTacToe.player.PlayersFactoryDouble;
 import ticTacToe.ui.Ui;
 import ticTacToe.ui.UiDouble;
 
@@ -60,11 +63,12 @@ public class GameFlowTest {
     }
 
     @Test
-    public void runsGameAgainstSmartComputer() {
+    public void runsGameHumanPlayerAgainstSmartComputer() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
         Grid grid = new Grid(3);
         Lines lines = new Lines();
-        GameFlow gameFlow = new GameFlow(ui, grid, lines);
+        PlayersFactory playersFactory = new PlayersFactory();
+        GameFlow gameFlow = new GameFlow(ui, grid, lines, playersFactory);
 
         gameFlow.runGame();
 
@@ -72,11 +76,25 @@ public class GameFlowTest {
         assertTrue(humanIsNotWinner(grid, lines, computerMark));
     }
 
+    @Test
+    public void runsGameComputerAgainstComputer() {
+        Ui ui = new Ui (new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("3\nx\nn".getBytes()));
+        Grid grid = new Grid(3);
+        Lines lines = new Lines();
+        PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
+        GameFlow gameFlow = new GameFlow(ui, grid, lines, playersFactoryDouble);
+
+        gameFlow.runGame();
+
+        assertTrue(grid.isFinishedGame(lines));
+    }
+
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
         Grid grid = new Grid(3);
         Lines lines = new Lines();
-        return new GameFlow(ui, grid, lines);
+        PlayersFactory playersFactory = new PlayersFactory();
+        return new GameFlow(ui, grid, lines, playersFactory);
     }
 
     private Ui newUiWith(String inputString) {

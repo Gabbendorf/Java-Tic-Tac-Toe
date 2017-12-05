@@ -2,10 +2,11 @@ package ticTacToe.ui;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.GameOption;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.game.Lines;
-import ticTacToe.grid.GridPreparer;
+import ticTacToe.grid.Lines;
+import ticTacToe.grid.GridFormatter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +16,8 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ticTacToe.game.GameOption.COMPUTER_VS_COMPUTER;
+import static ticTacToe.game.GameOption.HUMAN_VS_HUMAN;
 import static ticTacToe.game.Mark.*;
 
 public class UiTest {
@@ -68,7 +71,7 @@ public class UiTest {
         ui.printGrid(new Lines(), grid);
 
         assertTrue(output.toString().contains("| --------- | \n | " +
-                                              GridPreparer.blue_X + " | " + GridPreparer.red_O + " | 3 | \n" +
+                                              GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
                                              " | --------- | \n " +
                                               "| 4 | 5 | 6 | \n " +
                                               "| --------- | \n " +
@@ -77,25 +80,26 @@ public class UiTest {
     }
 
     @Test
-    public void asksForOpponentTypeNumber() {
+    public void asksForGameTypeOption() {
         Ui ui = newUiWith("1");
 
-        String opponentOptionNumber = ui.chooseOpponent();
+        GameOption gameOptionChosen = ui.chooseGameOption();
 
-        assertTrue(output.toString().contains("Choose opponent type:"));
-        assertTrue(output.toString().contains("1- human player"));
-        assertTrue(output.toString().contains("2- smart computer."));
-        assertEquals("1", opponentOptionNumber);
+        assertTrue(output.toString().contains("Choose a game option:"));
+        assertTrue(output.toString().contains("1- Human Player vs Human Player"));
+        assertTrue(output.toString().contains("2- Human Player vs Smart Computer"));
+        assertTrue(output.toString().contains("3- Computer vs Computer"));
+        assertEquals(HUMAN_VS_HUMAN, gameOptionChosen);
     }
 
     @Test
-    public void asksForValidOpponentTypeNumber() {
-        Ui ui = newUiWith("3\nd\n1");
+    public void asksForCorrectInputForGameTypeOption() {
+        Ui ui = newUiWith("n\n5\n3");
 
-        String validOpponentNumber = ui.chooseOpponent();
+        GameOption validGameOption = ui.chooseGameOption();
 
-        assertTrue(output.toString().contains("Please choose a valid opponent:"));
-        assertEquals("1", validOpponentNumber);
+        assertTrue(output.toString().contains("Invalid input."));
+        assertEquals(COMPUTER_VS_COMPUTER, validGameOption);
     }
 
     @Test
@@ -104,8 +108,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: " + GridPreparer.blue_X +
-                                              " => Cross, " + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.blue_X +
+                                              " => Cross, " + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(CROSS, markType);
     }
 
@@ -115,8 +119,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or "
-                                              + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or "
+                                              + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(NOUGHT, markType);
     }
 
@@ -126,7 +130,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -136,7 +140,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -210,7 +214,7 @@ public class UiTest {
     public void announcesWinner() {
         Ui ui = newUiWith("input");
 
-        ui.declareWinner(CROSS, lines, gridWithSize);
+        ui.declareWinner(CROSS);
 
         assertTrue(output.toString().contains("Player X won!"));
     }
@@ -219,7 +223,7 @@ public class UiTest {
     public void announcesDraw() {
         Ui ui = newUiWith("input");
 
-        ui.declareDraw(lines, gridWithSize);
+        ui.declareDraw();
 
         assertTrue(output.toString().contains("It's draw: nobody wins!"));
     }

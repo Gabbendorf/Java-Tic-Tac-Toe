@@ -1,6 +1,6 @@
-package ticTacToe.game;
+package ticTacToe.grid;
 
-import ticTacToe.grid.Grid;
+import ticTacToe.game.Mark;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,7 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
+import ticTacToe.grid.Lines;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;
@@ -16,11 +17,11 @@ public class GameFlow {
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Grid grid, Lines lines) {
+    public GameFlow(Ui ui, Grid grid, Lines lines, PlayersFactory playersFactory) {
         this.ui = ui;
         this.grid = grid;
         this.lines = lines;
-        this.playersFactory = new PlayersFactory();
+        this.playersFactory = playersFactory;
         ui.welcomePlayer();
     }
 
@@ -32,18 +33,19 @@ public class GameFlow {
     }
 
     private void setUpPlayers() {
-        String opponentOptionNumber = ui.chooseOpponent();
-        firstPlayer = playersFactory.firstPlayer(ui);
-        secondPlayer = playersFactory.secondPlayer(opponentOptionNumber, firstPlayer.getMark());
+        GameOption gameTypeOption = ui.chooseGameOption();
+        firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
+        secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
     }
 
     private void gameFlow() {
         Mark currentMark = ui.askForStarter();
         while (!grid.isFinishedGame(lines)) {
+            ui.printGrid(lines, grid);
             String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);
-            currentMark = currentMark.doSwitch();
+            currentMark = currentMark.swap();
         }
     }
 
@@ -60,10 +62,11 @@ public class GameFlow {
 
     private void reportFinalResult() {
         if (lines.isWinning(grid)) {
-            ui.declareWinner(lines.winningMark(grid), lines, grid);
+            ui.declareWinner(lines.winningMark(grid));
         } else {
-            ui.declareDraw(lines, grid);
+            ui.declareDraw();
         }
+        ui.printGrid(lines, grid);
     }
 
     private void startNewGameOrQuit() {

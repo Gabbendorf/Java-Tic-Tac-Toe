@@ -1,9 +1,10 @@
 package ticTacToe.ui;
 
+import ticTacToe.game.GameOption;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.GridPreparer;
-import ticTacToe.game.Lines;
+import ticTacToe.grid.GridFormatter;
+import ticTacToe.grid.Lines;
 
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -13,43 +14,43 @@ import java.util.Scanner;
 
 public class Ui {
 
-    private final GridPreparer gridPreparer;
+    private final GridFormatter gridFormatter;
     private PrintStream output;
     private Scanner input;
 
     public Ui(PrintStream output, InputStream input) {
         this.output = output;
         this.input = new Scanner(input);
-        this.gridPreparer = new GridPreparer();
+        this.gridFormatter = new GridFormatter();
     }
 
     public void welcomePlayer() {
         clearScreen();
         output.println("Welcome to TIC TAC TOE!");
         output.println("Are you ready to play??");
+        output.println("\n");
     }
 
     public void printGrid(Lines lines, Grid grid) {
-        List<ArrayList<String>> rowsWithColours = gridPreparer.rowsWithColours(lines.getRows(grid));
-        output.println(gridPreparer.prepareGridForPrinting(rowsWithColours));
+        List<ArrayList<String>> rowsWithColours = gridFormatter.rowsWithColours(lines.getRows(grid));
+        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
     }
 
-    public String chooseOpponent() {
-        output.println("\n");
-        output.println("Choose opponent type:");
-        opponentOptions();
-        return validOptionNumber(input.nextLine());
+    public GameOption chooseGameOption() {
+        output.println("Choose a game option:");
+        gameTypeOptions();
+        return validGameOption(validatedInput());
     }
 
     public Mark askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: " + GridPreparer.blue_X + " => Cross, " + GridPreparer.red_O + " (letter) => Nought");
+        output.println("First player: please choose a mark: " + GridFormatter.blue_X + " => Cross, " + GridFormatter.red_O + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public Mark askForStarter() {
         clearScreen();
-        output.println("Who starts: " + GridPreparer.blue_X + " or " + GridPreparer.red_O + " (letter)?");
+        output.println("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?");
         Mark markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -60,7 +61,6 @@ public class Ui {
     }
 
     public String validPosition(Grid grid, Mark mark, Lines lines) {
-        printGrid(lines, grid);
         String validatedPosition = validatePosition(grid, mark, lines, validInput(grid, mark, lines, input.nextLine()));
         return notOccupiedPosition(grid, validatedPosition, mark, lines);
     }
@@ -70,15 +70,13 @@ public class Ui {
         output.println(String.format("Player %s marked position %s.", mark.sign, gridPosition));
     }
 
-    public void declareWinner(Mark mark, Lines lines, Grid grid) {
+    public void declareWinner(Mark mark) {
         clearScreen();
-        printGrid(lines, grid);
         output.println(String.format("Player %s won!", mark.sign));
     }
 
-    public void declareDraw(Lines lines, Grid grid) {
+    public void declareDraw() {
         clearScreen();
-        printGrid(lines, grid);
         output.println("It's draw: nobody wins!");
     }
 
@@ -91,54 +89,59 @@ public class Ui {
         output.println("See you soon!");
     }
 
-    private void opponentOptions() {
-        output.println("1- human player");
-        output.println("2- smart computer.");
+    private void gameTypeOptions() {
+        output.println("1- Human Player vs Human Player");
+        output.println("2- Human Player vs Smart Computer");
+        output.println("3- Computer vs Computer");
     }
 
-    private String validOptionNumber(String opponentOptionNumber) {
-        while (isInvalidOptionNumber(opponentOptionNumber)) {
+    private int validatedInput() {
+        String userInput = input.nextLine();
+        while (isNotNumber(userInput)) {
             clearScreen();
-            output.println("Please choose a valid opponent:");
-            opponentOptions();
-            opponentOptionNumber = input.nextLine();
+            output.println("Invalid input.");
+            gameTypeOptions();
+            userInput = input.nextLine();
         }
-        return opponentOptionNumber;
+        return Integer.parseInt(userInput);
     }
 
-    private boolean isInvalidOptionNumber(String opponentOptionNumber) {
-        return !opponentOptionNumber.equals("1") && !opponentOptionNumber.equals("2");
+    private GameOption validGameOption(int validInput) {
+        while (!GameOption.isValid(validInput)) {
+            clearScreen();
+            output.println("Wrong option, please choose a valid game option:");
+            gameTypeOptions();
+            validInput = validatedInput();
+        }
+        return GameOption.create(validInput);
     }
 
     private Mark validMarkType(String mark) {
         while (!Mark.isValid(mark)) {
             clearScreen();
-            output.println("Invalid option: " + GridPreparer.blue_X + " => Cross or " + GridPreparer.red_O + " (letter) => Nought");
+            output.println("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return Mark.create(mark);
     }
 
     private String validatePosition(Grid grid, Mark mark, Lines lines, String usersInput) {
-        while (isOutsideValidRange(usersInput, grid)) {
+        while (!grid.isInsideCellsRange(usersInput)) {
             clearScreen();
             output.println("Invalid position.");
-            usersInput = promptForNewInput(grid, mark, lines);
+            printGrid(lines, grid);
+            usersInput = validPosition(grid, mark, lines);
             printGrid(lines, grid);
         }
         return usersInput;
-    }
-
-    private boolean isOutsideValidRange(String gridPosition, Grid grid) {
-        Integer positionNumber = Integer.parseInt(gridPosition);
-        return positionNumber <= 0 || positionNumber > grid.getCells().size();
     }
 
     private String validInput(Grid grid, Mark mark, Lines lines, String usersInput) {
         while (isNotNumber(usersInput)) {
             clearScreen();
             output.println("Invalid input: position must be a number.");
-            usersInput = promptForNewInput(grid, mark, lines);
+            printGrid(lines, grid);
+            usersInput = validPosition(grid, mark, lines);
         }
         return usersInput;
     }
@@ -156,15 +159,11 @@ public class Ui {
         while (!grid.isEmptyCell(validPosition)) {
             clearScreen();
             output.println("Position already occupied.");
-            validPosition = promptForNewInput(grid, mark, lines);
+            printGrid(lines, grid);
+            validPosition = validPosition(grid, mark, lines);
             printGrid(lines, grid);
         }
         return validPosition;
-    }
-
-    private String promptForNewInput(Grid grid, Mark mark, Lines lines) {
-        promptForPosition(mark);
-        return validPosition(grid, mark, lines);
     }
 
     private String validAnswer(String answer) {

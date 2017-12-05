@@ -5,7 +5,7 @@ import java.util.List;
 
 import static ticTacToe.game.Mark.*;
 
-public class GridPreparer {
+public class GridFormatter {
 
     private static final String NEW_LINE = "\n";
     private static final String LINE = "---------";
