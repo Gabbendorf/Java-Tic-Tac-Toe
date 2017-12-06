@@ -19,7 +19,6 @@ public class GameFlow {
 
     public GameFlow(Ui ui, Lines lines, PlayersFactory playersFactory) {
         this.ui = ui;
-        this.grid = createNewGrid();
         this.lines = lines;
         this.playersFactory = playersFactory;
     }
@@ -33,6 +32,7 @@ public class GameFlow {
 
     private void setUpGame() {
         ui.welcomePlayer();
+        grid = createNewGrid();
         GameOption gameTypeOption = ui.chooseGameOption();
         firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
         secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
@@ -71,7 +71,6 @@ public class GameFlow {
 
     private void startNewGameOrQuit() {
         if (playAgain(ui.askToPlayAgain())) {
-            grid = createNewGrid();
             runGame();
         } else {
             ui.sayBye();
