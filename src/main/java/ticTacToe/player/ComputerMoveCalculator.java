@@ -38,15 +38,19 @@ public class ComputerMoveCalculator {
     private int scoreForFinalGrid(Grid gridCopy, Lines lines) {
         int score;
         if (lines.isWinning(gridCopy)) {
-            if (lines.winningMark(gridCopy) == computerMark) {
-                score = 1;
-            } else {
-                score = -1;
-            }
+            score = scoreDependingOnWinner(lines, gridCopy);
         } else {
             score = 0;
         }
         return score;
+    }
+
+    private int scoreDependingOnWinner(Lines lines, Grid gridCopy) {
+        if (lines.winningMark(gridCopy) == computerMark) {
+            return 1;
+        } else {
+            return -1;
+        }
     }
 
     private int maximisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {

@@ -56,13 +56,13 @@ public class Ui {
 
     public Mark askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: " + GridFormatter.blue_X + " => Cross, " + GridFormatter.red_O + " (letter) => Nought");
+        output.println("First player: please choose a mark: " + GridFormatter.BLUE_X + " => Cross, " + GridFormatter.RED_O + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public Mark askForStarter() {
         clearScreen();
-        output.println("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?");
+        output.println("Who starts: " + GridFormatter.BLUE_X + " or " + GridFormatter.RED_O + " (letter)?");
         Mark markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -135,7 +135,7 @@ public class Ui {
     private Mark validMarkType(String mark) {
         while (!Mark.isValid(mark)) {
             clearScreen();
-            output.println("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought");
+            output.println("Invalid option: " + GridFormatter.BLUE_X + " => Cross or " + GridFormatter.RED_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return Mark.create(mark);

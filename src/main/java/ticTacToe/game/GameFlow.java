@@ -1,7 +1,6 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.GridFactory;
 import ticTacToe.grid.Lines;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
@@ -20,20 +19,20 @@ public class GameFlow {
 
     public GameFlow(Ui ui, Lines lines, PlayersFactory playersFactory) {
         this.ui = ui;
-        ui.welcomePlayer();
         this.grid = createNewGrid();
         this.lines = lines;
         this.playersFactory = playersFactory;
     }
 
     public void runGame() {
-        setUpPlayers();
+        setUpGame();
         gameFlow();
         reportFinalResult();
         startNewGameOrQuit();
     }
 
-    private void setUpPlayers() {
+    private void setUpGame() {
+        ui.welcomePlayer();
         GameOption gameTypeOption = ui.chooseGameOption();
         firstPlayer = playersFactory.firstPlayer(ui, gameTypeOption);
         secondPlayer = playersFactory.secondPlayer(gameTypeOption, firstPlayer.getMark());
@@ -84,6 +83,6 @@ public class GameFlow {
     }
 
     private Grid createNewGrid() {
-        return new GridFactory().createGrid(ui.chooseGridSize());
+        return new Grid(ui.chooseGridSize());
     }
 }

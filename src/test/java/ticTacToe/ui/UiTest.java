@@ -109,13 +109,13 @@ public class UiTest {
         ui.printGrid(new Lines(), grid);
 
         assertTrue(output.toString().contains("| ------------- | \n" +
-                                              "| 1 | " + GridFormatter.red_O + " | 3 | 4 | \n" +
+                                              "| 1 | " + GridFormatter.RED_O + " | 3 | 4 | \n" +
                                               "| ------------- | \n" +
                                               "| 5 | 6 | 7 | 8 | \n" +
                                               "| ------------- | \n" +
                                               "| 9 | 10| 11| 12| \n" +
                                               "| ------------- | \n" +
-                                              "| 13| 14| " + GridFormatter.blue_X + " | 16| \n" +
+                                              "| 13| 14| " + GridFormatter.BLUE_X + " | 16| \n" +
                                               "| ------------- |"));
     }
 
@@ -129,7 +129,7 @@ public class UiTest {
         ui.printGrid(new Lines(), grid);
 
         assertTrue(output.toString().contains("| --------- | \n" +
-                                              "| " + GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
+                                              "| " + GridFormatter.BLUE_X + " | " + GridFormatter.RED_O + " | 3 | \n" +
                                               "| --------- | \n" +
                                               "| 4 | 5 | 6 | \n" +
                                               "| --------- | \n" +
@@ -166,8 +166,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.blue_X +
-                                              " => Cross, " + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.BLUE_X +
+                                              " => Cross, " + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(CROSS, markType);
     }
 
@@ -177,8 +177,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or "
-                                              + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.BLUE_X + " => Cross or "
+                                              + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(NOUGHT, markType);
     }
 
@@ -188,7 +188,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + GridFormatter.BLUE_X + " or " + GridFormatter.RED_O + " (letter)?"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -198,7 +198,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.BLUE_X + " => Cross or " + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(CROSS, startingMark);
     }
 

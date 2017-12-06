@@ -8,8 +8,8 @@ import static ticTacToe.game.Mark.*;
 public class GridFormatter {
 
     private static final String NEW_LINE = "\n";
-    public static final String red_O = "\u001B[31mO\u001b[0m";
-    public static final String blue_X = "\u001b[34mX\u001b[0m";
+    public static final String RED_O = "\u001B[31mO\u001b[0m";
+    public static final String BLUE_X = "\u001b[34mX\u001b[0m";
 
     public String prepareGridForPrinting(List<ArrayList<String>> rows, int gridSize) {
         List<String> printableList = new ArrayList<>();
@@ -46,17 +46,17 @@ public class GridFormatter {
     private String addColourTo(String cell) {
         String colouredMark;
         if (cell.equals(CROSS.sign)) {
-            colouredMark = blue_X;
+            colouredMark = BLUE_X;
         } else if (cell.equals(NOUGHT.sign)){
-            colouredMark = red_O;
+            colouredMark = RED_O;
         } else {
             colouredMark = cell;
         }
-        return String.format(justifyPattern(colouredMark, cell), colouredMark);
+        return String.format(formattingPattern(colouredMark, cell), colouredMark);
     }
 
-    private String justifyPattern(String colouredMark, String cell) {
-        Integer justifiedCellLength = colouredMark.length() - cell.length() + 2;
-        return "%-" + justifiedCellLength.toString() + "s";
+    private String formattingPattern(String colouredMark, String cell) {
+        int justifiedCellLength = colouredMark.length() - cell.length() + 2;
+        return "%-" + Integer.toString(justifiedCellLength) + "s";
     }
 }
