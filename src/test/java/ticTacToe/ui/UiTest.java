@@ -5,7 +5,6 @@ import org.junit.Test;
 import ticTacToe.game.GameOption;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Lines;
 import ticTacToe.grid.GridFormatter;
 
 import java.io.ByteArrayInputStream;
@@ -25,14 +24,12 @@ public class UiTest {
     private ByteArrayOutputStream output;
     private Grid gridWithSize;
     private Grid gridWithCells;
-    private Lines lines;
 
     @Before
     public void setUp() {
         output = new ByteArrayOutputStream();
         gridWithSize = new Grid(3);
         gridWithCells = new Grid(new ArrayList<>(Arrays.asList("X", "2")));
-        lines = new Lines();
     }
 
     @Test
@@ -71,7 +68,7 @@ public class UiTest {
         Ui ui = newUiWith("input");
         Grid grid = new Grid(3);
 
-        ui.printGrid(new Lines(), grid);
+        ui.printGrid(grid);
 
         assertTrue(output.toString().contains("| --------- | \n" +
                                               "| 1 | 2 | 3 | \n" +
@@ -87,7 +84,7 @@ public class UiTest {
         Ui ui = newUiWith("input");
         Grid grid = new Grid(4);
 
-        ui.printGrid(new Lines(), grid);
+        ui.printGrid(grid);
 
         assertTrue(output.toString().contains("| ------------- | \n" +
                                               "| 1 | 2 | 3 | 4 | \n" +
@@ -106,7 +103,7 @@ public class UiTest {
         grid.addMark(NOUGHT, "2");
         grid.addMark(CROSS, "15");
 
-        ui.printGrid(new Lines(), grid);
+        ui.printGrid(grid);
 
         assertTrue(output.toString().contains("| ------------- | \n" +
                                               "| 1 | " + GridFormatter.RED_O + " | 3 | 4 | \n" +
@@ -126,7 +123,7 @@ public class UiTest {
         grid.addMark(NOUGHT, "2");
         grid.addMark(CROSS, "1");
 
-        ui.printGrid(new Lines(), grid);
+        ui.printGrid(grid);
 
         assertTrue(output.toString().contains("| --------- | \n" +
                                               "| " + GridFormatter.BLUE_X + " | " + GridFormatter.RED_O + " | 3 | \n" +
@@ -215,7 +212,7 @@ public class UiTest {
     public void returnsValidPosition() {
         Ui ui = newUiWith("1");
 
-        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS);
 
         assertEquals("1", gridPosition);
     }
@@ -224,7 +221,7 @@ public class UiTest {
     public void asksForNotOccupiedPosition() {
         Ui ui = newUiWith("1\n2");
 
-        String gridPosition = ui.validPosition(gridWithCells, CROSS , lines);
+        String gridPosition = ui.validPosition(gridWithCells, CROSS);
 
         assertTrue(output.toString().contains("Position already occupied."));
         assertEquals("2", gridPosition);
@@ -234,7 +231,7 @@ public class UiTest {
     public void asksForValidPosition() {
         Ui ui = newUiWith("10\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS);
 
         assertTrue(output.toString().contains("Invalid position."));
         assertEquals("1", gridPosition);
@@ -244,7 +241,7 @@ public class UiTest {
     public void asksForNumberAsInput() {
         Ui ui = newUiWith("d\n1");
 
-        String gridPosition = ui.validPosition(gridWithSize, CROSS, lines);
+        String gridPosition = ui.validPosition(gridWithSize, CROSS);
 
         assertTrue(output.toString().contains("Invalid input: position must be a number."));
         assertEquals("1", gridPosition);
@@ -254,7 +251,7 @@ public class UiTest {
     public void returnsValidInputAfterAllChecks() {
         Ui ui = newUiWith("h\n100\nh\n1");
 
-        String validPosition = ui.validPosition(gridWithSize, CROSS, lines);
+        String validPosition = ui.validPosition(gridWithSize, CROSS);
 
         assertEquals("1", validPosition);
     }

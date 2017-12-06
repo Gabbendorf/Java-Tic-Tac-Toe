@@ -2,7 +2,6 @@ package ticTacToe.ui;
 
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Lines;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -20,7 +19,7 @@ public class UiDouble extends Ui {
     }
 
     @Override
-    public String validPosition(Grid grid, Mark mark, Lines lines) {
+    public String validPosition(Grid grid, Mark mark) {
         List<String> emptyPositions = grid.emptyPositions();
         return emptyPositions.get(new Random().nextInt(emptyPositions.size()));
     }

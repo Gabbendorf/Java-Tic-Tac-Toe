@@ -9,7 +9,7 @@ import static java.util.Arrays.asList;
 
 public class Grid {
 
-    private List<String> cells;
+    protected List<String> cells;
     private int size;
 
     public Grid(int size) {
@@ -37,10 +37,6 @@ public class Grid {
             }
         }
         return true;
-    }
-
-    public List<String> getCells() {
-        return cells;
     }
 
     public int getSize() {
@@ -80,8 +76,40 @@ public class Grid {
         return emptyPositions().size() == cells.size();
     }
 
-    public boolean isFinishedGame(Lines lines) {
-        return allOccupiedCells() || lines.isWinning(this);
+    public boolean isWinner() {
+        for (Line line : allLines()) {
+            if (line.isWinning()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isFinishedGame() {
+        return allOccupiedCells() || isWinner();
+    }
+
+    public Mark winningMark() {
+        return winningLine().winningMark();
+    }
+
+    public Line winningLine() {
+        Line winningLine = null;
+        for (Line line : allLines()) {
+            if (line.isWinning()) {
+                winningLine = line;
+            }
+        }
+        return winningLine;
+    }
+
+    public List<ArrayList<String>> rows() {
+        List<ArrayList<String>> rows = new ArrayList<>();
+        for (int i = 0; i < size; i++){
+            ArrayList<String> line = sliceArray(startingCellPosition(i), finalCellPosition(i));
+            rows.add(line);
+        }
+        return rows;
     }
 
     private List<String> allCells() {
@@ -98,5 +126,74 @@ public class Grid {
 
     private int positionFor(String cellNumber) {
         return Integer.parseInt(cellNumber) - 1;
+    }
+
+    private List<Line> allLines() {
+        List<Line> allLines = new ArrayList<>();
+        addEachLine(rows(), allLines);
+        addEachLine(columns(), allLines);
+        addEachLine(diagonalLines(), allLines);
+        return allLines;
+    }
+
+    private void addEachLine(List<ArrayList<String>> lines, List<Line> allLines) {
+        for (List<String> line : lines) {
+            allLines.add(new Line(line));
+        }
+    }
+
+    private ArrayList<String> sliceArray(int startingPoint, int finalPoint) {
+        ArrayList<String> row = new ArrayList<>();
+        for (int i = startingPoint; i <= finalPoint; i++) {
+            row.add(cells.get(i));
+        }
+        return row;
+    }
+
+    private int startingCellPosition(int i) {
+        return i * size;
+    }
+
+    private int finalCellPosition(int i) {
+        return  (i + 1) * size - 1;
+    }
+
+    private List<ArrayList<String>> columns() {
+        List<ArrayList<String>> columns = new ArrayList<>();
+        for (int cellPosition = 0; cellPosition < size; cellPosition++) {
+            ArrayList<String> line = new ArrayList<>();
+            for (int horizontalLineNumber = 0; horizontalLineNumber < size; horizontalLineNumber++) {
+                line.add(rows().get(horizontalLineNumber).get(cellPosition));
+            }
+            columns.add(line);
+        }
+        return columns;
+    }
+
+    private List<ArrayList<String>> diagonalLines() {
+        List<ArrayList<String>> diagonalLines = new ArrayList<>();
+        diagonalLines.add(firstDiagonalLine());
+        diagonalLines.add(secondDiagonalLine());
+        return diagonalLines;
+    }
+
+    private ArrayList<String> firstDiagonalLine() {
+        ArrayList<String> diagonalLine = new ArrayList<>();
+        int cellNumber = 0;
+        for (int rowNumber = 0; rowNumber < size; rowNumber++) {
+            diagonalLine.add(rows().get(rowNumber).get(cellNumber));
+            cellNumber += 1;
+        }
+        return diagonalLine;
+    }
+
+    private ArrayList<String> secondDiagonalLine() {
+        ArrayList<String> diagonalLine = new ArrayList<>();
+        int cellNumber = size - 1;
+        for (int rowNumber = 0; rowNumber < size; rowNumber++) {
+            diagonalLine.add(rows().get(rowNumber).get(cellNumber));
+            cellNumber -= 1;
+        }
+        return diagonalLine;
     }
 }

@@ -2,7 +2,6 @@ package ticTacToe.player;
 
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Lines;
 import ticTacToe.ui.Ui;
 
 public class HumanPlayer implements Player {
@@ -13,9 +12,9 @@ public class HumanPlayer implements Player {
         this.mark = mark;
     }
 
-    public String makeMove(Ui ui, Grid grid, Lines lines) {
+    public String makeMove(Ui ui, Grid grid) {
         ui.promptForPosition(mark);
-        return ui.validPosition(grid, mark, lines);
+        return ui.validPosition(grid, mark);
     }
 
     public Mark getMark() {

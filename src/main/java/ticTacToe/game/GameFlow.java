@@ -1,7 +1,6 @@
 package ticTacToe.game;
 
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Lines;
 import ticTacToe.player.Player;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;
@@ -11,15 +10,15 @@ import java.util.Map;
 public class GameFlow {
 
     private final Ui ui;
-    private final Lines lines;
     private Grid grid;
     private final PlayersFactory playersFactory;
     private Player firstPlayer;
     private Player secondPlayer;
 
-    public GameFlow(Ui ui, Lines lines, PlayersFactory playersFactory) {
+    public GameFlow(Ui ui, PlayersFactory playersFactory) {
         this.ui = ui;
-        this.lines = lines;
+        ui.welcomePlayer();
+        this.grid = createNewGrid();
         this.playersFactory = playersFactory;
     }
 
@@ -40,9 +39,9 @@ public class GameFlow {
 
     private void gameFlow() {
         Mark currentMark = ui.askForStarter();
-        while (!grid.isFinishedGame(lines)) {
-            ui.printGrid(lines, grid);
-            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid, lines);
+        while (!grid.isFinishedGame()) {
+            ui.printGrid(grid);
+            String positionChosen = currentPlayer(currentMark).makeMove(ui, grid);
             grid.addMark(currentMark, positionChosen);
             ui.confirmMove(currentMark, positionChosen);
             currentMark = currentMark.swap();
@@ -61,12 +60,12 @@ public class GameFlow {
     }
 
     private void reportFinalResult() {
-        if (lines.isWinning(grid)) {
-            ui.declareWinner(lines.winningMark(grid));
+        if (grid.isWinner()) {
+            ui.declareWinner(grid.winningMark());
         } else {
             ui.declareDraw();
         }
-        ui.printGrid(lines, grid);
+        ui.printGrid(grid);
     }
 
     private void startNewGameOrQuit() {

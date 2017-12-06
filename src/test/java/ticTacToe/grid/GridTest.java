@@ -3,9 +3,11 @@ package ticTacToe.grid;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,16 +24,16 @@ public class GridTest {
 
     @Test
     public void hasNineCells() {
-        assertEquals(grid.getCells().size(), 9);
-        assertEquals(grid.getCells().get(0), "1");
-        assertEquals(grid.getCells().get(8), "9");
+        assertEquals(grid.cells.size(), 9);
+        assertEquals(grid.cells.get(0), "1");
+        assertEquals(grid.cells.get(8), "9");
     }
 
     @Test
     public void addsMarkNoughtToCell() {
         grid.addMark(NOUGHT, "1");
 
-        String addedMark = grid.getCells().get(0);
+        String addedMark = grid.cells.get(0);
 
         assertEquals(NOUGHT.sign, addedMark);
     }
@@ -40,7 +42,7 @@ public class GridTest {
     public void addsMarkCrossToCell() {
         grid.addMark(CROSS, "1");
 
-        String addedMark = grid.getCells().get(0);
+        String addedMark = grid.cells.get(0);
 
         assertEquals(CROSS.sign, addedMark);
     }
@@ -77,7 +79,7 @@ public class GridTest {
 
         Grid copyOfGrid = grid.copyOfGrid();
 
-        assertEquals(grid.getCells(), copyOfGrid.getCells());
+        assertEquals(grid.cells, copyOfGrid.cells);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class GridTest {
         Grid copyOfGrid = grid.copyOfGrid();
         grid.addMark(CROSS, "2");
 
-        assertFalse(grid.getCells().equals(copyOfGrid.getCells()));
+        assertFalse(grid.cells.equals(copyOfGrid.cells));
     }
 
     @Test
@@ -134,29 +136,70 @@ public class GridTest {
     }
 
     @Test
+    public void returnsTrueForWinningGrid() {
+        Grid grid = new Grid(Arrays.asList("X", "X", "X", "4", "5", "6", "7", "8", "9"));
+
+        assertTrue(grid.isWinner());
+    }
+
+    @Test
+    public void returnsFalseForNotWinningGrid() {
+        assertFalse(grid.isWinner());
+    }
+
+    @Test
     public void knowsGameIsEndedIfDraw() {
         Grid grid = new Grid(Arrays.asList("X", "O", "X", "O", "O", "X", "X", "X", "O"));
-        Lines lines = new Lines();
 
-        assertTrue(grid.isFinishedGame(lines));
+        assertTrue(grid.isFinishedGame());
     }
 
     @Test
     public void knowsGameIsEndedIfThereIsWinner() {
         Grid grid = new Grid(Arrays.asList("X", "X", "X", "O", "O", "X", "X", "O", "O"));
-        Lines lines = new Lines();
 
-        assertTrue(grid.isFinishedGame(lines));
+        assertTrue(grid.isFinishedGame());
     }
 
     @Test
     public void knowsGameIsNotEnded() {
-        Lines lines = new Lines();
+        assertFalse(grid.isFinishedGame());
+    }
 
-        assertFalse(grid.isFinishedGame(lines));
+    @Test
+    public void returnsWinningMark() {
+        Grid grid = new Grid(Arrays.asList("X", "X", "X", "4", "5", "6", "7", "8", "9"));
+
+        assertEquals(CROSS, grid.winningMark());
+    }
+
+    @Test
+    public void returnsWinningLine() {
+        Grid grid = new Grid(Arrays.asList("X", "X", "X", "4", "5", "6", "7", "8", "9"));
+
+        Line winningLine = grid.winningLine();
+
+        assertTrue(winningLine.cells.equals(new ArrayList<>(Arrays.asList("X", "X", "X"))));
+    }
+
+    @Test
+    public void createsRows() {
+        String[] firstRow = new String[]{"1","2","3"};
+        String[] secondRow = new String[]{"4", "5", "6"};
+        String[] thirdRow = new String[]{"7", "8", "9"};
+
+        assertEquals(rows(firstRow, secondRow, thirdRow), grid.rows());
+    }
+
+    private List<List> rows(String[] firstRow, String[] secondRow, String[] thirdRow) {
+        ArrayList<List> rows = new ArrayList<>();
+        rows.add(asList(firstRow));
+        rows.add(asList(secondRow));
+        rows.add(asList(thirdRow));
+        return rows;
     }
 
     private List<String> cells(List<Grid> gridList, int gridNumber) {
-        return gridList.get(gridNumber).getCells();
+        return gridList.get(gridNumber).cells;
     }
 }

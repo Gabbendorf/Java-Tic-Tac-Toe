@@ -2,7 +2,6 @@ package ticTacToe.player;
 
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
-import ticTacToe.grid.Lines;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,47 +15,43 @@ public class ComputerMoveCalculator {
         this.computerMark = mark;
     }
 
-    public Grid getBestGrid(Grid grid, Mark mark, Lines lines) {
-        calculateMinimax(grid, 8, -1, 1, mark, lines);
+    public Grid getBestGrid(Grid grid, Mark mark) {
+        calculateMinimax(grid, 8, -1, 1, mark);
         return bestGrid;
     }
 
-    private int calculateMinimax(Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
-        if (grid.isFinishedGame(lines) || depthLevel == 0) {
-            return scoreForFinalGrid(grid, lines);
+    private int calculateMinimax(Grid grid, int depthLevel, int alpha, int beta, Mark mark) {
+        if (grid.isFinishedGame() || depthLevel == 0) {
+            return scoreForFinalGrid(grid);
         } else {
             List<Grid> gridsWithMoves = grid.makeCopiesOfGridWith(mark);
             Collections.shuffle(gridsWithMoves);
             if (mark == computerMark) {
-                return maximisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark, lines);
+                return maximisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark);
             } else {
-                return minimisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark, lines);
+                return minimisedScore(gridsWithMoves, grid, depthLevel, alpha, beta, mark);
             }
         }
     }
 
-    private int scoreForFinalGrid(Grid gridCopy, Lines lines) {
+    private int scoreForFinalGrid(Grid gridCopy) {
         int score;
-        if (lines.isWinning(gridCopy)) {
-            score = scoreDependingOnWinner(lines, gridCopy);
+        if (gridCopy.isWinner()) {
+            if (gridCopy.winningMark() == computerMark) {
+                score = 1;
+            } else {
+                score = -1;
+            }
         } else {
             score = 0;
         }
         return score;
     }
 
-    private int scoreDependingOnWinner(Lines lines, Grid gridCopy) {
-        if (lines.winningMark(gridCopy) == computerMark) {
-            return 1;
-        } else {
-            return -1;
-        }
-    }
-
-    private int maximisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
+    private int maximisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark) {
         Grid gridSelected = grid;
         for (Grid gridWithMove : gridsWithMoves) {
-            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap(), lines);
+            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap());
             if (score > alpha) {
                 alpha = score;
                 gridSelected = gridWithMove;
@@ -69,10 +64,10 @@ public class ComputerMoveCalculator {
         return alpha;
     }
 
-    private int minimisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark, Lines lines) {
+    private int minimisedScore(List<Grid> gridsWithMoves, Grid grid, int depthLevel, int alpha, int beta, Mark mark) {
         Grid gridSelected = grid;
         for (Grid gridWithMove : gridsWithMoves) {
-            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap(), lines);
+            int score = calculateMinimax(gridWithMove, depthLevel-1, alpha, beta, mark.swap());
             if (score < beta) {
                 beta = score;
                 gridSelected = gridWithMove;

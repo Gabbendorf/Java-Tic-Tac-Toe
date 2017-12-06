@@ -1,6 +1,5 @@
 package ticTacToe.player;
 
-import ticTacToe.grid.Lines;
 import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.ui.Ui;
@@ -17,9 +16,9 @@ public class SmartComputer implements Player {
         this.moveCalculator = new ComputerMoveCalculator(mark);
     }
 
-    public String makeMove(Ui ui, Grid grid, Lines lines) {
+    public String makeMove(Ui ui, Grid grid) {
         slowDown();
-        return bestMoveFor(grid, lines);
+        return bestMoveFor(grid);
     }
 
     public Mark getMark() {
@@ -34,8 +33,8 @@ public class SmartComputer implements Player {
         }
     }
 
-    private String bestMoveFor(Grid grid, Lines lines) {
-        Grid bestGrid = moveCalculator.getBestGrid(grid, mark, lines);
+    private String bestMoveFor(Grid grid) {
+        Grid bestGrid = moveCalculator.getBestGrid(grid, mark);
         StringBuilder movePosition = new StringBuilder();
         for (String cell : grid.emptyPositions()) {
             if (!bestGrid.isEmptyCell(cell)) {

@@ -2,7 +2,6 @@ package ticTacToe.game;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.grid.Lines;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.player.PlayersFactoryDouble;
 import ticTacToe.ui.Ui;
@@ -65,9 +64,8 @@ public class GameFlowTest {
     @Test
     public void runsGameHumanPlayerAgainstSmartComputerOn3x3Grid() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
-        GameFlow gameFlow = new GameFlow(ui, lines, playersFactory);
+        GameFlow gameFlow = new GameFlow(ui, playersFactory);
 
         gameFlow.runGame();
 
@@ -79,9 +77,8 @@ public class GameFlowTest {
     @Test
     public void runsGameHumanPlayerAgainstSmartComputerOn4x4Grid() {
         UiDouble ui = new UiDouble(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("".getBytes()));
-        Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
-        GameFlow gameFlow = new GameFlow(ui, lines, playersFactory);
+        GameFlow gameFlow = new GameFlow(ui, playersFactory);
 
         gameFlow.runGame();
 
@@ -93,9 +90,8 @@ public class GameFlowTest {
     @Test
     public void runsGameComputerAgainstComputerOn3x3Grid() {
         Ui ui = new Ui (new PrintStream(output), new ByteArrayInputStream("3\n3\nx\nn".getBytes()));
-        Lines lines = new Lines();
         PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
-        GameFlow gameFlow = new GameFlow(ui, lines, playersFactoryDouble);
+        GameFlow gameFlow = new GameFlow(ui, playersFactoryDouble);
 
         gameFlow.runGame();
 
@@ -105,9 +101,8 @@ public class GameFlowTest {
     @Test
     public void runsGameComputerAgainstComputerOn4x4Grid() {
         Ui ui = new Ui (new PrintStream(output), new ByteArrayInputStream("4\n3\nx\nn".getBytes()));
-        Lines lines = new Lines();
         PlayersFactory playersFactoryDouble = new PlayersFactoryDouble();
-        GameFlow gameFlow = new GameFlow(ui, lines, playersFactoryDouble);
+        GameFlow gameFlow = new GameFlow(ui, playersFactoryDouble);
 
         gameFlow.runGame();
 
@@ -116,9 +111,8 @@ public class GameFlowTest {
 
     private GameFlow newGameFlow(String allInput) {
         Ui ui = newUiWith(allInput);
-        Lines lines = new Lines();
         PlayersFactory playersFactory = new PlayersFactory();
-        return new GameFlow(ui, lines, playersFactory);
+        return new GameFlow(ui, playersFactory);
     }
 
     private Ui newUiWith(String inputString) {
