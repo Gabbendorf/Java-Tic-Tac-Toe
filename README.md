@@ -8,7 +8,7 @@ The player must put 3 or 4 (depending on the size of the grid) marks in a row to
 ## Game options
 The player can select one of the following game options:
 
-* player vs. another player
+* player vs. another human player
 * player vs. unbeatable computer
 * unbeatable computer vs. unbeatable computer.
 
@@ -20,3 +20,12 @@ The player can play:
 ## Computer player
 Computer player never loses. The worst it can do against a human player is obtaining a draw result.
 Two computer against each other will always end up with a tie game.
+
+## How to run the game
+You need to have Gradle installed:
+
+`git clone git@github.com:Gabbendorf/Java-Tic-Tac-Toe.git`
+`cd Java-Tic-Tac-Toe`
+`gradle clean`
+`gradle jar`
+`java -jar build/libs/JavaTicTacToe.jar`
