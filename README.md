@@ -29,4 +29,4 @@ git clone git@github.com:Gabbendorf/Java-Tic-Tac-Toe.git
 cd Java-Tic-Tac-Toe
 gradle clean
 gradle jar
-java -jar build/libs/JavaTicTacToe.jar```
+java -jar build/libs/JavaTicTacToe.jar
