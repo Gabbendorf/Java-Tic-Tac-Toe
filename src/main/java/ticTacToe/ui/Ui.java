@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class Ui {
 
+    private final static String THREE = "3";
+    private final static String FOUR = "4";
     private final GridFormatter gridFormatter;
     private PrintStream output;
     private Scanner input;
@@ -31,12 +33,24 @@ public class Ui {
         output.println("\n");
     }
 
+    public int chooseGridSize() {
+        output.println("Choose a size for the grid [" + THREE + " or " + FOUR + "]:");
+        String userInput = input.nextLine();
+        while (isInvalidGridSize(userInput)) {
+            clearScreen();
+            output.println("Invalid grid size [" + THREE + " or " + FOUR + "]:");
+            userInput = input.nextLine();
+        }
+        return Integer.parseInt(userInput);
+    }
+
     public void printGrid(Lines lines, Grid grid) {
         List<ArrayList<String>> rowsWithColours = gridFormatter.rowsWithColours(lines.getRows(grid));
-        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours));
+        output.println(gridFormatter.prepareGridForPrinting(rowsWithColours, grid.getSize()));
     }
 
     public GameOption chooseGameOption() {
+        clearScreen();
         output.println("Choose a game option:");
         gameTypeOptions();
         return validGameOption(validatedInput());
@@ -44,13 +58,13 @@ public class Ui {
 
     public Mark askForMarkType() {
         clearScreen();
-        output.println("First player: please choose a mark: " + GridFormatter.blue_X + " => Cross, " + GridFormatter.red_O + " (letter) => Nought");
+        output.println("First player: please choose a mark: " + GridFormatter.BLUE_X + " => Cross, " + GridFormatter.RED_O + " (letter) => Nought");
         return validMarkType(input.nextLine().toUpperCase());
     }
 
     public Mark askForStarter() {
         clearScreen();
-        output.println("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?");
+        output.println("Who starts: " + GridFormatter.BLUE_X + " or " + GridFormatter.RED_O + " (letter)?");
         Mark markType = validMarkType(input.nextLine().toUpperCase());
         clearScreen();
         return markType;
@@ -89,6 +103,10 @@ public class Ui {
         output.println("See you soon!");
     }
 
+    private boolean isInvalidGridSize(String userInput) {
+        return !userInput.equals(THREE) && !userInput.equals(FOUR);
+    }
+
     private void gameTypeOptions() {
         output.println("1- Human Player vs Human Player");
         output.println("2- Human Player vs Smart Computer");
@@ -119,7 +137,7 @@ public class Ui {
     private Mark validMarkType(String mark) {
         while (!Mark.isValid(mark)) {
             clearScreen();
-            output.println("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought");
+            output.println("Invalid option: " + GridFormatter.BLUE_X + " => Cross or " + GridFormatter.RED_O + " (letter) => Nought");
             mark = input.nextLine().toUpperCase();
         }
         return Mark.create(mark);

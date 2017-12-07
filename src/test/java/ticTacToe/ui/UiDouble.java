@@ -16,7 +16,7 @@ import static ticTacToe.game.Mark.CROSS;
 public class UiDouble extends Ui {
 
     public UiDouble(PrintStream output, InputStream input) {
-        super(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("2\nx\nx\nn".getBytes()));
+        super(new PrintStream(new ByteArrayOutputStream()), new ByteArrayInputStream("4\n2\nx\nx\ny\n3\n2\nx\nx\nn".getBytes()));
     }
 
     @Override

@@ -46,23 +46,81 @@ public class UiTest {
     }
 
     @Test
-    public void printsGrid() {
-        Ui ui = newUiWith("input");
+    public void asksToChooseGridSizeAndReturnsIt() {
+        Ui ui = newUiWith("3");
 
+        int gridSizeChosen = ui.chooseGridSize();
+
+        assertEquals(3, gridSizeChosen);
+        assertTrue(output.toString().contains("Choose a size for the grid [3 or 4]:"));
+    }
+
+
+    @Test
+    public void asksForValidGridSize() {
+        Ui ui = newUiWith("5\nn\n7\n3");
+
+        int gridSizeChosen = ui.chooseGridSize();
+
+        assertEquals(3, gridSizeChosen);
+        assertTrue(output.toString().contains("Invalid grid size [3 or 4]:"));
+    }
+
+    @Test
+    public void printsGrid3x3() {
+        Ui ui = newUiWith("input");
         Grid grid = new Grid(3);
+
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n " +
-                                              "| 1 | 2 | 3 | \n " +
-                                              "| --------- | \n " +
-                                              "| 4 | 5 | 6 | \n " +
-                                              "| --------- | \n " +
-                                              "| 7 | 8 | 9 | \n " +
+        assertTrue(output.toString().contains("| --------- | \n" +
+                                              "| 1 | 2 | 3 | \n" +
+                                              "| --------- | \n" +
+                                              "| 4 | 5 | 6 | \n" +
+                                              "| --------- | \n" +
+                                              "| 7 | 8 | 9 | \n" +
                                               "| --------- |"));
     }
 
     @Test
-    public void printsGridWithColouredMarks() {
+    public void printsGrid4x4() {
+        Ui ui = newUiWith("input");
+        Grid grid = new Grid(4);
+
+        ui.printGrid(new Lines(), grid);
+
+        assertTrue(output.toString().contains("| ------------- | \n" +
+                                              "| 1 | 2 | 3 | 4 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 5 | 6 | 7 | 8 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 9 | 10| 11| 12| \n" +
+                                              "| ------------- | \n" +
+                                              "| 13| 14| 15| 16| \n" +
+                                              "| ------------- |"));
+    }
+    @Test
+    public void prints4x4GridWithColouredMarks() {
+        Ui ui = newUiWith("input");
+        Grid grid = new Grid(4);
+        grid.addMark(NOUGHT, "2");
+        grid.addMark(CROSS, "15");
+
+        ui.printGrid(new Lines(), grid);
+
+        assertTrue(output.toString().contains("| ------------- | \n" +
+                                              "| 1 | " + GridFormatter.RED_O + " | 3 | 4 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 5 | 6 | 7 | 8 | \n" +
+                                              "| ------------- | \n" +
+                                              "| 9 | 10| 11| 12| \n" +
+                                              "| ------------- | \n" +
+                                              "| 13| 14| " + GridFormatter.BLUE_X + " | 16| \n" +
+                                              "| ------------- |"));
+    }
+
+    @Test
+    public void prints3x3GridWithColouredMarks() {
         Ui ui = newUiWith("input");
         Grid grid = new Grid(3);
         grid.addMark(NOUGHT, "2");
@@ -70,12 +128,12 @@ public class UiTest {
 
         ui.printGrid(new Lines(), grid);
 
-        assertTrue(output.toString().contains("| --------- | \n | " +
-                                              GridFormatter.blue_X + " | " + GridFormatter.red_O + " | 3 | \n" +
-                                             " | --------- | \n " +
-                                              "| 4 | 5 | 6 | \n " +
-                                              "| --------- | \n " +
-                                              "| 7 | 8 | 9 | \n " +
+        assertTrue(output.toString().contains("| --------- | \n" +
+                                              "| " + GridFormatter.BLUE_X + " | " + GridFormatter.RED_O + " | 3 | \n" +
+                                              "| --------- | \n" +
+                                              "| 4 | 5 | 6 | \n" +
+                                              "| --------- | \n" +
+                                              "| 7 | 8 | 9 | \n" +
                                               "| --------- |"));
     }
 
@@ -108,8 +166,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.blue_X +
-                                              " => Cross, " + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("First player: please choose a mark: " + GridFormatter.BLUE_X +
+                                              " => Cross, " + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(CROSS, markType);
     }
 
@@ -119,8 +177,8 @@ public class UiTest {
 
         Mark markType = ui.askForMarkType();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or "
-                                              + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.BLUE_X + " => Cross or "
+                                              + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(NOUGHT, markType);
     }
 
@@ -130,7 +188,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Who starts: " + GridFormatter.blue_X + " or " + GridFormatter.red_O + " (letter)?"));
+        assertTrue(output.toString().contains("Who starts: " + GridFormatter.BLUE_X + " or " + GridFormatter.RED_O + " (letter)?"));
         assertEquals(CROSS, startingMark);
     }
 
@@ -140,7 +198,7 @@ public class UiTest {
 
         Mark startingMark = ui.askForStarter();
 
-        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.blue_X + " => Cross or " + GridFormatter.red_O + " (letter) => Nought"));
+        assertTrue(output.toString().contains("Invalid option: " + GridFormatter.BLUE_X + " => Cross or " + GridFormatter.RED_O + " (letter) => Nought"));
         assertEquals(CROSS, startingMark);
     }
 

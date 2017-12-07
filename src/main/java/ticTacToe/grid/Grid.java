@@ -72,7 +72,7 @@ public class Grid {
         return gridCopies;
     }
 
-    public  boolean isInsideCellsRange(String positionChosen) {
+    public boolean isInsideCellsRange(String positionChosen) {
         return positionFor(positionChosen) >= 0 && positionFor(positionChosen) < cells.size();
     }
 
@@ -82,10 +82,6 @@ public class Grid {
 
     public boolean isFinishedGame(Lines lines) {
         return allOccupiedCells() || lines.isWinning(this);
-    }
-
-    public void setCellsToEmpty() {
-        cells = allCells();
     }
 
     private List<String> allCells() {

@@ -2,7 +2,6 @@ package ticTacToe.player;
 
 import org.junit.Before;
 import org.junit.Test;
-import ticTacToe.game.GameOption;
 import ticTacToe.ui.Ui;
 import ticTacToe.ui.UiDouble;
 
