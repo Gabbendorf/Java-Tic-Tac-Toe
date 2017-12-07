@@ -28,4 +28,4 @@ You need to have Gradle installed:
 cd Java-Tic-Tac-Toe
 gradle clean
 gradle jar
-java -jar build/libs/JavaTicTacToe.jar```
+java -jar build/libs/JavaTicTacToe.jar
