@@ -24,8 +24,8 @@ Two computer against each other will always end up with a tie game.
 ## How to run the game
 You need to have Gradle installed:
 
-`git clone git@github.com:Gabbendorf/Java-Tic-Tac-Toe.git
+```git clone git@github.com:Gabbendorf/Java-Tic-Tac-Toe.git
 cd Java-Tic-Tac-Toe
 gradle clean
 gradle jar
-java -jar build/libs/JavaTicTacToe.jar
+java -jar build/libs/JavaTicTacToe.jar```
