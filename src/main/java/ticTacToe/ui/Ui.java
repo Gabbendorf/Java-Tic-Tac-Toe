@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class Ui {
 
+    private final static String THREE = "3";
+    private final static String FOUR = "4";
     private final GridFormatter gridFormatter;
     private PrintStream output;
     private Scanner input;
@@ -32,11 +34,11 @@ public class Ui {
     }
 
     public int chooseGridSize() {
-        output.println("Choose a size for the grid [3 or 4]:");
+        output.println("Choose a size for the grid [" + THREE + " or " + FOUR + "]:");
         String userInput = input.nextLine();
         while (isInvalidGridSize(userInput)) {
             clearScreen();
-            output.println("Invalid grid size [3 or 4]:");
+            output.println("Invalid grid size [" + THREE + " or " + FOUR + "]:");
             userInput = input.nextLine();
         }
         return Integer.parseInt(userInput);
@@ -102,7 +104,7 @@ public class Ui {
     }
 
     private boolean isInvalidGridSize(String userInput) {
-        return !userInput.equals("3") && !userInput.equals("4");
+        return !userInput.equals(THREE) && !userInput.equals(FOUR);
     }
 
     private void gameTypeOptions() {
