@@ -12,7 +12,7 @@ The player can select one of the following game options:
 * player vs. unbeatable computer
 * unbeatable computer vs. unbeatable computer.
 
-They can play:
+The player can play:
 
 * on a grid size 3x3
 * on a grid size 4x4
