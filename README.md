@@ -37,7 +37,6 @@ java -jar build/libs/JavaTicTacToe.jar
 ```
 
 ## How to run the tests
-You need to have Gradle installed:
 
 ```
 gradle clean test
