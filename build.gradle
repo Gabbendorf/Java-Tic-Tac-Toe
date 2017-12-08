@@ -29,4 +29,8 @@ jar {
     }
 }
 
+task unitTest( type: Test ) {
+    exclude '**/integrationTest®/**'
+}
+
 mainClassName = 'GameRunner'

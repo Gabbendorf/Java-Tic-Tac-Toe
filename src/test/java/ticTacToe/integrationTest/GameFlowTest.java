@@ -1,7 +1,8 @@
-package ticTacToe.game;
+package ticTacToe.integrationTest;
 
 import org.junit.Before;
 import org.junit.Test;
+import ticTacToe.game.GameFlow;
 import ticTacToe.grid.Lines;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.player.PlayersFactoryDouble;
