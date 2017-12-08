@@ -38,6 +38,19 @@ java -jar build/libs/JavaTicTacToe.jar
 
 ## How to run the tests
 
+From the main directory:
+
+To run just the unit tests (this process will be faster)
 ```
-gradle clean test
+./gradlew unitTest
+```
+
+To run all tests (this process will take longer)
+```
+./gradlew test
+```
+
+To run just the integration tests (this process will take longer)
+```
+./gradlew test -Dtest.single=integrationTest/**/
 ```
