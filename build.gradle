@@ -30,7 +30,8 @@ jar {
 }
 
 task unitTest( type: Test ) {
-    exclude '**/integrationTest®/**'
+    description 'integration tests are excluded from running as they slow down the process'
+    exclude '**/integrationTest/**'
 }
 
 mainClassName = 'GameRunner'
