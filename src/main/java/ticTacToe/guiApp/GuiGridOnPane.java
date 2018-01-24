@@ -7,23 +7,19 @@ import javafx.scene.layout.GridPane;
 import ticTacToe.grid.Grid;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GuiGridOnPane {
 
     private final GridPane gridPane;
     private final Grid grid;
+    private ArrayList<JavaFxButton> allButtons;
 
-    public GuiGridOnPane(GridPane gridPane, int gridSize) {
+    public GuiGridOnPane(GridPane gridPane, Grid grid) {
         this.gridPane = gridPane;
-        this.grid = new Grid(gridSize);
+        this.grid = grid;
     }
 
-    public List<JavaFxButton> buttons() {
-        List<JavaFxButton> allButtons = new ArrayList<>();
-        for (String cellNumber : grid.getCells()) {
-            allButtons.add(new JavaFxButton(new Button(), cellNumber));
-        }
+    public ArrayList<JavaFxButton> getAllButtons() {
         return allButtons;
     }
 
@@ -35,14 +31,15 @@ public class GuiGridOnPane {
     }
 
     public void addButtonsToPane() {
+        createButtons();
         int columnIndex = 1;
         int rowIndex = 0;
         int buttonCounter = 1;
-        for (JavaFxButton button : buttons()) {
+        for (JavaFxButton button : getAllButtons()) {
             gridPane.add(button.actualButton(), columnIndex, rowIndex);
             columnIndex = updateColumnIndex(columnIndex);
             buttonCounter += 1;
-            if (buttonCounter > 3) {
+            if (buttonCounter > grid.getSize()) {
                 rowIndex += 1;
                 buttonCounter = 1;
             }
@@ -53,8 +50,15 @@ public class GuiGridOnPane {
         return gridPane;
     }
 
+    private void createButtons() {
+        allButtons = new ArrayList<>();
+        for (String cellNumber : grid.getCells()) {
+            allButtons.add(new JavaFxButton(new Button(), cellNumber));
+        }
+    }
+
     private int updateColumnIndex(int columnIndex) {
-        if (columnIndex == 3) {
+        if (columnIndex == grid.getSize()) {
             return 1;
         }
         return columnIndex + 1;
