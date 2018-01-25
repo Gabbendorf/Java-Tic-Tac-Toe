@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 
-public class JavaFxButton {
+public class JavaFxButton implements ButtonWrapper {
 
     private final Button button;
 
@@ -13,6 +13,7 @@ public class JavaFxButton {
         this.button.setText(cellNumber);
     }
 
+    @Override
     public void setOnAction(EventHandler<ActionEvent> event) {
         button.setOnAction(event);
     }

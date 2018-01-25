@@ -2,58 +2,45 @@ package ticTacToe.guiApp;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.GridPane;
 import ticTacToe.grid.Grid;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GuiGridOnPane {
 
-    private final GridPane gridPane;
+    private final GridPaneWrapper gridPane;
     private final Grid grid;
-    private ArrayList<JavaFxButton> allButtons;
+    private ArrayList<ButtonWrapper> allButtons = new ArrayList<>();
 
-    public GuiGridOnPane(GridPane gridPane, Grid grid) {
+    public GuiGridOnPane(GridPaneWrapper gridPane, Grid grid) {
         this.gridPane = gridPane;
         this.grid = grid;
     }
 
-    public ArrayList<JavaFxButton> getAllButtons() {
+    public ArrayList<ButtonWrapper> getAllButtons() {
         return allButtons;
     }
 
     public void gridPaneSetUp() {
-        gridPane.setAlignment(Pos.CENTER);
-        gridPane.setPadding(new Insets(25, 25, 25, 25));
-        gridPane.setHgap(10);
-        gridPane.setVgap(10);
+        gridPane.actualGridPane().setAlignment(Pos.CENTER);
+        gridPane.actualGridPane().setPadding(new Insets(25, 25, 25, 25));
+        gridPane.actualGridPane().setHgap(10);
+        gridPane.actualGridPane().setVgap(10);
     }
 
-    public void addButtonsToPane() {
-        createButtons();
+    public void addAll(List<ButtonWrapper> buttons) {
         int columnIndex = 1;
         int rowIndex = 0;
         int buttonCounter = 1;
-        for (JavaFxButton button : getAllButtons()) {
-            gridPane.add(button.actualButton(), columnIndex, rowIndex);
+        for (ButtonWrapper button : buttons) {
+            gridPane.addButton(button, columnIndex, rowIndex);
             columnIndex = updateColumnIndex(columnIndex);
             buttonCounter += 1;
             if (buttonCounter > grid.getSize()) {
                 rowIndex += 1;
                 buttonCounter = 1;
             }
-        }
-    }
-
-    public GridPane actualGridPane() {
-        return gridPane;
-    }
-
-    private void createButtons() {
-        allButtons = new ArrayList<>();
-        for (String cellNumber : grid.getCells()) {
-            allButtons.add(new JavaFxButton(new Button(), cellNumber));
         }
     }
 
