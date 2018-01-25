@@ -7,9 +7,11 @@ import ticTacToe.guiApp.ButtonWrapper;
 
 public class ButtonDouble implements ButtonWrapper {
 
+    public boolean wasCalled;
+
     @Override
     public void setOnAction(EventHandler<ActionEvent> event) {
-
+        wasCalled = true;
     }
 
     @Override

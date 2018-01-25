@@ -11,7 +11,7 @@ public class ActionSetter {
         this.grid = grid;
     }
 
-    public void addClickHandler(JavaFxButton button, Mark mark, String buttonNumber) {
+    public void addClickHandler(ButtonWrapper button, Mark mark, String buttonNumber) {
         button.setOnAction(event -> {
             grid.addMark(mark, buttonNumber);
             button.actualButton().setText(mark.sign);
