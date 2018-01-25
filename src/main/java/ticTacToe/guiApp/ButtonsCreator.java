@@ -8,11 +8,25 @@ import java.util.List;
 
 public class ButtonsCreator {
 
+    private final ActionSetter actionSetter;
+    private List<ButtonWrapper> buttonsCreated;
+
+    public ButtonsCreator(ActionSetter actionSetter) {
+        this.actionSetter = actionSetter;
+    }
+
     public List<ButtonWrapper> createButtons(Grid grid) {
-        List<ButtonWrapper> allButtons = new ArrayList<>();
+        buttonsCreated = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
-            allButtons.add(new JavaFxButton(new Button(), cellNumber));
+            buttonsCreated.add(new JavaFxButton(new Button(), cellNumber));
         }
-        return allButtons;
+        setActionToButtons();
+        return buttonsCreated;
+    }
+
+    private void setActionToButtons() {
+        for (ButtonWrapper button : buttonsCreated) {
+            actionSetter.addClickHandler(button, button.actualButton().getText());
+        }
     }
 }

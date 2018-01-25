@@ -1,7 +1,6 @@
 package ticTacToe.guiAppTest;
 
 import org.junit.Test;
-import ticTacToe.game.Mark;
 import ticTacToe.grid.Grid;
 import ticTacToe.guiApp.ActionSetter;
 
@@ -14,7 +13,7 @@ public class ActionSetterTest {
         ActionSetter actionSetter = new ActionSetter(new Grid(3));
         ButtonDouble button = new ButtonDouble();
 
-        actionSetter.addClickHandler(button, Mark.CROSS, "1");
+        actionSetter.addClickHandler(button, "1");
 
         assertTrue(button.wasCalled);
     }

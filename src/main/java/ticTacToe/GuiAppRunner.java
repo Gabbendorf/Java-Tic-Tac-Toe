@@ -1,14 +1,12 @@
 package ticTacToe;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
+import javafx.scene.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import ticTacToe.game.Mark;
-import ticTacToe.grid.Grid;
-import ticTacToe.guiApp.ActionSetter;
-import ticTacToe.guiApp.GuiGridOnPane;
-import ticTacToe.guiApp.JavaFxButton;
+import ticTacToe.grid.*;
+import ticTacToe.guiApp.*;
 
 public class GuiAppRunner extends Application {
 
@@ -16,15 +14,16 @@ public class GuiAppRunner extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Tic Tac Toe");
         Grid grid = new Grid(3);
-        GuiGridOnPane gridOnPane = new GuiGridOnPane(new GridPane(), grid);
-        gridOnPane.gridPaneSetUp();
-        gridOnPane.addButtonsToPane();
-        ActionSetter actionSetter = new ActionSetter(grid);
-        for (JavaFxButton button : gridOnPane.getAllButtons()) {
-            actionSetter.addClickHandler(button, Mark.NOUGHT, button.actualButton().getText());
-        }
+        ButtonsCreator buttonsCreator = new ButtonsCreator(new ActionSetter(grid));
+        JavaFxGridPane javaFxGridPane = new JavaFxGridPane(new GridPane());
+        Label label = new Label();
+        GuiGridOnPane gridOnPane = new GuiGridOnPane(javaFxGridPane, grid);
 
-        Scene scene = new Scene(gridOnPane.actualGridPane(), 200,200);
+        gridOnPane.gridPaneSetUp();
+        gridOnPane.addAll(buttonsCreator.createButtons(grid));
+        javaFxGridPane.actualGridPane().add(label, 0, 4);
+
+        Scene scene = new Scene(javaFxGridPane.actualGridPane(), 250,250);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

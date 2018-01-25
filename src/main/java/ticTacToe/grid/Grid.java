@@ -11,6 +11,8 @@ public class Grid {
 
     private List<String> cells;
     private int size;
+    private int crossesCount;
+    private int noughtsCount;
 
     public Grid(int size) {
         this.size = size;
@@ -82,6 +84,29 @@ public class Grid {
 
     public boolean isFinishedGame(Lines lines) {
         return allOccupiedCells() || lines.isWinning(this);
+    }
+
+    public Mark markThatMoves() {
+        makeMarksCount();
+        if (crossesCount > noughtsCount) {
+            return Mark.NOUGHT;
+        } else if (crossesCount < noughtsCount){
+            return Mark.CROSS;
+        } else {
+            return Mark.CROSS;
+        }
+    }
+
+    private void makeMarksCount() {
+        crossesCount = 0;
+        noughtsCount = 0;
+        for (String mark : cells) {
+            if (mark.equals(Mark.CROSS.sign)) {
+                crossesCount += 1;
+            } else if (mark.equals(Mark.NOUGHT.sign)) {
+                noughtsCount += 1;
+            }
+        }
     }
 
     private List<String> allCells() {

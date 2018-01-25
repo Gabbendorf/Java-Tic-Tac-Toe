@@ -11,10 +11,11 @@ public class ActionSetter {
         this.grid = grid;
     }
 
-    public void addClickHandler(ButtonWrapper button, Mark mark, String buttonNumber) {
+    public void addClickHandler(ButtonWrapper button, String buttonNumber) {
         button.setOnAction(event -> {
-            grid.addMark(mark, buttonNumber);
-            button.actualButton().setText(mark.sign);
+            Mark currentMark = grid.markThatMoves();
+            grid.addMark(currentMark, buttonNumber);
+            button.actualButton().setText(currentMark.sign);
         });
     }
 }

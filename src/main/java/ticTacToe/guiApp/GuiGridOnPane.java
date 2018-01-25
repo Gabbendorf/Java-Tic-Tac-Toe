@@ -4,22 +4,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import ticTacToe.grid.Grid;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GuiGridOnPane {
 
     private final GridPaneWrapper gridPane;
     private final Grid grid;
-    private ArrayList<ButtonWrapper> allButtons = new ArrayList<>();
 
     public GuiGridOnPane(GridPaneWrapper gridPane, Grid grid) {
         this.gridPane = gridPane;
         this.grid = grid;
-    }
-
-    public ArrayList<ButtonWrapper> getAllButtons() {
-        return allButtons;
     }
 
     public void gridPaneSetUp() {
