@@ -2,6 +2,7 @@ package ticTacToe.guiAppTest;
 
 import org.junit.Test;
 import ticTacToe.grid.Grid;
+import ticTacToe.guiApp.ActionSetter;
 import ticTacToe.guiApp.ButtonWrapper;
 import ticTacToe.guiApp.GuiGridOnPane;
 
@@ -24,8 +25,8 @@ public class GuiGridOnPaneTest {
     }
 
     private GuiGridOnPane newGuiGridOnPane(GridPaneDouble gridPaneDouble) {
-        ButtonsCreatorDouble buttonsCreator = new ButtonsCreatorDouble();
         Grid grid = new Grid(3);
+        ButtonsCreatorDouble buttonsCreator = new ButtonsCreatorDouble(new ActionSetter(grid));
         buttonsCreated = buttonsCreator.createButtons(grid);
         return new GuiGridOnPane(gridPaneDouble, grid);
     }
