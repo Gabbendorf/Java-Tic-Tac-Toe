@@ -13,7 +13,7 @@ public class ActionSetterTest {
         ActionSetter actionSetter = new ActionSetter(new Grid(3));
         ButtonDouble button = new ButtonDouble();
 
-        actionSetter.addClickHandler(button, "1");
+        actionSetter.addClickHandler(button);
 
         assertTrue(button.wasCalled);
     }

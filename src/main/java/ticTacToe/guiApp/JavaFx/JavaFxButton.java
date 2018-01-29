@@ -1,8 +1,9 @@
-package ticTacToe.guiApp;
+package ticTacToe.guiApp.JavaFx;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import ticTacToe.guiApp.ButtonWrapper;
 
 public class JavaFxButton implements ButtonWrapper {
 

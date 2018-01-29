@@ -2,6 +2,7 @@ package ticTacToe.guiApp;
 
 import javafx.scene.control.Button;
 import ticTacToe.grid.Grid;
+import ticTacToe.guiApp.JavaFx.JavaFxButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,15 +19,10 @@ public class ButtonsCreator {
     public List<ButtonWrapper> createButtons(Grid grid) {
         buttonsCreated = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
-            buttonsCreated.add(new JavaFxButton(new Button(), cellNumber));
+            ButtonWrapper button = new JavaFxButton(new Button(), cellNumber);
+            actionSetter.addClickHandler(button);
+            buttonsCreated.add(button);
         }
-        setActionToButtons();
         return buttonsCreated;
-    }
-
-    private void setActionToButtons() {
-        for (ButtonWrapper button : buttonsCreated) {
-            actionSetter.addClickHandler(button, button.actualButton().getText());
-        }
     }
 }

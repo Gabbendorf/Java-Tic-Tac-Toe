@@ -1,6 +1,8 @@
-package ticTacToe.guiApp;
+package ticTacToe.guiApp.JavaFx;
 
 import javafx.scene.layout.GridPane;
+import ticTacToe.guiApp.ButtonWrapper;
+import ticTacToe.guiApp.GridPaneWrapper;
 
 public class JavaFxGridPane implements GridPaneWrapper {
 
