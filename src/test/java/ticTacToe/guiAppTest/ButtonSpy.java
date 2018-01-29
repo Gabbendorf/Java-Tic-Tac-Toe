@@ -5,7 +5,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import ticTacToe.guiApp.ButtonWrapper;
 
-public class ButtonDouble implements ButtonWrapper {
+public class ButtonSpy implements ButtonWrapper {
 
     public boolean wasClicked;
 

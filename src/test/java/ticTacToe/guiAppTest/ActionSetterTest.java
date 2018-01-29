@@ -11,10 +11,10 @@ public class ActionSetterTest {
     @Test
     public void setsActionOnButton() {
         ActionSetter actionSetter = new ActionSetter(new Grid(3));
-        ButtonDouble button = new ButtonDouble();
+        ButtonSpy button = new ButtonSpy();
 
         actionSetter.addClickHandler(button);
 
-        assertTrue(button.wasCalled);
+        assertTrue(button.wasClicked);
     }
 }

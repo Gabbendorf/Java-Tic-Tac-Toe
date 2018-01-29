@@ -14,10 +14,10 @@ public class ButtonsCreatorDouble extends ButtonsCreator {
         super(actionSetter);
     }
 
-    public List<ButtonWrapper> createButtons(Grid grid) {
+    public List<ButtonWrapper> buttons(Grid grid) {
         List<ButtonWrapper> allButtons = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
-            allButtons.add(new ButtonDouble());
+            allButtons.add(new ButtonSpy());
         }
         return allButtons;
     }
