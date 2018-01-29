@@ -6,13 +6,13 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
+import static ticTacToe.game.Mark.CROSS;
+import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
     private List<String> cells;
     private int size;
-    private int crossesCount;
-    private int noughtsCount;
 
     public Grid(int size) {
         this.size = size;
@@ -86,27 +86,22 @@ public class Grid {
         return allOccupiedCells() || lines.isWinning(this);
     }
 
-    public Mark markThatMoves() {
-        makeMarksCount();
-        if (crossesCount > noughtsCount) {
-            return Mark.NOUGHT;
-        } else if (crossesCount < noughtsCount){
-            return Mark.CROSS;
+    public Mark nextMark() {
+        if (count(CROSS) > count(NOUGHT)) {
+            return NOUGHT;
         } else {
-            return Mark.CROSS;
+            return CROSS;
         }
     }
 
-    private void makeMarksCount() {
-        crossesCount = 0;
-        noughtsCount = 0;
-        for (String mark : cells) {
-            if (mark.equals(Mark.CROSS.sign)) {
-                crossesCount += 1;
-            } else if (mark.equals(Mark.NOUGHT.sign)) {
-                noughtsCount += 1;
+    private int count(Mark mark) {
+        int marks = 0;
+        for (String cell : cells) {
+            if (cell.equals(mark.sign)) {
+                marks += 1;
             }
         }
+        return marks;
     }
 
     private List<String> allCells() {

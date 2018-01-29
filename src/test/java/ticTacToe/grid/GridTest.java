@@ -159,14 +159,14 @@ public class GridTest {
 
     @Test
     public void returnsCrossIfFirstMove() {
-        assertEquals(Mark.CROSS, grid.markThatMoves());
+        assertEquals(Mark.CROSS, grid.nextMark());
     }
 
     @Test
     public void returnsMarkThatShouldMoveNext() {
         grid.addMark(Mark.CROSS, "1");
 
-        assertEquals(Mark.NOUGHT, grid.markThatMoves());
+        assertEquals(Mark.NOUGHT, grid.nextMark());
     }
 
     private List<String> cells(List<Grid> gridList, int gridNumber) {
