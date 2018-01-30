@@ -10,7 +10,7 @@ import ticTacToe.guiApp.AppButton;
 
 public class ButtonSpy implements AppButton {
 
-    public boolean wasClicked;
+    public boolean hasAction;
 
     private Grid grid;
     private Lines lines;
@@ -25,9 +25,9 @@ public class ButtonSpy implements AppButton {
     @Override
     public void setOnAction(EventHandler<ActionEvent> event) {
         if (!grid.isFinishedGame(lines) && !Mark.isValid(text)) {
-            wasClicked = true;
+            hasAction = true;
         } else {
-            wasClicked = false;
+            hasAction = false;
         }
     }
 

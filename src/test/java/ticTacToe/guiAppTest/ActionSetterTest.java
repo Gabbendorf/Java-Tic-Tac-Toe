@@ -32,7 +32,7 @@ public class ActionSetterTest {
 
         actionSetter.addClickHandler(button, label);
 
-        assertTrue(button.wasClicked);
+        assertTrue(button.hasAction);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ActionSetterTest {
 
         actionSetter.addClickHandler(button, label);
 
-        assertFalse(button.wasClicked);
+        assertFalse(button.hasAction);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class ActionSetterTest {
 
         actionSetter.addClickHandler(button, label);
 
-        assertFalse(button.wasClicked);
+        assertFalse(button.hasAction);
     }
 
     private ButtonSpy newButtonSpy(String text, Grid grid) {
