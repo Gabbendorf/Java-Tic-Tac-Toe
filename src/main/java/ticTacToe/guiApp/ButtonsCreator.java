@@ -10,14 +10,13 @@ import java.util.List;
 public class ButtonsCreator {
 
     private final ActionSetter actionSetter;
-    private List<ButtonWrapper> buttonsCreated;
 
     public ButtonsCreator(ActionSetter actionSetter) {
         this.actionSetter = actionSetter;
     }
 
-    public List<ButtonWrapper> createButtons(Grid grid) {
-        buttonsCreated = new ArrayList<>();
+    public List<ButtonWrapper> buttons(Grid grid) {
+        List<ButtonWrapper> buttonsCreated = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
             ButtonWrapper button = new JavaFxButton(new Button(), cellNumber);
             actionSetter.addClickHandler(button);

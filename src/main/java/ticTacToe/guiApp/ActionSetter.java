@@ -1,21 +1,21 @@
 package ticTacToe.guiApp;
 
 import ticTacToe.game.Mark;
-import ticTacToe.grid.Grid;
 
 public class ActionSetter {
 
-    private final Grid grid;
+    private final GuiGameFlow gameFlow;
 
-    public ActionSetter(Grid grid) {
-        this.grid = grid;
+    public ActionSetter(GuiGameFlow gameFlow) {
+        this.gameFlow = gameFlow;
     }
 
     public void addClickHandler(ButtonWrapper button) {
         button.setOnAction(event -> {
-            Mark currentMark = grid.nextMark();
-            grid.addMark(currentMark, button.actualButton().getText());
-            button.actualButton().setText(currentMark.sign);
+            if (gameFlow.isNotGameOver()) {
+                Mark mark = gameFlow.move(button.actualButton().getText());
+                button.actualButton().setText(mark.sign);
+            }
         });
     }
 }

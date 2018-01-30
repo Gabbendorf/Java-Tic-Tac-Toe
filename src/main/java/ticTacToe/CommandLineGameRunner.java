@@ -5,7 +5,7 @@ import ticTacToe.grid.Lines;
 import ticTacToe.player.PlayersFactory;
 import ticTacToe.ui.Ui;
 
-public class GameRunner {
+public class CommandLineGameRunner {
 
     public static void main(String[] args) {
         Ui ui = new Ui(System.out, System.in);

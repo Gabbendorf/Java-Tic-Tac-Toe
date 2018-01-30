@@ -16,16 +16,13 @@ public class GuiAppRunner extends Application {
         primaryStage.setTitle("Tic Tac Toe");
         Grid grid = new Grid(3);
         Label label = new Label();
-        ButtonsCreator buttonsCreator = new ButtonsCreator(new ActionSetter(grid));
         JavaFxGridPane javaFxGridPane = new JavaFxGridPane(new GridPane());
         GuiGridOnPane gridOnPane = new GuiGridOnPane(javaFxGridPane, grid);
-
-        gridOnPane.gridPaneSetUp();
-        gridOnPane.addAll(buttonsCreator.createButtons(grid));
-        javaFxGridPane.actualGridPane().add(label, 0, 4);
-
-
+        GuiGameFlow flow = new GuiGameFlow(grid, new Lines());
+        gridOnPane.gridPaneSetUp(new ButtonsCreator(new ActionSetter(flow)));
         Scene scene = new Scene(javaFxGridPane.actualGridPane(), 300,300);
+
+        javaFxGridPane.actualGridPane().add(label, 0, 4);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
