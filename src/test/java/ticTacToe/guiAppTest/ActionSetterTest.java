@@ -5,6 +5,7 @@ import org.junit.Test;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
 import ticTacToe.guiApp.ActionSetter;
+import ticTacToe.guiApp.AppLabel;
 import ticTacToe.guiApp.GuiGameFlow;
 
 import static org.junit.Assert.assertFalse;
@@ -15,11 +16,14 @@ public class ActionSetterTest {
 
     private static Grid grid;
     private static Lines lines;
+    private static AppLabel label;
 
     @BeforeClass
     public static void classInstantiations() {
         grid = new Grid(3);
         lines = new Lines();
+        label = new LabelStub();
+
     }
 
     @Test
@@ -27,7 +31,7 @@ public class ActionSetterTest {
         ActionSetter actionSetter = new ActionSetter(new GuiGameFlow(grid, lines));
         ButtonSpy button = new ButtonSpy(grid, lines);
 
-        actionSetter.addClickHandler(button);
+        actionSetter.addClickHandler(button, label);
 
         assertTrue(button.wasClicked);
     }
@@ -38,7 +42,7 @@ public class ActionSetterTest {
         ActionSetter actionSetter = new ActionSetter(new GuiGameFlow(grid, lines));
         ButtonSpy button = new ButtonSpy(grid, lines);
 
-        actionSetter.addClickHandler(button);
+        actionSetter.addClickHandler(button, label);
 
         assertFalse(button.wasClicked);
     }

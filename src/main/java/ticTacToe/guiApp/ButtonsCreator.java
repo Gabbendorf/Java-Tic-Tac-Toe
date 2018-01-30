@@ -15,11 +15,11 @@ public class ButtonsCreator {
         this.actionSetter = actionSetter;
     }
 
-    public List<AppButton> buttons(Grid grid) {
+    public List<AppButton> buttons(Grid grid, AppLabel label) {
         List<AppButton> buttonsCreated = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
             AppButton button = new JavaFxButton(new Button(), cellNumber);
-            actionSetter.addClickHandler(button);
+            actionSetter.addClickHandler(button, label);
             buttonsCreated.add(button);
         }
         return buttonsCreated;

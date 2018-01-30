@@ -10,11 +10,12 @@ public class ActionSetter {
         this.gameFlow = gameFlow;
     }
 
-    public void addClickHandler(AppButton button) {
+    public void addClickHandler(AppButton button, AppLabel label) {
         button.setOnAction(event -> {
             if (gameFlow.isNotGameOver()) {
                 Mark mark = gameFlow.move(button.actualButton().getText());
                 button.actualButton().setText(mark.sign);
+                label.setText(gameFlow.messageForGameState());
             }
         });
     }

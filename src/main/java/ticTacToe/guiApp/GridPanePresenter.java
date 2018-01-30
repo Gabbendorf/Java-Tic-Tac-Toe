@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import ticTacToe.grid.Grid;
 
+
 public class GridPanePresenter {
 
     private final AppGridPane gridPane;
@@ -14,19 +15,19 @@ public class GridPanePresenter {
         this.grid = grid;
     }
 
-    public void gridPaneSetUp(ButtonsCreator buttonsCreator) {
-        addAllButtons(buttonsCreator);
+    public void gridPaneSetUp(ButtonsCreator buttonsCreator, AppLabel label) {
+        addAllButtons(buttonsCreator, label);
         gridPane.actualGridPane().setAlignment(Pos.CENTER);
         gridPane.actualGridPane().setPadding(new Insets(25, 25, 25, 25));
         gridPane.actualGridPane().setHgap(10);
         gridPane.actualGridPane().setVgap(10);
     }
 
-    public void addAllButtons(ButtonsCreator buttonsCreator) {
+    public void addAllButtons(ButtonsCreator buttonsCreator, AppLabel label) {
         int columnIndex = 1;
         int rowIndex = 0;
         int buttonCounter = 1;
-        for (AppButton button : buttonsCreator.buttons(grid)) {
+        for (AppButton button : buttonsCreator.buttons(grid, label)) {
             gridPane.addButton(button, columnIndex, rowIndex);
             columnIndex = updateColumnIndex(columnIndex);
             buttonCounter += 1;

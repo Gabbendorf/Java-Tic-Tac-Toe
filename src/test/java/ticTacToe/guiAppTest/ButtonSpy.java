@@ -18,6 +18,7 @@ public class ButtonSpy implements AppButton {
         this.grid = grid;
         this.lines = lines;
     }
+
     @Override
     public void setOnAction(EventHandler<ActionEvent> event) {
         if (!grid.isFinishedGame(lines)) {

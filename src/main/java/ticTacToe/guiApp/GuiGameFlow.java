@@ -23,4 +23,24 @@ public class GuiGameFlow {
     public boolean isNotGameOver() {
         return !grid.isFinishedGame(lines);
     }
+
+    public String messageForGameState() {
+        StringBuilder message = new StringBuilder();
+        if (grid.isFinishedGame(lines)) {
+            message.append(messageForGameOver());
+        } else {
+            message.append(String.format("It's %s turn", grid.nextMark().sign));
+        }
+        return message.toString();
+    }
+
+    private String messageForGameOver() {
+        StringBuilder message = new StringBuilder();
+        if (lines.isWinning(grid)) {
+            message.append(String.format("%s won!", lines.winningMark(grid).sign));
+        } else if (grid.allOccupiedCells()) {
+            message.append("It's draw!");
+        }
+        return message.toString();
+    }
 }
