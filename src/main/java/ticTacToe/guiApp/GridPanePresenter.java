@@ -4,7 +4,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import ticTacToe.grid.Grid;
 
-
 public class GridPanePresenter {
 
     private final AppGridPane gridPane;

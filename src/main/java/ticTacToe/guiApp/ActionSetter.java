@@ -12,8 +12,9 @@ public class ActionSetter {
 
     public void addClickHandler(AppButton button, AppLabel label) {
         button.setOnAction(event -> {
-            if (gameFlow.isNotGameOver()) {
-                Mark mark = gameFlow.move(button.actualButton().getText());
+            String buttonText = button.actualButton().getText();
+            if (gameFlow.isNotGameOver() && gameFlow.isNotClickedButton(buttonText)) {
+                Mark mark = gameFlow.move(buttonText);
                 button.actualButton().setText(mark.sign);
                 label.setText(gameFlow.messageForGameState());
             }

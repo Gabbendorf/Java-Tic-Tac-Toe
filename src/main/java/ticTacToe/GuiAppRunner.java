@@ -16,15 +16,15 @@ public class GuiAppRunner extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setTitle("Tic Tac Toe");
         Grid grid = new Grid(3);
-        Label javaFxLabel = new Label();
-        AppLabel label = new JavaFxLabel(javaFxLabel);
+        Label label = new Label();
+        AppLabel appLabel = new JavaFxLabel(label);
         JavaFxGridPane javaFxGridPane = new JavaFxGridPane(new GridPane());
         GridPanePresenter gridPane = new GridPanePresenter(javaFxGridPane, grid);
         GuiGameFlow flow = new GuiGameFlow(grid, new Lines());
-        gridPane.gridPaneSetUp(new ButtonsCreator(new ActionSetter(flow)), label);
+        gridPane.gridPaneSetUp(new ButtonsCreator(new ActionSetter(flow)), appLabel);
         Scene scene = new Scene(javaFxGridPane.actualGridPane(), 300,300);
 
-        javaFxGridPane.actualGridPane().add(javaFxLabel, 0, 4);
+        javaFxGridPane.actualGridPane().add(label, 0, 4);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

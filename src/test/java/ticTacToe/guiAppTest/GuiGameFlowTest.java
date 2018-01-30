@@ -68,6 +68,20 @@ public class GuiGameFlowTest {
     }
 
     @Test
+    public void returnsTrueIfTextButtonIsNumber() {
+        GuiGameFlow gameFlow = newGuiGameFlow(emptyGrid);
+
+        assertTrue(gameFlow.isNotClickedButton("1"));
+    }
+
+    @Test
+    public void returnsFalseIfTextButtonIsValidMark() {
+        GuiGameFlow gameFlow = newGuiGameFlow(emptyGrid);
+
+        assertFalse(gameFlow.isNotClickedButton("X"));
+    }
+
+    @Test
     public void returnsMessageForOnGoingGame() {
         GuiGameFlow gameFlow = newGuiGameFlow(emptyGrid);
 

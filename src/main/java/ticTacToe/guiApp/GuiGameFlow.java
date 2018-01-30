@@ -5,11 +5,11 @@ import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
 
 public class GuiGameFlow {
+
     private final Grid grid;
     private final Lines lines;
 
     public GuiGameFlow(Grid grid, Lines lines) {
-
         this.grid = grid;
         this.lines = lines;
     }
@@ -22,6 +22,10 @@ public class GuiGameFlow {
 
     public boolean isNotGameOver() {
         return !grid.isFinishedGame(lines);
+    }
+
+    public boolean isNotClickedButton(String position) {
+        return !Mark.isValid(position);
     }
 
     public String messageForGameState() {

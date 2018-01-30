@@ -14,22 +14,21 @@ import static ticTacToe.game.Mark.CROSS;
 
 public class ActionSetterTest {
 
-    private static Grid grid;
     private static Lines lines;
     private static AppLabel label;
+    private static Grid emptyGrid;
+    private ActionSetter actionSetter;
 
     @BeforeClass
     public static void classInstantiations() {
-        grid = new Grid(3);
+        emptyGrid = new Grid(3);
         lines = new Lines();
         label = new LabelStub();
-
     }
 
     @Test
-    public void setsActionOnButton() {
-        ActionSetter actionSetter = new ActionSetter(new GuiGameFlow(grid, lines));
-        ButtonSpy button = new ButtonSpy(grid, lines);
+    public void setsActionOnButtonIfGameIsNotOverAndButtonIsNotClicked() {
+        ButtonSpy button = newButtonSpy("1", emptyGrid);
 
         actionSetter.addClickHandler(button, label);
 
@@ -38,13 +37,25 @@ public class ActionSetterTest {
 
     @Test
     public void actionIsNotTriggeredIfGameIsOver() {
-        Grid grid = winningGrid();
-        ActionSetter actionSetter = new ActionSetter(new GuiGameFlow(grid, lines));
-        ButtonSpy button = new ButtonSpy(grid, lines);
+        ButtonSpy button = newButtonSpy("1", winningGrid());
 
         actionSetter.addClickHandler(button, label);
 
         assertFalse(button.wasClicked);
+    }
+
+    @Test
+    public void actionIsNotTriggeredIfButtonWasAlreadyClicked() {
+        ButtonSpy button = newButtonSpy("X", emptyGrid);
+
+        actionSetter.addClickHandler(button, label);
+
+        assertFalse(button.wasClicked);
+    }
+
+    private ButtonSpy newButtonSpy(String text, Grid grid) {
+        actionSetter = new ActionSetter(new GuiGameFlow(grid, lines));
+        return new ButtonSpy(grid, lines, text);
     }
 
     private Grid winningGrid() {

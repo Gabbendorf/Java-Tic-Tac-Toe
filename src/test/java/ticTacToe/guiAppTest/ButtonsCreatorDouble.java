@@ -18,7 +18,7 @@ public class ButtonsCreatorDouble extends ButtonsCreator {
     public List<AppButton> buttons(Grid grid) {
         List<AppButton> allButtons = new ArrayList<>();
         for (String cellNumber : grid.getCells()) {
-            allButtons.add(new ButtonSpy(grid, new Lines()));
+            allButtons.add(new ButtonSpy(grid, new Lines(), null));
         }
         return allButtons;
     }
