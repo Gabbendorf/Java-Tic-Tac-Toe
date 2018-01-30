@@ -1,10 +1,10 @@
 package ticTacToe.guiApp.JavaFx;
 
 import javafx.scene.layout.GridPane;
-import ticTacToe.guiApp.ButtonWrapper;
-import ticTacToe.guiApp.GridPaneWrapper;
+import ticTacToe.guiApp.AppButton;
+import ticTacToe.guiApp.AppGridPane;
 
-public class JavaFxGridPane implements GridPaneWrapper {
+public class JavaFxGridPane implements AppGridPane {
 
     private final GridPane gridPane;
 
@@ -13,7 +13,7 @@ public class JavaFxGridPane implements GridPaneWrapper {
     }
 
     @Override
-    public void addButton(ButtonWrapper button, int columnIndex, int rowIndex) {
+    public void addButton(AppButton button, int columnIndex, int rowIndex) {
         gridPane.add(button.actualButton(), columnIndex, rowIndex);
     }
 

@@ -17,9 +17,9 @@ public class GuiAppRunner extends Application {
         Grid grid = new Grid(3);
         Label label = new Label();
         JavaFxGridPane javaFxGridPane = new JavaFxGridPane(new GridPane());
-        GuiGridOnPane gridOnPane = new GuiGridOnPane(javaFxGridPane, grid);
+        GridPanePresenter gridPane = new GridPanePresenter(javaFxGridPane, grid);
         GuiGameFlow flow = new GuiGameFlow(grid, new Lines());
-        gridOnPane.gridPaneSetUp(new ButtonsCreator(new ActionSetter(flow)));
+        gridPane.gridPaneSetUp(new ButtonsCreator(new ActionSetter(flow)));
         Scene scene = new Scene(javaFxGridPane.actualGridPane(), 300,300);
 
         javaFxGridPane.actualGridPane().add(label, 0, 4);

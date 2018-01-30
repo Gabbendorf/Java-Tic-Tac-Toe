@@ -1,18 +1,18 @@
 package ticTacToe.guiAppTest;
 
 import javafx.scene.layout.GridPane;
-import ticTacToe.guiApp.ButtonWrapper;
-import ticTacToe.guiApp.GridPaneWrapper;
+import ticTacToe.guiApp.AppButton;
+import ticTacToe.guiApp.AppGridPane;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GridPaneDouble implements GridPaneWrapper {
+public class GridPaneDouble implements AppGridPane {
 
-    List<ButtonWrapper> buttonsAdded = new ArrayList<>();
+    List<AppButton> buttonsAdded = new ArrayList<>();
 
     @Override
-    public void addButton(ButtonWrapper button, int columnIndex, int rowIndex) {
+    public void addButton(AppButton button, int columnIndex, int rowIndex) {
         buttonsAdded.add(button);
     }
 

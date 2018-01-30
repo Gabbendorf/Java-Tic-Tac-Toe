@@ -5,9 +5,9 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import ticTacToe.grid.Grid;
 import ticTacToe.grid.Lines;
-import ticTacToe.guiApp.ButtonWrapper;
+import ticTacToe.guiApp.AppButton;
 
-public class ButtonSpy implements ButtonWrapper {
+public class ButtonSpy implements AppButton {
 
     public boolean wasClicked;
 

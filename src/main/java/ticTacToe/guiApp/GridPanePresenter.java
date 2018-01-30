@@ -4,12 +4,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import ticTacToe.grid.Grid;
 
-public class GuiGridOnPane {
+public class GridPanePresenter {
 
-    private final GridPaneWrapper gridPane;
+    private final AppGridPane gridPane;
     private final Grid grid;
 
-    public GuiGridOnPane(GridPaneWrapper gridPane, Grid grid) {
+    public GridPanePresenter(AppGridPane gridPane, Grid grid) {
         this.gridPane = gridPane;
         this.grid = grid;
     }
@@ -26,7 +26,7 @@ public class GuiGridOnPane {
         int columnIndex = 1;
         int rowIndex = 0;
         int buttonCounter = 1;
-        for (ButtonWrapper button : buttonsCreator.buttons(grid)) {
+        for (AppButton button : buttonsCreator.buttons(grid)) {
             gridPane.addButton(button, columnIndex, rowIndex);
             columnIndex = updateColumnIndex(columnIndex);
             buttonCounter += 1;
