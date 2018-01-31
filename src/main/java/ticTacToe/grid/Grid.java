@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import static java.util.Arrays.asList;
+import static ticTacToe.game.Mark.CROSS;
+import static ticTacToe.game.Mark.NOUGHT;
 
 public class Grid {
 
@@ -82,6 +84,24 @@ public class Grid {
 
     public boolean isFinishedGame(Lines lines) {
         return allOccupiedCells() || lines.isWinning(this);
+    }
+
+    public Mark nextMark() {
+        if (count(CROSS) > count(NOUGHT)) {
+            return NOUGHT;
+        } else {
+            return CROSS;
+        }
+    }
+
+    private int count(Mark mark) {
+        int marks = 0;
+        for (String cell : cells) {
+            if (cell.equals(mark.sign)) {
+                marks += 1;
+            }
+        }
+        return marks;
     }
 
     private List<String> allCells() {
