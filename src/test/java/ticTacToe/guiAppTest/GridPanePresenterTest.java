@@ -17,7 +17,6 @@ public class GridPanePresenterTest {
 
     @Before
      public void setUp() {
-        com.sun.javafx.application.PlatformImpl.startup(() -> {});
         grid = new Grid(3);
         label = new LabelStub();
         guiGameFlow = new GuiGameFlow(grid, new Lines());
